@@ -1,4 +1,4 @@
 rootProject.name = 'Yelstream Topp Tiny Project'
 
-include 'Topp-Argh-Library'
-include 'Topp-Ex-Library'
+include 'Topp-Format-Library'
+include 'Topp-Function-Library'
