@@ -1,0 +1,10 @@
+plugins {
+    id 'java-library-distribution'
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+//    api 'org.slf4j:slf4j-api:1.7.36'
+}

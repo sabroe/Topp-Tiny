@@ -1,0 +1,173 @@
+/*** FILE "build.gradle" ******************************************************/
+
+
+/*** Imports: *****************************************************************/
+
+import java.text.SimpleDateFormat
+
+
+/*** Properties: **************************************************************/
+
+def buildTime = new Date()
+
+def buildTimeByMilisecond = new SimpleDateFormat("yyyy-MM-dd-HHmmss.SSS").format(buildTime)
+def buildTimeBySecond = new SimpleDateFormat("yyyy-MM-dd-HHmmss").format(buildTime)
+def buildTimeByMinute = new SimpleDateFormat("yyyy-MM-dd-HHmm").format(buildTime)
+def buildTimeByDay = new SimpleDateFormat("yyyy-MM-dd").format(buildTime)
+
+
+/*** Build script: ************************************************************/
+
+buildscript
+{
+    repositories
+    {
+        mavenCentral()
+    }
+
+    dependencies
+    {
+    }
+}
+
+
+/*** All projects: ************************************************************/
+
+allprojects
+{
+    def localProperties = new Properties()
+    def file=file("custom.properties")
+    logger.info(":> Properties file name: ${file}")
+    if (file.exists())
+    {
+        localProperties.load(file.newReader())
+    }
+    ext.custom = new Properties()
+    if (parent!=null) ext.custom.putAll(parent.ext.custom)
+    ext.custom.putAll(localProperties)
+    logger.info(":> Parent extension properties: "+(parent==null?null:parent.ext.custom))
+    logger.info(":> Local properties:            "+localProperties)
+    logger.info(":> Extension properties:        "+ext.custom)
+
+    project.version = custom.version?:buildTimeBySecond
+
+    logger.info(":> Project name:      $project.name")
+    logger.info(":> Project directory: $project.projectDir")
+    logger.info(":> Project version:   $project.version")
+
+    repositories
+    {
+        mavenCentral()
+    }
+}
+
+
+/*** All sub-projects: ********************************************************/
+
+subprojects
+{
+    def projectNameC14N = "${project.name.replaceAll(' ','-')}"
+    logger.info(":> Project name canonicalization: ${projectNameC14N}.")
+
+    def baseNamePrefix = custom['archives.base-name-prefix']?:""
+//    def baseNamePrefix = "xxx"
+    logger.info(":> Base name prefix: ${baseNamePrefix}.")
+
+    /*
+     * Specifics for the Java plugin.
+     */
+    plugins.withType(JavaPlugin)
+    {
+        archivesBaseName = "${baseNamePrefix}${projectNameC14N}"
+        logger.info(":> Archives base name: ${archivesBaseName}.")
+
+//        sourceCompatibility = custom['java.source-compatibility']?:JavaVersion.VERSION_17
+//        targetCompatibility = custom['java.target-compatibility']?:JavaVersion.VERSION_17
+
+        def defaultEncoding = custom['java.default-encoding']?:'UTF-8'
+
+        compileJava
+        {
+            options.encoding = defaultEncoding
+//            options.release = 16
+        }
+
+        compileTestJava
+        {
+            options.encoding = defaultEncoding
+//            options.release = 16
+        }
+
+        java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(17)
+            }
+        }
+
+        jar
+        {
+            manifest
+            {
+                attributes 'Implementation-Version': custom['jar.manifest.implementation-version']?:project.version
+                attributes 'Implementation-Title'  : custom['jar.manifest.implementation-title']  ?:project.name
+                attributes 'Implementation-Vendor' : custom['jar.manifest.implementation-vendor'] ?:(custom['vendor.name']?:"")
+            }
+
+            exclude('**/.keep')
+        }
+
+/*
+         task listRepositories << {
+              println "Repositories:"
+              project.repositories.each { println "Name: "+it.name+", URL: "+it.url }
+          }
+*/
+
+/*
+        java {
+            withJavadocJar()
+            withSourcesJar()
+
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(16)
+            }
+        }
+*/
+    }
+
+    /*
+     * Specifics for the Java Library Distribution plugin.
+     */
+    plugins.withType(JavaLibraryDistributionPlugin)
+    {
+        distributions
+        {
+            main
+            {
+                archivesBaseName = "${baseNamePrefix}${projectNameC14N}"
+
+                distZip
+                {
+                    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+                }
+            }
+        }
+    }
+
+    /*
+     * Specifics for the Application plugin.
+     */
+    plugins.withType(ApplicationPlugin)
+    {
+        distributions
+        {
+            main
+            {
+                archivesBaseName = "${baseNamePrefix}${projectNameC14N}"
+            }
+        }
+    }
+}
+
+
+/******** "build.gradle" ******************************************************/
