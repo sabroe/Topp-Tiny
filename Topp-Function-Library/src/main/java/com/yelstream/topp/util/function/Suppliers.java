@@ -6,6 +6,10 @@ import java.util.function.Supplier;
 
 /**
  * Utility addressing instances of {@link Supplier}.
+ *
+ * @author Morten Sabroe Mortenen
+ * @version 1.0
+ * @since 2022-04-15
  */
 @UtilityClass
 public class Suppliers {

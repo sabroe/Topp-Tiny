@@ -10,6 +10,10 @@ import java.util.Objects;
  *
  * @param <T> The type of the input to the function.
  * @param <R> The type of the result of the function.
+ *
+ * @author Morten Sabroe Mortenen
+ * @version 1.0
+ * @since 2022-04-15
  */
 @FunctionalInterface
 public interface FunctionEx<T, R, E extends Throwable> {

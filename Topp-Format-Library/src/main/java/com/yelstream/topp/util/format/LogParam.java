@@ -37,6 +37,10 @@ import java.util.function.Supplier;
  * <pre>
  *     log.debug("Consuming record from topic; record is '{}'.", LogParam.of(record));
  * </pre>
+ *
+ * @author Morten Sabroe Mortenen
+ * @version 1.0
+ * @since 2022-04-15
  */
 @AllArgsConstructor
 public final class LogParam {

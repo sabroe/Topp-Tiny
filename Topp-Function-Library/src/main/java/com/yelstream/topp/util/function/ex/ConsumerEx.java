@@ -11,6 +11,10 @@ import java.util.Objects;
  * whose functional method is {@link #accept(Object)}.
  *
  * @param <T> the type of the input to the operation
+ *
+ * @author Morten Sabroe Mortenen
+ * @version 1.0
+ * @since 2022-04-15
  */
 @FunctionalInterface
 public interface ConsumerEx<T, E extends Throwable> {

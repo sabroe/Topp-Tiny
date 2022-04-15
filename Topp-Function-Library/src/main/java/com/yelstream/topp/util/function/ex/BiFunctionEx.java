@@ -15,6 +15,10 @@ import java.util.function.Function;
  * @param <R> the type of the result of the function
  *
  * @see Function
+ *
+ * @author Morten Sabroe Mortenen
+ * @version 1.0
+ * @since 2022-04-15
  */
 @FunctionalInterface
 public interface BiFunctionEx<T, U, R, E extends Throwable> {

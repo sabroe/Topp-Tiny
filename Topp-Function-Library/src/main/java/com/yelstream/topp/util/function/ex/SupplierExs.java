@@ -4,6 +4,10 @@ import lombok.experimental.UtilityClass;
 
 /**
  * Utility addressing instances of {@link SupplierEx}.
+ *
+ * @author Morten Sabroe Mortenen
+ * @version 1.0
+ * @since 2022-04-15
  */
 @UtilityClass
 public class SupplierExs {

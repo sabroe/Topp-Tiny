@@ -16,6 +16,10 @@ import java.util.function.Consumer;
  * @param <U> the type of the second argument to the operation
  *
  * @see Consumer
+ *
+ * @author Morten Sabroe Mortenen
+ * @version 1.0
+ * @since 2022-04-15
  */
 @FunctionalInterface
 public interface BiConsumerEx<T, U, E extends Throwable> {

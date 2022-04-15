@@ -10,6 +10,10 @@ package com.yelstream.topp.util.function.ex;
  * whose functional method is {@link #get()}.
  *
  * @param <T> The type of results supplied by this supplier.
+ *
+ * @author Morten Sabroe Mortenen
+ * @version 1.0
+ * @since 2022-04-15
  */
 @FunctionalInterface
 public interface SupplierEx<T, E extends Throwable> {
