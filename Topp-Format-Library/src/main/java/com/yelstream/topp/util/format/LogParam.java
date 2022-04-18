@@ -63,6 +63,7 @@ public final class LogParam {
     /**
      * Creates a parameter.
      * @param textSupplier Supplier of the object whose {@link #toString()} supplies the text to this object.
+     * @return Parameter.
      */
     public static LogParam of(final Supplier<Object> textSupplier) {
         return new LogParam(textSupplier);
@@ -71,6 +72,7 @@ public final class LogParam {
     /**
      * Creates a parameter.
      * @param unprotectedParameter Object whose {@link #toString()} supplies the text to this object.
+     * @return Parameter.
      */
     public static LogParam of(final Object unprotectedParameter) {
         return of(()->unprotectedParameter);
