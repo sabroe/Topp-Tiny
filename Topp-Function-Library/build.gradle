@@ -47,11 +47,6 @@ publishing {
                         name = 'Morten Sabroe Mortensen'
                         email = 'morten.sabroe.mortensen@gmail.com'
                     }
-                    developer {
-                        id = 'krizzkrozz'
-                        name = 'Kristina Olsson'
-                        email = 'ko@x.se'
-                    }
                 }
                 scm {
                     connection = 'scm:git:git:github.com:sabroe/Topp-Tiny.git'
