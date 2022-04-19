@@ -1,10 +1,74 @@
 plugins {
     id 'java-library-distribution'
+    id 'maven-publish'
+    id 'signing'
+}
+
+group 'io.github.sabroe.topp'
+version '0.0.2-test'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
 }
 
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
+}
 
-//    api 'org.slf4j:slf4j-api:1.7.36'
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'io.github.sabroe.topp'
+            artifactId = 'topp-tiny-format-utility'
+            version = '0.0.2-test'
+            from components.java
+            pom {
+                name = 'Topp-Tiny-Format'
+                description = 'Topp Tiny Format is an open-source Java library which implements formatting utilities.'
+                url = 'https://github.com/sabroe/Topp-Tiny'
+                inceptionYear = '2022'
+
+                licenses {
+                    license {
+                        name = 'Apache License 2.0'
+                        url = 'https://github.com/sabroe/Topp-Tiny/blob/main/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'sabroe'
+                        name = 'Morten Sabroe Mortensen'
+                        email = 'morten.sabroe.mortensen@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git:github.com:sabroe/Topp-Tiny.git'
+                    developerConnection = 'scm:git:ssh://github.com:sabroe/Topp-Tiny.git'
+                    url = 'https://github.com/sabroe/Topp-Tiny'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'OSSRH'
+            url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+            credentials {
+                username = project.properties['ossrhUsername']
+                password = project.properties['ossrhPassword']
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
 }
