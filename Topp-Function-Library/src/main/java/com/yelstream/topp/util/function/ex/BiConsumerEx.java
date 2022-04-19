@@ -28,6 +28,7 @@ public interface BiConsumerEx<T, U, E extends Throwable> {
      *
      * @param t the first input argument
      * @param u the second input argument
+     * @throws E Thrown in case of error.
      */
     void accept(T t, U u) throws E;
 

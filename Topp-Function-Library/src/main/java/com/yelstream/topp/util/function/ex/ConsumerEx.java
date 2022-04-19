@@ -20,8 +20,8 @@ import java.util.Objects;
 public interface ConsumerEx<T, E extends Throwable> {
     /**
      * Performs this operation on the given argument.
-     *
      * @param t the input argument
+     * @throws E Thrown in case of error.
      */
     void accept(T t) throws E;
 

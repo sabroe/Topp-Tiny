@@ -19,9 +19,9 @@ import java.util.Objects;
 public interface FunctionEx<T, R, E extends Throwable> {
     /**
      * Applies this function to the given argument.
-     *
      * @param t the function argument
      * @return the function result
+     * @throws E Thrown in case of error.
      */
     R apply(T t) throws E;
 
@@ -69,6 +69,7 @@ public interface FunctionEx<T, R, E extends Throwable> {
      * Returns a function that always returns its input argument.
      *
      * @param <T> The type of the input and output objects to the function.
+     * @param <E> Type of error.
      * @return A function that always returns its input argument.
      */
     static <T, E extends Throwable> FunctionEx<T, T, E> identity() {

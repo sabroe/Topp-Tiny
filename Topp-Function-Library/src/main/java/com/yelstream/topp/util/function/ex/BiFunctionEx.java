@@ -28,6 +28,7 @@ public interface BiFunctionEx<T, U, R, E extends Throwable> {
      * @param t the first function argument
      * @param u the second function argument
      * @return the function result
+     * @throws E Thrown in case of error.
      */
     R apply(T t, U u) throws E;
 
