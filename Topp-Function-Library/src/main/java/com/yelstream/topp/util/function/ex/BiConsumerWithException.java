@@ -22,7 +22,7 @@ import java.util.function.Consumer;
  * @since 2022-04-15
  */
 @FunctionalInterface
-public interface BiConsumerEx<T, U, E extends Throwable> {
+public interface BiConsumerWithException<T, U, E extends Throwable> {
     /**
      * Performs this operation on the given arguments.
      *
@@ -44,7 +44,7 @@ public interface BiConsumerEx<T, U, E extends Throwable> {
      * operation followed by the {@code after} operation
      * @throws NullPointerException if {@code after} is null
      */
-    default BiConsumerEx<T, U, E> andThen(BiConsumerEx<? super T, ? super U, ? extends E> after) {
+    default BiConsumerWithException<T, U, E> andThen(BiConsumerWithException<? super T, ? super U, ? extends E> after) {
         Objects.requireNonNull(after);
 
         return (l, r) -> {

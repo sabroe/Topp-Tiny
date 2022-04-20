@@ -16,7 +16,7 @@ import java.util.Objects;
  * @since 2022-04-15
  */
 @FunctionalInterface
-public interface FunctionEx<T, R, E extends Throwable> {
+public interface FunctionWithException<T, R, E extends Throwable> {
     /**
      * Applies this function to the given argument.
      * @param t the function argument
@@ -38,9 +38,9 @@ public interface FunctionEx<T, R, E extends Throwable> {
      * function and then applies this function
      * @throws NullPointerException if before is null
      *
-     * @see #andThen(FunctionEx)
+     * @see #andThen(FunctionWithException)
      */
-    default <V> FunctionEx<V, R, E> compose(FunctionEx<? super V, ? extends T, ? extends E> before) {
+    default <V> FunctionWithException<V, R, E> compose(FunctionWithException<? super V, ? extends T, ? extends E> before) {
         Objects.requireNonNull(before);
         return (V v) -> apply(before.apply(v));
     }
@@ -58,9 +58,9 @@ public interface FunctionEx<T, R, E extends Throwable> {
      * applies the {@code after} function
      * @throws NullPointerException if after is null
      *
-     * @see #compose(FunctionEx)
+     * @see #compose(FunctionWithException)
      */
-    default <V> FunctionEx<T, V, E> andThen(FunctionEx<? super R, ? extends V, ? extends E> after) {
+    default <V> FunctionWithException<T, V, E> andThen(FunctionWithException<? super R, ? extends V, ? extends E> after) {
         Objects.requireNonNull(after);
         return (T t) -> after.apply(apply(t));
     }
@@ -72,7 +72,7 @@ public interface FunctionEx<T, R, E extends Throwable> {
      * @param <E> Type of error.
      * @return A function that always returns its input argument.
      */
-    static <T, E extends Throwable> FunctionEx<T, T, E> identity() {
+    static <T, E extends Throwable> FunctionWithException<T, T, E> identity() {
         return t -> t;
     }
 }

@@ -3,14 +3,14 @@ package com.yelstream.topp.util.function.ex;
 import lombok.experimental.UtilityClass;
 
 /**
- * Utility addressing instances of {@link SupplierEx}.
+ * Utility addressing instances of {@link SupplierWithException}.
  *
  * @author Morten Sabroe Mortenen
  * @version 1.0
  * @since 2022-04-15
  */
 @UtilityClass
-public class SupplierExs {
+public class SupplierWithExceptions {
     /**
      * Gets the value of a supplier, if set.
      * @param supplier Supplier.
@@ -20,7 +20,7 @@ public class SupplierExs {
      *         If supplier is {@code null} then this is {@code null}.
      * @throws E Thrown in case of error.
      */
-    public <T, E extends Throwable> T get(SupplierEx<T, E> supplier) throws E {
+    public <T, E extends Throwable> T get(SupplierWithException<T, E> supplier) throws E {
         return supplier==null?null:supplier.get();
     }
 
@@ -30,9 +30,9 @@ public class SupplierExs {
      * @param <T> Type of supplier value.
      * @param <E> Type of error.
      * @return Supplier wrapping the argument supplier.
-     *         This is non-{@code null} and obtains its value from {@link #get(SupplierEx)} on the argument supplier.
+     *         This is non-{@code null} and obtains its value from {@link #get(SupplierWithException)} on the argument supplier.
      */
-    public <T, E extends Throwable> SupplierEx<T, E> create(SupplierEx<T, E> supplier) {
+    public <T, E extends Throwable> SupplierWithException<T, E> create(SupplierWithException<T, E> supplier) {
         return ()->get(supplier);
     }
 }

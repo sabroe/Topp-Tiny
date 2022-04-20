@@ -4,24 +4,14 @@ import java.util.Objects;
 import java.util.function.Function;
 
 /**
- * Represents a function that accepts two arguments and produces a result.
- * This is the two-arity specialization of {@link Function}.
- *
- * <p>This is a <a href="package-summary.html">functional interface</a>
- * whose functional method is {@link #apply(Object, Object)}.
- *
- * @param <T> the type of the first argument to the function
- * @param <U> the type of the second argument to the function
- * @param <R> the type of the result of the function
- *
- * @see Function
+csssssssssssssssssc * @see Function
  *
  * @author Morten Sabroe Mortenen
  * @version 1.0
  * @since 2022-04-15
  */
 @FunctionalInterface
-public interface BiFunctionEx<T, U, R, E extends Throwable> {
+public interface BiFunctionWithException<T, U, R, E extends Throwable> {
     /**
      * Applies this function to the given arguments.
      *
@@ -45,7 +35,7 @@ public interface BiFunctionEx<T, U, R, E extends Throwable> {
      * applies the {@code after} function
      * @throws NullPointerException if after is null
      */
-    default <V> BiFunctionEx<T, U, V, E> andThen(FunctionEx<? super R, ? extends V, ? extends E> after) {
+    default <V> BiFunctionWithException<T, U, V, E> andThen(FunctionWithException<? super R, ? extends V, ? extends E> after) {
         Objects.requireNonNull(after);
         return (T t, U u) -> after.apply(apply(t, u));
     }

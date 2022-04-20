@@ -1,4 +1,6 @@
-package com.yelstream.topp.util.function.ex;
+package com.yelstream.topp.util.function;
+
+import com.yelstream.topp.util.function.ex.SupplierWithException;
 
 /**
  * Represents a supplier of results.
@@ -10,17 +12,12 @@ package com.yelstream.topp.util.function.ex;
  * whose functional method is {@link #get()}.
  *
  * @param <T> The type of results supplied by this supplier.
+ * @param <E> Thrown in case of error.
+ *            This is checked.
  *
  * @author Morten Sabroe Mortenen
  * @version 1.0
- * @since 2022-04-15
+ * @since 2022-04-20
  */
-@FunctionalInterface
-public interface SupplierEx<T, E extends Throwable> {
-    /**
-     * Gets a result.
-     * @return A result.
-     * @throws E Thrown in case of error.
-     */
-    T get() throws E;
+public interface CheckedSupplier<T, E extends Exception> extends SupplierWithException<T, E> {
 }

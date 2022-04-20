@@ -17,7 +17,7 @@ import java.util.Objects;
  * @since 2022-04-15
  */
 @FunctionalInterface
-public interface ConsumerEx<T, E extends Throwable> {
+public interface ConsumerWithException<T, E extends Throwable> {
     /**
      * Performs this operation on the given argument.
      * @param t the input argument
@@ -37,7 +37,7 @@ public interface ConsumerEx<T, E extends Throwable> {
      * operation followed by the {@code after} operation
      * @throws NullPointerException if {@code after} is null
      */
-    default ConsumerEx<T, E> andThen(ConsumerEx<? super T, ? extends E> after) {
+    default ConsumerWithException<T, E> andThen(ConsumerWithException<? super T, ? extends E> after) {
         Objects.requireNonNull(after);
         return (T t) -> { accept(t); after.accept(t); };
     }
