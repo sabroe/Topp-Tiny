@@ -4,8 +4,8 @@ plugins {
     id 'signing'
 }
 
-group 'io.github.sabroe.topp'
-version '0.0.2-test'
+//group 'io.github.sabroe.topp'
+//version '0.0.4-test'
 
 repositories {
     mavenCentral()
@@ -25,9 +25,9 @@ java {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId = 'io.github.sabroe.topp'
+            groupId = project.group
             artifactId = 'topp-tiny-function-utility'
-            version = '0.0.2-test'
+            version = project.version
             from components.java
             pom {
                 name = 'Topp-Tiny-Format'

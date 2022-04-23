@@ -22,7 +22,7 @@ import java.util.function.Supplier;
  * - into a single line:
  * </p>
  * <pre>
- *   log.debug("Created message; formatted message is -\n{}.", LogParam.of(()->ObjectMappers.format(message)));
+ *   log.debug("Created message; formatted message is -\n{}.", LogParam.of(()-&gt;ObjectMappers.format(message)));
  * </pre>
  *
  * <p>

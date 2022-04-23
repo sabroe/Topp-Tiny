@@ -26,12 +26,12 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId = project.group
-            artifactId = 'topp-tiny-format-utility'
+            artifactId = 'topp-tiny-net-utility'
             version = project.version
             from components.java
             pom {
                 name = 'Topp-Tiny-Format'
-                description = 'Topp Tiny Format is an open-source Java library which implements formatting utilities.'
+                description = 'Topp Tiny Net is an open-source Java library which implements network related utilities.'
                 url = 'https://github.com/sabroe/Topp-Tiny'
                 inceptionYear = '2022'
 
