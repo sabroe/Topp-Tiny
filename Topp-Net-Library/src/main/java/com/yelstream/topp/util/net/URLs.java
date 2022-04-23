@@ -12,6 +12,10 @@ import java.net.URLConnection;
 
 /**
  * Utilities addressing instances of {@link URL}.
+ *
+ * @author Morten Sabroe Mortenen
+ * @version 1.0
+ * @since 2022-04-23
  */
 @UtilityClass
 public class URLs {
@@ -66,5 +70,25 @@ public class URLs {
         URLConnection connection=url.openConnection();
         connection.setUseCaches(false);
         return connection.getInputStream();
+    }
+
+    /**
+     * Creates a URL array.
+     * Intended for transforming arguments to constructors of {@link java.net.URLClassLoader}.
+     * @param urls URLs as an ellipsis argument (array).
+     * @return URLs as an array.
+     */
+    public URL[] of(URL... urls) {
+        return urls;
+    }
+
+    /**
+     * Creates a URL array.
+     * Intended for transforming arguments to constructors of {@link java.net.URLClassLoader}.
+     * @param url URL.
+     * @return URL as an array.
+     */
+    public URL[] of(URL url) {
+        return url==null?null:of(url);
     }
 }

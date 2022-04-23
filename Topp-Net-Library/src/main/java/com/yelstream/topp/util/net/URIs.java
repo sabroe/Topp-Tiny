@@ -8,6 +8,10 @@ import java.net.URL;
 
 /**
  * Utilities addressing instances of {@link URI}.
+ *
+ * @author Morten Sabroe Mortenen
+ * @version 1.0
+ * @since 2022-04-23
  */
 @UtilityClass
 public class URIs {
