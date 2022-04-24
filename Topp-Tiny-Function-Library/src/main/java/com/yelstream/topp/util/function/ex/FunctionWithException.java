@@ -10,6 +10,7 @@ import java.util.Objects;
  *
  * @param <T> The type of the input to the function.
  * @param <R> The type of the result of the function.
+ * @param <E> Thrown in case of error.
  *
  * @author Morten Sabroe Mortenen
  * @version 1.0

@@ -11,6 +11,7 @@ import java.util.Objects;
  * whose functional method is {@link #accept(Object)}.
  *
  * @param <T> the type of the input to the operation
+ * @param <E> Thrown in case of error.
  *
  * @author Morten Sabroe Mortenen
  * @version 1.0

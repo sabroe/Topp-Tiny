@@ -10,6 +10,7 @@ package com.yelstream.topp.util.function.ex;
  * whose functional method is {@link #get()}.
  *
  * @param <T> The type of results supplied by this supplier.
+ * @param <E> Thrown in case of error.
  *
  * @author Morten Sabroe Mortenen
  * @version 1.0
