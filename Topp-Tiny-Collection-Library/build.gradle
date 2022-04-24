@@ -32,7 +32,7 @@ publishing {
             version = project.version
             from components.java
             pom {
-                name = 'Topp-Tiny-Format'
+                name = 'Topp-Tiny-Collection'
                 description = 'Topp Tiny Collection is an open-source Java library which implements collection related utilities.'
                 url = 'https://github.com/sabroe/Topp-Tiny'
                 inceptionYear = '2022'
