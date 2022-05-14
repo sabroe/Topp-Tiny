@@ -8,3 +8,13 @@ and
 [application features](src/main/java/com/yelstream/topp/util/feature).
 
 _Greetings to all, Morten Sabroe Mortensen_
+
+---
+
+### Artifacts
+
+Artifacts are released to the [Maven Central Repository](https://search.maven.org/).
+
+For the latest version,
+search
+[_Group ID_ `io.github.sabroe.topp` and _Artifact ID_ `topp-tiny-collection-utility`](https://search.maven.org/search?q=g:io.github.sabroe.topp%20AND%20a:topp-tiny-collection-utility).
