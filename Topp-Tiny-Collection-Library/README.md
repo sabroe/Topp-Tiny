@@ -6,3 +6,6 @@ Currently, addressed is the handling of
 [maps](src/main/java/com/yelstream/topp/util/collection) 
 and 
 [application features](src/main/java/com/yelstream/topp/util/feature).
+
+_Greetings to all, Morten Sabroe Mortensen_
+~~~~

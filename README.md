@@ -10,3 +10,5 @@ The libraries are:
 * [Net Library](Topp-Tiny-Net-Library/README.md)
 
 For the function, see their respective readme files.
+
+_Greetings to all, Morten Sabroe Mortensen_

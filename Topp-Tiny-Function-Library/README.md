@@ -6,3 +6,5 @@ Currently, addressed is the handling of
 [exception aware funcional interfaces](src/main/java/com/yelstream/topp/util/function/ex)
 and
 [access to object properties](src/main/java/com/yelstream/topp/util/function/access).
+
+_Greetings to all, Morten Sabroe Mortensen_

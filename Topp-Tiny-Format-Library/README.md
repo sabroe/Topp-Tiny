@@ -4,3 +4,5 @@ Topp Tiny Format is an open-source Java library which implements formatting util
 
 Currently, addressed is the handling of
 [logging parameters](src/main/java/com/yelstream/topp/util/format).
+
+_Greetings to all, Morten Sabroe Mortensen_

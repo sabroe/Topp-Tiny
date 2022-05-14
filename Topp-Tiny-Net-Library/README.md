@@ -4,3 +4,5 @@ Topp Tiny Net is an open-source Java library which implements network related ut
 
 Currently, addressed is the handling of
 [URLs and URIs](src/main/java/com/yelstream/topp/util/net).
+
+_Greetings to all, Morten Sabroe Mortensen_
