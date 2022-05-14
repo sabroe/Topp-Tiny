@@ -6,6 +6,10 @@ import java.util.function.Function;
  * Property getter operating on an object.
  * @param <O> Type of object.
  * @param <V> Type of value.
+ *
+ * @author Morten Sabroe Mortenen
+ * @version 1.0
+ * @since 2022-05-14
  */
 @FunctionalInterface
 public interface Getter<O,V> {

@@ -45,6 +45,10 @@ import java.util.function.Predicate;
  *     the argument {@code featureEnabling} is the actually set and overriding values.
  * </p>
  * @param <F> Type of feature.
+ *
+ * @author Morten Sabroe Mortenen
+ * @version 1.0
+ * @since 2022-05-14
  */
 public class FeatureMap<F extends Enum<F>> {
 

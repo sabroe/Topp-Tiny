@@ -9,6 +9,10 @@ import java.util.function.Function;
  * Property operating on an object.
  * @param <O> Type of object.
  * @param <V> Type of value.
+ *
+ * @author Morten Sabroe Mortenen
+ * @version 1.0
+ * @since 2022-05-14
  */
 @AllArgsConstructor(staticName="of")
 public class Property<O,V> implements Getter<O,V>, Setter<O,V> {
