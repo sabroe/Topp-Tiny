@@ -8,4 +8,3 @@ and
 [application features](src/main/java/com/yelstream/topp/util/feature).
 
 _Greetings to all, Morten Sabroe Mortensen_
-~~~~
