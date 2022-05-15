@@ -1,5 +1,7 @@
 # Topp Tiny Utility
 
+A collection of utility libraries.
+
 ## Description
 
 Topp Tiny is a collection of utility libraries addressing fundamental Java functionalities.
@@ -19,3 +21,4 @@ For the function of these libraries, see the respective readme files.
 ---
 
 _Greetings to all, Morten Sabroe Mortensen_
+<img align="right" width="250" src="doc/image/20220428_214818.png">

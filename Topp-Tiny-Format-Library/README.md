@@ -6,12 +6,12 @@ Module: `topp-tiny-format-utility`
 
 Topp Tiny Format is an open-source Java library which implements formatting utilities.
 
+## Content
+
 Currently, addressed is the handling of
 [logging parameters](src/main/java/com/yelstream/topp/util/format).
 
-## Content
-
-### Artifacts
+## Artifacts
 
 Artifacts are released to the [Maven Central Repository](https://search.maven.org/).
 

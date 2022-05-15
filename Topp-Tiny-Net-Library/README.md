@@ -6,12 +6,12 @@ Module: `topp-tiny-net-utility`
 
 Topp Tiny Net is an open-source Java library which implements network related utilities.
 
+## Content
+
 Currently, addressed is the handling of
 [URLs and URIs](src/main/java/com/yelstream/topp/util/net).
 
-## Content
-
-### Artifacts
+## Artifacts
 
 Artifacts are released to the [Maven Central Repository](https://search.maven.org/).
 
