@@ -17,7 +17,7 @@ This may address
 [ChronoUnit](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/temporal/ChronoUnit.html).
 at a later time.
 
-<img align="læeft" width="250" src="doc/image/SummaryofRoundingOperationsUnderDifferentRoundingModes.png">
+<img align="left" width="500" src="doc/image/SummaryofRoundingOperationsUnderDifferentRoundingModes.png">
 <br clear="all">
 
 ## Artifacts
