@@ -12,6 +12,7 @@ These libraries are small or even tiny.
 The libraries are:
 
 * [Collection Library](Topp-Tiny-Collection-Library/README.md)
+* [Concurrency Library](Topp-Tiny-Concurrency-Library/README.md)
 * [Format Library](Topp-Tiny-Format-Library/README.md)
 * [Function Library](Topp-Tiny-Function-Library/README.md)
 * [Net Library](Topp-Tiny-Net-Library/README.md)
