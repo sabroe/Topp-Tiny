@@ -9,15 +9,15 @@ Topp Tiny Concurrent is an open-source Java library which implements concurrency
 ## Content
 
 Currently, addressed is the handling of
-[time units](src/main/java/com/yelstream/topp/util/concurrent).
-This explicitly addresses all roundings modes listed for [RoundingMode](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/RoundingMode.html)
-for [TimeUnit](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/TimeUnit.html).
+[TimeUnit](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/TimeUnit.html).
+This explicitly addresses all roundings modes listed for 
+[RoundingMode](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/RoundingMode.html).
 
 This may address
 [ChronoUnit](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/temporal/ChronoUnit.html).
 at a later time.
 
-<img align="left" width="500" src="doc/image/SummaryofRoundingOperationsUnderDifferentRoundingModes.png">
+<img align="left" width="720" src="doc/image/SummaryofRoundingOperationsUnderDifferentRoundingModes.png">
 <br clear="all">
 
 ## Artifacts
