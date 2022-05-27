@@ -16,8 +16,9 @@ This explicitly addresses all roundings modes listed for
 <img align="left" src="doc/image/SummaryofRoundingOperationsUnderDifferentRoundingModes.png">
 <br clear="all">
 
-The current code is taken from an older
-[Yelstream-blog from 2013](http://yelstream.blogspot.com/2013/02/java-timeunit-conversion.html).
+The current code is taken from an older Yelstream
+[blog](http://yelstream.blogspot.com/2013/02/java-timeunit-conversion.html)
+from 2013.
 
 This may address
 [ChronoUnit](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/temporal/ChronoUnit.html)
