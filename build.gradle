@@ -114,4 +114,59 @@ subprojects {
             }
         }
     }
+
+    plugins.withType(MavenPublishPlugin) {
+        publishing {
+            publications {
+                mavenJava(MavenPublication) {
+                    groupId = custom['publishing.publication.groupId']?:project.group
+                    artifactId = custom['publishing.publication.artifactId']
+                    version = custom['publishing.publication.groupId']?:project.version
+                    from components.java
+                    pom {
+                        name = custom['publishing.publication.name']
+                        description = custom['publishing.publication.description']
+                        url = custom['publishing.publication.url']
+                        inceptionYear = custom['publishing.publication.inception-year']
+
+                        licenses {
+                            license {
+                                name = custom['publishing.publication.licenses.license-1.name']
+                                url = custom['publishing.publication.licenses.license-1.url']
+                            }
+                        }
+                        developers {
+                            developer {
+                                id = custom['publishing.publication.developers.developer-1.id']
+                                name = custom['publishing.publication.developers.developer-1.name']
+                                email = custom['publishing.publication.developers.developer-1.email']
+                            }
+                        }
+                        scm {
+                            connection = custom['publishing.publication.scm.connection']
+                            developerConnection = custom['publishing.publication.scm.developer-connection']
+                            url = custom['publishing.publication.scm.url']
+                        }
+                    }
+                }
+            }
+
+            repositories {
+                maven {
+                    name = 'OSSRH'
+                    url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+                    credentials {
+                        username = project.properties['ossrhUsername']
+                        password = project.properties['ossrhPassword']
+                    }
+                }
+            }
+        }
+    }
+
+    plugins.withType(SigningPlugin) {
+        signing {
+            sign publishing.publications.mavenJava
+        }
+    }
 }

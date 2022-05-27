@@ -4,9 +4,6 @@ plugins {
     id 'signing'
 }
 
-//group 'io.github.sabroe.topp'
-//version '0.0.4-test'
-
 repositories {
     mavenCentral()
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
@@ -20,55 +17,4 @@ dependencies {
 java {
     withJavadocJar()
     withSourcesJar()
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            groupId = project.group
-            artifactId = 'topp-tiny-format-utility'
-            version = project.version
-            from components.java
-            pom {
-                name = 'Topp-Tiny-Format'
-                description = 'Topp Tiny Format is an open-source Java library which implements formatting utilities.'
-                url = 'https://github.com/sabroe/Topp-Tiny'
-                inceptionYear = '2022'
-
-                licenses {
-                    license {
-                        name = 'Apache License 2.0'
-                        url = 'https://github.com/sabroe/Topp-Tiny/blob/main/LICENSE'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'sabroe'
-                        name = 'Morten Sabroe Mortensen'
-                        email = 'morten.sabroe.mortensen@gmail.com'
-                    }
-                }
-                scm {
-                    connection = 'scm:git:git:github.com:sabroe/Topp-Tiny.git'
-                    developerConnection = 'scm:git:ssh://github.com:sabroe/Topp-Tiny.git'
-                    url = 'https://github.com/sabroe/Topp-Tiny'
-                }
-            }
-        }
-    }
-
-    repositories {
-        maven {
-            name = 'OSSRH'
-            url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
-            credentials {
-                username = project.properties['ossrhUsername']
-                password = project.properties['ossrhPassword']
-            }
-        }
-    }
-}
-
-signing {
-    sign publishing.publications.mavenJava
 }
