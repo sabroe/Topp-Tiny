@@ -1,5 +1,3 @@
-/*** FILE "build.gradle" ******************************************************/
-
 /*
  * Note:
  *     To publish, run the task 'publish'.
@@ -7,45 +5,28 @@
  *     To verify the first stages of approval, access https://repo1.maven.org/maven2/io/github/sabroe/topp/.
  */
 
-/*** Imports: *****************************************************************/
-
 import java.text.SimpleDateFormat
 
-
-/*** Properties: **************************************************************/
-
 def buildTime = new Date()
-
-def buildTimeByMilisecond = new SimpleDateFormat("yyyy-MM-dd-HHmmss.SSS").format(buildTime)
 def buildTimeBySecond = new SimpleDateFormat("yyyy-MM-dd-HHmmss").format(buildTime)
 def buildTimeByMinute = new SimpleDateFormat("yyyy-MM-dd-HHmm").format(buildTime)
 def buildTimeByDay = new SimpleDateFormat("yyyy-MM-dd").format(buildTime)
 
 
-/*** Build script: ************************************************************/
-
-buildscript
-{
-    repositories
-    {
+buildscript {
+    repositories {
         mavenCentral()
     }
 
-    dependencies
-    {
+    dependencies {
     }
 }
 
-
-/*** All projects: ************************************************************/
-
-allprojects
-{
+allprojects {
     def localProperties = new Properties()
     def file=file("custom.properties")
     logger.info(":> Properties file name: ${file}")
-    if (file.exists())
-    {
+    if (file.exists()) {
         localProperties.load(file.newReader())
     }
     ext.custom = new Properties()
@@ -55,132 +36,82 @@ allprojects
     logger.info(":> Local properties:            "+localProperties)
     logger.info(":> Extension properties:        "+ext.custom)
 
-    project.version = custom.version?:buildTimeBySecond
-
-
-allprojects {  //HACK!
-    project.group 'io.github.sabroe.topp'
-    project.version '0.2.0'
-}
-
+    project.group = custom['project.group']?:'io.github.sabroe.topp'
+    project.version = custom['project.version']?:buildTimeBySecond
 
     logger.info(":> Project name:      $project.name")
     logger.info(":> Project directory: $project.projectDir")
     logger.info(":> Project version:   $project.version")
+    logger.info(":> Project group:     $project.group")
 
-    repositories
-    {
+    repositories {
         mavenCentral()
     }
 }
 
 
-/*** All sub-projects: ********************************************************/
-
-subprojects
-{
+subprojects {
     def projectNameC14N = "${project.name.replaceAll(' ','-')}"
     logger.info(":> Project name canonicalization: ${projectNameC14N}.")
 
     def baseNamePrefix = custom['archives.base-name-prefix']?:""
-//    def baseNamePrefix = "xxx"
     logger.info(":> Base name prefix: ${baseNamePrefix}.")
 
-    /*
-     * Specifics for the Java plugin.
-     */
-    plugins.withType(JavaPlugin)
-    {
+    plugins.withType(JavaPlugin) {
         archivesBaseName = "${baseNamePrefix}${projectNameC14N}"
         logger.info(":> Archives base name: ${archivesBaseName}.")
 
-//        sourceCompatibility = custom['java.source-compatibility']?:JavaVersion.VERSION_17
-//        targetCompatibility = custom['java.target-compatibility']?:JavaVersion.VERSION_17
-
         def defaultEncoding = custom['java.default-encoding']?:'UTF-8'
 
-        compileJava
-        {
+        compileJava {
             options.encoding = defaultEncoding
-//            options.release = 16
         }
 
-        compileTestJava
-        {
+        compileTestJava {
             options.encoding = defaultEncoding
-//            options.release = 16
         }
 
         java {
             toolchain {
-                languageVersion = JavaLanguageVersion.of(11)
+                languageVersion = JavaLanguageVersion.of(custom['java.language-version']?:'17')
             }
         }
 
-        jar
-        {
-            manifest
-            {
-                attributes 'Implementation-Version': custom['jar.manifest.implementation-version']?:project.version
-                attributes 'Implementation-Title'  : custom['jar.manifest.implementation-title']  ?:project.name
-                attributes 'Implementation-Vendor' : custom['jar.manifest.implementation-vendor'] ?:(custom['vendor.name']?:"")
+        jar {
+            manifest {
+                attributes 'Implementation-Title'                :custom['jar.manifest.implementation-title']                ?:(custom['implementation.title']?:project.name)
+                attributes 'Implementation-Group'                :custom['jar.manifest.implementation-group']                ?:(custom['implementation.group']?:project.group)
+                attributes 'Implementation-Version'              :custom['jar.manifest.implementation-version']              ?:(custom['implementation.version']?:project.version)
+                attributes 'Implementation-Vendor'               :custom['jar.manifest.implementation-vendor']               ?:(custom['implementation.vendor-name']?:'Yelstream')
+                attributes 'Implementation-Build-Date'           :custom['jar.manifest.implementation-build-date']           ?:(custom['implementation.build-date']?:buildTimeByDay)
+                attributes 'Implementation-Java-Language-Version':custom['jar.manifest.implementation-java-language-version']?:java.toolchain.languageVersion
+                attributes 'Implementation-Licence'              :custom['jar.manifest.implementation-license']              ?:(custom['implementation.license']?:'Apache License 2.0')
+                attributes 'Implementation-Copyright'            :custom['jar.manifest.implementation-copyright']            ?:(custom['implementation.copyright']?:'Copyright 2022 Morten Sabroe Mortensen')
+                attributes 'Implementation-Author'               :custom['jar.manifest.implementation-author']               ?:(custom['implementation.author']?:'Morten Sabroe Mortensen')
+                attributes 'Implementation-Contact'              :custom['jar.manifest.implementation-contact']              ?:(custom['implementation.contact']?:'mailto:morten.sabroe.mortensen@gmail.com')
+                attributes 'Implementation-Comment'              :custom['jar.manifest.implementation-comment']              ?:(custom['implementation.comment']?:'Greetings to all!')
             }
 
             exclude('**/.keep')
         }
-
-/*
-         task listRepositories << {
-              println "Repositories:"
-              project.repositories.each { println "Name: "+it.name+", URL: "+it.url }
-          }
-*/
-
-/*
-        java {
-            withJavadocJar()
-            withSourcesJar()
-
-            toolchain {
-                languageVersion = JavaLanguageVersion.of(16)
-            }
-        }
-*/
     }
 
-    /*
-     * Specifics for the Java Library Distribution plugin.
-     */
-    plugins.withType(JavaLibraryDistributionPlugin)
-    {
-        distributions
-        {
-            main
-            {
+    plugins.withType(JavaLibraryDistributionPlugin) {
+        distributions {
+            main {
                 archivesBaseName = "${baseNamePrefix}${projectNameC14N}"
-
-                distZip
-                {
+                distZip {
                     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
                 }
             }
         }
     }
 
-    /*
-     * Specifics for the Application plugin.
-     */
-    plugins.withType(ApplicationPlugin)
-    {
-        distributions
-        {
-            main
-            {
+    plugins.withType(ApplicationPlugin) {
+        distributions {
+            main {
                 archivesBaseName = "${baseNamePrefix}${projectNameC14N}"
             }
         }
     }
 }
-
-
-/******** "build.gradle" ******************************************************/
