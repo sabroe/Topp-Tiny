@@ -11,11 +11,11 @@ These libraries are small or even tiny.
 
 The libraries are:
 
-* [Collection Library](Topp-Tiny-Collection-Library/README.md)
-* [Concurrent Library](Topp-Tiny-Concurrent-Library/README.md)
-* [Format Library](Topp-Tiny-Format-Library/README.md)
-* [Function Library](Topp-Tiny-Function-Library/README.md)
-* [Net Library](Topp-Tiny-Net-Library/README.md)
+* [Collection Library](Topp-Tiny-Collection-Library)
+* [Concurrent Library](Topp-Tiny-Concurrent-Library)
+* [Format Library](Topp-Tiny-Format-Library)
+* [Function Library](Topp-Tiny-Function-Library)
+* [Net Library](Topp-Tiny-Net-Library)
 
 For the function of these libraries, see the respective readme files.
 
