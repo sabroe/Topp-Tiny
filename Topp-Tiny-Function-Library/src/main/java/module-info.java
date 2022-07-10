@@ -1,4 +1,4 @@
-module Topp.Tiny.Function.Library {
+module com.yelstream.topp.tiny.function {
     requires static lombok;
     exports com.yelstream.topp.util.function;
     exports com.yelstream.topp.util.function.access;

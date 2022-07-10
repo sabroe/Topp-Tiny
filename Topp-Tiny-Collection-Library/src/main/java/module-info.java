@@ -1,6 +1,6 @@
-module Topp.Tiny.Collection.Library {
+module com.yelstream.topp.tiny.collection {
     requires static lombok;
-    requires transitive Topp.Tiny.Function.Library;
+    requires transitive com.yelstream.topp.tiny.function;
     exports com.yelstream.topp.util.collection;
     exports com.yelstream.topp.util.feature;
 }

@@ -1,9 +1,15 @@
-/*
- * Note:
- *     To publish, run the task 'publish'.
- *     To approve the publishing using the Nexus Repository Manager, access https://s01.oss.sonatype.org/#stagingRepositories.
- *     To verify the first stages of approval, access https://repo1.maven.org/maven2/io/github/sabroe/topp/.
- */
+                                                                                                                            buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+    }
+}
+
+plugins {
+    id "org.sonarqube" version "3.4.0.2513" apply false
+}
 
 import java.text.SimpleDateFormat
 
@@ -12,15 +18,12 @@ def buildTimeBySecond = new SimpleDateFormat("yyyy-MM-dd-HHmmss").format(buildTi
 def buildTimeByMinute = new SimpleDateFormat("yyyy-MM-dd-HHmm").format(buildTime)
 def buildTimeByDay = new SimpleDateFormat("yyyy-MM-dd").format(buildTime)
 
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-    }
-}
+/*
+ * Note:
+ *     To publish, run the task 'publish'.
+ *     To approve the publishing using the Nexus Repository Manager, access https://s01.oss.sonatype.org/#stagingRepositories.
+ *     To verify the first stages of approval, access https://repo1.maven.org/maven2/io/github/sabroe/topp/.
+ */
 
 allprojects {
     def localProperties = new Properties()
@@ -176,6 +179,18 @@ subprojects {
     plugins.withType(SigningPlugin) {
         signing {
             sign publishing.publications.mavenJava
+        }
+    }
+
+    tasks.withType(JavaCompile) {
+        apply plugin: "org.sonarqube"
+
+        sonarqube {
+            properties {
+                //https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-gradle/
+                //property "sonar.sourceEncoding", "UTF-8"
+                //property "sonar.sources", "src"
+            }
         }
     }
 }
