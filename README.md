@@ -15,6 +15,8 @@ The libraries are:
 * [Concurrent Library](Topp-Tiny-Concurrent-Library)
 * [Format Library](Topp-Tiny-Format-Library)
 * [Function Library](Topp-Tiny-Function-Library)
+* [I/O Library](Topp-Tiny-IO-Library)
+* [Management Library](Topp-Tiny-Management-Library)
 * [Net Library](Topp-Tiny-Net-Library)
 
 For the function of these libraries, see the respective readme files.

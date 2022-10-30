@@ -13,7 +13,9 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
-    testImplementation(platform('org.junit:junit-bom:5.8.2'))
+    implementation 'org.slf4j:slf4j-api:2.0.3'
+
+    testImplementation(platform('org.junit:junit-bom:5.9.0'))
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
