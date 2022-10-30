@@ -15,7 +15,7 @@ import java.util.function.Function;
  * @param <R> the type of the result of the function
  * @param <E> Thrown in case of error.
  *
- * @author Morten Sabroe Mortenen
+ * @author Morten Sabroe Mortensen
  * @version 1.0
  * @since 2022-04-15
  */

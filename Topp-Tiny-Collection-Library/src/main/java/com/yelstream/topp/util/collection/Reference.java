@@ -6,7 +6,7 @@ import lombok.Data;
  * Holder of an object.
  * @param <E> Type of object held.
  *
- * @author Morten Sabroe Mortenen
+ * @author Morten Sabroe Mortensen
  * @version 1.0
  * @since 2022-05-14
  */

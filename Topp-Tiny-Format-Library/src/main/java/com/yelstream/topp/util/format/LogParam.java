@@ -38,7 +38,7 @@ import java.util.function.Supplier;
  *     log.debug("Consuming record from topic; record is '{}'.", LogParam.of(record));
  * </pre>
  *
- * @author Morten Sabroe Mortenen
+ * @author Morten Sabroe Mortensen
  * @version 1.0
  * @since 2022-04-15
  */

@@ -7,7 +7,7 @@ import java.util.function.UnaryOperator;
  * Generates a {@link Path} from a name.
  * This name may become a part of the path.
  *
- * @author Morten Sabroe Mortenen
+ * @author Morten Sabroe Mortensen
  * @version 1.0
  * @since 2022-10-30
  */

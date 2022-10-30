@@ -9,7 +9,7 @@ import java.net.URL;
 /**
  * Utilities addressing instances of {@link URI}.
  *
- * @author Morten Sabroe Mortenen
+ * @author Morten Sabroe Mortensen
  * @version 1.0
  * @since 2022-04-23
  */

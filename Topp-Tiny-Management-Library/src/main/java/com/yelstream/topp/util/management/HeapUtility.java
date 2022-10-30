@@ -11,7 +11,7 @@ import java.nio.file.Path;
 /**
  * Utilities addressing the heap space of the Java VM.
  *
- * @author Morten Sabroe Mortenen
+ * @author Morten Sabroe Mortensen
  * @version 1.0
  * @since 2022-10-30
  */

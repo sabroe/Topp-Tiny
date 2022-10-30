@@ -12,7 +12,7 @@ package com.yelstream.topp.util.function.ex;
  * @param <T> The type of results supplied by this supplier.
  * @param <E> Thrown in case of error.
  *
- * @author Morten Sabroe Mortenen
+ * @author Morten Sabroe Mortensen
  * @version 1.0
  * @since 2022-04-15
  */

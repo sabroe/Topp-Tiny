@@ -10,7 +10,7 @@ import java.nio.file.Path;
 /**
  * Deletes a path when used in a try-with-resources.
  *
- * @author Morten Sabroe Mortenen
+ * @author Morten Sabroe Mortensen
  * @version 1.0
  * @since 2022-10-30
  */

@@ -6,7 +6,7 @@ import org.junit.platform.suite.api.Suite;
 /**
  * Test suite for {@code com.yelstream.util.concurrent}. 
  *
- * @author Morten Sabroe Mortenen
+ * @author Morten Sabroe Mortensen
  * @version 1.0
  * @since 2013-02-28
  */

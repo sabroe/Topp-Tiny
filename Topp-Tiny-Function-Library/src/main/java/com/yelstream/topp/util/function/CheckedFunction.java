@@ -13,7 +13,7 @@ import com.yelstream.topp.util.function.ex.FunctionWithException;
  * @param <E> Thrown in case of error.
  *            This is checked.
  *
- * @author Morten Sabroe Mortenen
+ * @author Morten Sabroe Mortensen
  * @version 1.0
  * @since 2022-04-20
  */
