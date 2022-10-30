@@ -28,7 +28,8 @@ public interface PathGenerator {
                             String fileNamePrefix,
                             String fileNameSuffix,
                             String filenameExtension) {
-        return of(directory,part->String.format("%s-%s-%s.%s",fileNamePrefix,part,fileNameSuffix,filenameExtension));
+        String fileNameFormat=String.format("%s-%%s-%s.%s",fileNamePrefix,fileNameSuffix,filenameExtension);
+        return of(directory,fileNameFormat);
     }
 
     /**
@@ -41,7 +42,19 @@ public interface PathGenerator {
     static PathGenerator of(Path directory,
                             String fileNamePrefix,
                             String filenameExtension) {
-        return of(directory,part->String.format("%s-%s.%s",fileNamePrefix,part,filenameExtension));
+        String fileNameFormat=String.format("%s-%%s.%s",fileNamePrefix,filenameExtension);
+        return of(directory,fileNameFormat);
+    }
+
+    /**
+     * Creates a path generator.
+     * @param directory Directory of files to generate paths for.
+     * @param fileNameFormat Format of file name with one textual argument.
+     * @return Path generator.
+     */
+    static PathGenerator of(Path directory,
+                            String fileNameFormat) {
+        return of(directory,part->String.format(fileNameFormat,part));
     }
 
     /**
