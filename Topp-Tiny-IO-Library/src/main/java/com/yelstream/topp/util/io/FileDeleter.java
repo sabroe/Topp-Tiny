@@ -7,9 +7,16 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Deletes a file when used in a try-with-resources.
+ *
+ * @author Morten Sabroe Mortenen
+ * @version 1.0
+ * @since 2022-10-30
+ */
 @AllArgsConstructor
 @Getter
-public final class FileHolder implements Closeable {
+public final class FileDeleter implements Closeable {
     private final File file;
 
     @Override
