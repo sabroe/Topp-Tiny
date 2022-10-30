@@ -7,7 +7,7 @@ import java.util.function.Consumer;
  * Represents an operation that accepts two input arguments and returns no
  * result.  This is the two-arity specialization of {@link Consumer}.
  * Unlike most other functional interfaces, {@code BiConsumer} is expected
- * to operate via side-effects.
+ * to operate via side effects.
  *
  * <p>This is a <a href="package-summary.html">functional interface</a>
  * whose functional method is {@link #accept(Object, Object)}.
@@ -21,6 +21,7 @@ import java.util.function.Consumer;
  * @since 2022-04-15
  */
 @FunctionalInterface
+@SuppressWarnings("unused")
 public interface BiConsumerWithException<T, U, E extends Throwable> {
     /**
      * Performs this operation on the given arguments.

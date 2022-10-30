@@ -17,6 +17,7 @@ import java.net.URLConnection;
  * @version 1.0
  * @since 2022-04-23
  */
+@SuppressWarnings("unused")
 @UtilityClass
 public class URLs {
     /**

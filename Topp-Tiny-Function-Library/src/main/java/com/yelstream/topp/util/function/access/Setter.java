@@ -11,6 +11,7 @@ import java.util.function.BiConsumer;
  * @version 1.0
  * @since 2022-05-14
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface Setter<O,V> {
     /**

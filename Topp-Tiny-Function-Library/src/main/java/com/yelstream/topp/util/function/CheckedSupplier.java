@@ -19,5 +19,6 @@ import com.yelstream.topp.util.function.ex.SupplierWithException;
  * @version 1.0
  * @since 2022-04-20
  */
+@SuppressWarnings("unused")
 public interface CheckedSupplier<T, E extends Exception> extends SupplierWithException<T, E> {
 }

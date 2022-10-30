@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Represents an operation that accepts a single input argument and returns no
  * result. Unlike most other functional interfaces, {@code Consumer} is expected
- * to operate via side-effects.
+ * to operate via side effects.
  *
  * <p>This is a <a href="package-summary.html">functional interface</a>
  * whose functional method is {@link #accept(Object)}.
@@ -18,6 +18,7 @@ import java.util.Objects;
  * @since 2022-04-15
  */
 @FunctionalInterface
+@SuppressWarnings("unused")
 public interface ConsumerWithException<T, E extends Throwable> {
     /**
      * Performs this operation on the given argument.

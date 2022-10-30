@@ -17,6 +17,7 @@ package com.yelstream.topp.util.function.ex;
  * @since 2022-04-15
  */
 @FunctionalInterface
+@SuppressWarnings("unused")
 public interface SupplierWithException<T, E extends Throwable> {
     /**
      * Gets a result.

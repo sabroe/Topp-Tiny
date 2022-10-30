@@ -1,16 +1,6 @@
-/*** FILE "TimeUnitConverter.java" ********************************************/ 
-
-/******************************************************************************/
-/**                                                                          **/
-/**   Yelstream Software, Morten Sabroe Mortensen.                           **/
-/**                                                                          **/
-/******************************************************************************/
-
 package com.yelstream.topp.util.concurrent;
 
 import java.util.concurrent.TimeUnit;
-
-/*** TimeUnitConverter: *******************************************************/
 
 /**
  * Converts {@code long} time duration values.
@@ -33,5 +23,3 @@ public interface TimeUnitConverter
                TimeUnit sourceUnit,
                TimeUnit targetUnit);
 }
-
-/******** "TimeUnitConverter.java" ********************************************/ 

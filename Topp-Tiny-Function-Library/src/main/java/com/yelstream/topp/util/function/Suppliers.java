@@ -12,6 +12,7 @@ import java.util.function.Supplier;
  * @since 2022-04-15
  */
 @UtilityClass
+@SuppressWarnings("unused")
 public class Suppliers {
     /**
      * Gets the value of a supplier, if set.

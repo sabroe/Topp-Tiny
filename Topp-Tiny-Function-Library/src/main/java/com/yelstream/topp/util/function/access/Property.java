@@ -14,6 +14,7 @@ import java.util.function.Function;
  * @version 1.0
  * @since 2022-05-14
  */
+@SuppressWarnings("unused")
 @AllArgsConstructor(staticName="of")
 public class Property<O,V> implements Getter<O,V>, Setter<O,V> {
     /**

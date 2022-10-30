@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * Data class to hold the information that should be added as module-info.class to an existing Jar file.
  */
+@SuppressWarnings("ALL")
 public class ModuleInfo implements Serializable {
     private String moduleName;
     private String moduleVersion;

@@ -21,5 +21,6 @@ import java.util.function.Function;
  * @version 1.0
  * @since 2022-04-20
  */
+@SuppressWarnings("unused")
 public interface CheckedBiFunction<T, U, R, E extends Exception> extends BiFunctionWithException<T, U, R, E> {
 }

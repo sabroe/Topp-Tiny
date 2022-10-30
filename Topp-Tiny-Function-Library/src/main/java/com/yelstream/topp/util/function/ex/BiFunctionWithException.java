@@ -20,6 +20,7 @@ import java.util.function.Function;
  * @since 2022-04-15
  */
 @FunctionalInterface
+@SuppressWarnings("unused")
 public interface BiFunctionWithException<T, U, R, E extends Throwable> {
     /**
      * Applies this function to the given arguments.

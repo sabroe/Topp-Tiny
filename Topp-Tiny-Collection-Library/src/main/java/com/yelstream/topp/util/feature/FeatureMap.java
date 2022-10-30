@@ -50,6 +50,7 @@ import java.util.function.Predicate;
  * @version 1.0
  * @since 2022-05-14
  */
+@SuppressWarnings("unused")
 public class FeatureMap<F extends Enum<F>> {
 
     /**

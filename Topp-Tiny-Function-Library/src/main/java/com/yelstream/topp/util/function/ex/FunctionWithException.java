@@ -17,6 +17,7 @@ import java.util.Objects;
  * @since 2022-04-15
  */
 @FunctionalInterface
+@SuppressWarnings("unused")
 public interface FunctionWithException<T, R, E extends Throwable> {
     /**
      * Applies this function to the given argument.

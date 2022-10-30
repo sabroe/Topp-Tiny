@@ -42,6 +42,7 @@ import java.util.function.Supplier;
  * @version 1.0
  * @since 2022-04-15
  */
+@SuppressWarnings("unused")
 @AllArgsConstructor
 public final class LogParam {
     private final Supplier<Object> textSupplier;

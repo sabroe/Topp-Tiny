@@ -9,6 +9,7 @@ import org.gradle.api.plugins.JavaPlugin;
 /**
  * Entry point of our plugin that should be applied in the root project.
  */
+@SuppressWarnings("ALL")
 public class ExtraModuleInfoPlugin implements Plugin<Project> {
 
     @Override
@@ -17,7 +18,7 @@ public class ExtraModuleInfoPlugin implements Plugin<Project> {
         ExtraModuleInfoPluginExtension extension = project.getObjects().newInstance(ExtraModuleInfoPluginExtension.class);
         project.getExtensions().add(ExtraModuleInfoPluginExtension.class, "extraJavaModuleInfo", extension);
 
-        // setup the transform for all projects in the build
+        // set up the transform for all projects in the build
         project.getPlugins().withType(JavaPlugin.class).configureEach(javaPlugin -> configureTransform(project, extension));
     }
 

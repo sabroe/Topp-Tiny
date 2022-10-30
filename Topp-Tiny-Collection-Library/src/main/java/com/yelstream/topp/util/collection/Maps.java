@@ -14,6 +14,7 @@ import java.util.Map;
  * @version 1.0
  * @since 2022-04-23
  */
+@SuppressWarnings("unused")
 @UtilityClass
 public class Maps {
     /**
@@ -88,7 +89,7 @@ public class Maps {
     public <K,V,E extends Throwable> V computeIfAbsent(Map<K,V> map,
                                                        K key,
                                                        SupplierWithException<V,E> valueSupplier) throws E {
-        return computeIfAbsent(map,key,(k)->valueSupplier.get());
+        return computeIfAbsent(map,key,k->valueSupplier.get());
     }
 
     /**

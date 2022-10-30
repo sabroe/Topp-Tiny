@@ -10,6 +10,7 @@ import lombok.experimental.UtilityClass;
  * @since 2022-04-15
  */
 @UtilityClass
+@SuppressWarnings("unused")
 public class SupplierWithExceptions {
     /**
      * Gets the value of a supplier, if set.

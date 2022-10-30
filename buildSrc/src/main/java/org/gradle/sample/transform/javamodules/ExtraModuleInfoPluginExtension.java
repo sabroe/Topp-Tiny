@@ -12,6 +12,7 @@ import java.util.Map;
  * Here the class is used as extension that can be configured in the build script
  * and as input to the ExtraModuleInfoTransform that add the information to Jars.
  */
+@SuppressWarnings("ALL")
 public class ExtraModuleInfoPluginExtension {
 
     private final Map<String, ModuleInfo> moduleInfo = new HashMap<>();

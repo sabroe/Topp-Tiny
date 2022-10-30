@@ -17,5 +17,6 @@ import com.yelstream.topp.util.function.ex.FunctionWithException;
  * @version 1.0
  * @since 2022-04-20
  */
+@SuppressWarnings("unused")
 public interface CheckedFunction<T, R, E extends Exception> extends FunctionWithException<T, R, E> {
 }

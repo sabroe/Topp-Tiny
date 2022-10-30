@@ -23,6 +23,7 @@ import java.util.zip.ZipEntry;
  * The transformation fails the build if a Jar does not contain information and no extra information
  * was defined for it. This way we make sure that all Jars are turned into modules.
  */
+@SuppressWarnings("ALL")
 abstract public class ExtraModuleInfoTransform implements TransformAction<ExtraModuleInfoTransform.Parameter> {
 
     public static class Parameter implements TransformParameters, Serializable {
