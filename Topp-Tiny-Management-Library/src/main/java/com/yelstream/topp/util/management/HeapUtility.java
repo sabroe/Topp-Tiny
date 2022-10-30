@@ -1,8 +1,6 @@
 package com.yelstream.topp.util.management;
 
 import com.sun.management.HotSpotDiagnosticMXBean;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.experimental.UtilityClass;
 
 import javax.management.MBeanServer;
@@ -20,28 +18,10 @@ import java.nio.file.Path;
 @SuppressWarnings("unused")
 @UtilityClass
 public final class HeapUtility {
-
     /**
      * File name extension of heap dumps.
      */
     public static final String HEAP_DUMP_FILE_NAME_EXTENSION="hprof";
-
-    /**
-     * Specification of hos to create heap dumps.
-     */
-    @AllArgsConstructor
-    @Getter
-    public static class DumpSpecification {
-        private final PathGenerator pathGenerator;
-        private final boolean live;
-
-        @SuppressWarnings("unused")
-        public static DumpSpecification of(Path directory,
-                                           String fileNamePrefix) {
-            PathGenerator fileNameGenerator= PathGenerator.of(directory,fileNamePrefix,HEAP_DUMP_FILE_NAME_EXTENSION);
-            return new DumpSpecification(fileNameGenerator,true);
-        }
-    }
 
     /**
      * Creates a heap dump.
@@ -76,8 +56,10 @@ public final class HeapUtility {
      *             This becomes part of the name of the file containing the heap dump.
      * @throws IOException Thrown in case of I/O error.
      */
-    public static void dump(DumpSpecification specification,
+    public static void dump(HeapDumpSpecification specification,
                             String name) throws IOException {
-        dump(specification.pathGenerator.generate(name),specification.isLive());
+        Path file=specification.getPathGenerator().generate(name);
+        boolean live=specification.isLive();
+        dump(file,live);
     }
 }
