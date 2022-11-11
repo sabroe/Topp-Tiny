@@ -9,6 +9,7 @@
 
 plugins {
     id "org.sonarqube" version "3.4.0.2513" apply false
+    id "checkstyle"
 }
 
 import java.text.SimpleDateFormat
@@ -59,6 +60,14 @@ subprojects {
 
     def baseNamePrefix = custom['archives.base-name-prefix']?:""
     logger.info(":> Base name prefix: ${baseNamePrefix}.")
+
+    tasks.withType(JavaCompile) {
+        apply plugin: "checkstyle"
+
+        checkstyle {
+            toolVersion = '10.4'
+        }
+    }
 
     plugins.withType(JavaPlugin) {
         archivesBaseName = "${baseNamePrefix}${projectNameC14N}"

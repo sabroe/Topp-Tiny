@@ -24,9 +24,9 @@ public interface Getter<O,V> {
     /**
      * Creates a property getter.
      * @param reader Reader of property.
-     * @return Property getter
      * @param <O> Type of object.
      * @param <V> Type of value.
+     * @return Property getter
      */
     static <O,V> Getter<O,V> of(Function<O,V> reader) {
         return reader::apply;

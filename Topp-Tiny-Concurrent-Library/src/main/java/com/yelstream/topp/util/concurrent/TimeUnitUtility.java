@@ -7,15 +7,13 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Utility for manipulating instances of {@link TimeUnit}.
- *
  * @author Morten Sabroe Mortensen
  * @version 1.0
  * @since 2013-02-28
  */
 @SuppressWarnings("unused")
 @UtilityClass
-public class TimeUnitUtility
-{
+public class TimeUnitUtility {
     /**
      * Converts a source time duration in a specific source time unit to
      * a target time duration in a specific target time unit and
@@ -27,11 +25,10 @@ public class TimeUnitUtility
      */
     public static long convertWithRounding(long sourceDuration,
                                            TimeUnit sourceUnit,
-                                           TimeUnit targetUnit)
-    {
-      return convertWithRounding1(sourceDuration,
-                                 sourceUnit,
-                                 targetUnit);
+                                           TimeUnit targetUnit) {
+        return convertWithRounding1(sourceDuration,
+                                    sourceUnit,
+                                    targetUnit);
     }
 
     /**
@@ -45,21 +42,19 @@ public class TimeUnitUtility
      */
     public static long convertWithRounding1(long sourceDuration,
                                             TimeUnit sourceUnit,
-                                            TimeUnit targetUnit)
-    {
+                                            TimeUnit targetUnit) {
         long res;
 
         if (sourceUnit==targetUnit) {
             res=sourceDuration;
-        }
-        else {
+        } else {
             if (sourceDuration<0) {
                 res=-convertWithRounding(-sourceDuration,sourceUnit,targetUnit);
             } else {
                 int order=targetUnit.compareTo(sourceUnit);  //Comparison is sound; units are declared in order of granularity with 'NANOSECONDS' first and 'DAYS' last!
 
                 if (order<=0)  { //if the source has a coarser granularity than the target ...
-                  res=targetUnit.convert(sourceDuration,sourceUnit);
+                    res=targetUnit.convert(sourceDuration,sourceUnit);
                 } else {
                     long targetToSourceFactor=sourceUnit.convert(1,targetUnit);
                     res=targetUnit.convert(sourceDuration+targetToSourceFactor/2,sourceUnit);
@@ -81,8 +76,7 @@ public class TimeUnitUtility
      */
     public static long convertWithRounding2(long sourceDuration,
                                             TimeUnit sourceUnit,
-                                            TimeUnit targetUnit)
-    {
+                                            TimeUnit targetUnit) {
         long res;
 
         if (sourceUnit==targetUnit) {
@@ -117,71 +111,68 @@ public class TimeUnitUtility
     public static long convert(long sourceDuration,
                                TimeUnit sourceUnit,
                                TimeUnit targetUnit,
-                               RoundingMode roundingMode)
-    {
-      long res;
+                               RoundingMode roundingMode) {
+        long res;
 
-      if (roundingMode==null) {
-          throw new IllegalArgumentException("Failure to convert; rounding mode must be set!");
-      } else {
-          switch (roundingMode) {
-              case FLOOR: {
-                  res= convertFloor(sourceDuration,sourceUnit,targetUnit);
-                  break;
-              }
+        if (roundingMode==null) {
+            throw new IllegalArgumentException("Failure to convert; rounding mode must be set!");
+        } else {
+            switch (roundingMode) {
+                case FLOOR: {
+                    res= convertFloor(sourceDuration,sourceUnit,targetUnit);
+                    break;
+                }
 
-              case CEILING: {
-                  res= convertCeiling(sourceDuration,sourceUnit,targetUnit);
-                  break;
-              }
+                case CEILING: {
+                    res= convertCeiling(sourceDuration,sourceUnit,targetUnit);
+                    break;
+                }
 
-              case UP: {
-                  res= convertUp(sourceDuration,sourceUnit,targetUnit);
-                  break;
-              }
+                case UP: {
+                    res= convertUp(sourceDuration,sourceUnit,targetUnit);
+                    break;
+                }
 
-              case DOWN: {
-                  res= convertDown(sourceDuration,sourceUnit,targetUnit);
-                  break;
-              }
+                case DOWN: {
+                    res= convertDown(sourceDuration,sourceUnit,targetUnit);
+                    break;
+                }
 
-              case HALF_UP: {
-                  res= convertHalfUp(sourceDuration,sourceUnit,targetUnit);
-                  break;
-              }
+                case HALF_UP: {
+                    res= convertHalfUp(sourceDuration,sourceUnit,targetUnit);
+                    break;
+                }
 
-              case HALF_DOWN: {
-                  res= convertHalfDown(sourceDuration,sourceUnit,targetUnit);
-                  break;
-              }
+                case HALF_DOWN: {
+                    res= convertHalfDown(sourceDuration,sourceUnit,targetUnit);
+                    break;
+                }
 
-              case HALF_EVEN: {
-                  res= convertHalfEven(sourceDuration,sourceUnit,targetUnit);
-                  break;
-              }
+                case HALF_EVEN: {
+                    res= convertHalfEven(sourceDuration,sourceUnit,targetUnit);
+                    break;
+                }
 
-              case UNNECESSARY: {
-                  res= convertUnnecessary(sourceDuration,sourceUnit,targetUnit);
-                  break;
-              }
+                case UNNECESSARY: {
+                    res= convertUnnecessary(sourceDuration,sourceUnit,targetUnit);
+                    break;
+                }
 
-              default:
-              {
-                  throw new IllegalArgumentException(String.format("Failure to convert; rounding mode %s can not be recognised!",roundingMode.name()));
-              }
-          }
-      }
+                default: {
+                    throw new IllegalArgumentException(String.format("Failure to convert; rounding mode %s can not be recognised!",roundingMode.name()));
+                }
+            }
+        }
 
-      return res;
+        return res;
     }
 
     /**
-     *
+     * .
      */
     private static long convertFloor(long sourceDuration,
                                      TimeUnit sourceUnit,
-                                     TimeUnit targetUnit)
-    {
+                                     TimeUnit targetUnit) {
         long res;
 
         if (sourceUnit==targetUnit) {
@@ -198,26 +189,25 @@ public class TimeUnitUtility
     }
 
     /**
-     *
+     * .
      */
     private static long convertCeiling(long sourceDuration,
                                        TimeUnit sourceUnit,
-                                       TimeUnit targetUnit)
-    {
+                                       TimeUnit targetUnit) {
         long res;
 
         if (sourceUnit==targetUnit) {
-          res=sourceDuration;  //No rounding!
+            res=sourceDuration;  //No rounding!
         } else {
             if (sourceDuration<0) {
-              res=-convertFloor(-sourceDuration,sourceUnit,targetUnit);
+                res=-convertFloor(-sourceDuration,sourceUnit,targetUnit);
             } else {
                 int order=targetUnit.compareTo(sourceUnit);
                 if (order<=0) {
                     res=targetUnit.convert(sourceDuration,sourceUnit);  //No rounding, just convert by scaling up!
                 } else {
-                  long targetToSourceFactor=sourceUnit.convert(1,targetUnit);
-                  res=targetUnit.convert(sourceDuration+(targetToSourceFactor-1),sourceUnit);  //Ceil!
+                    long targetToSourceFactor=sourceUnit.convert(1,targetUnit);
+                    res=targetUnit.convert(sourceDuration+(targetToSourceFactor-1),sourceUnit);  //Ceil!
                 }
             }
         }
@@ -226,12 +216,11 @@ public class TimeUnitUtility
     }
 
     /**
-     *
+     * .
      */
     private static long convertUp(long sourceDuration,
                                   TimeUnit sourceUnit,
-                                  TimeUnit targetUnit)
-    {
+                                  TimeUnit targetUnit) {
         long res;
 
         if (sourceUnit==targetUnit) {
@@ -255,12 +244,11 @@ public class TimeUnitUtility
     }
 
     /**
-     *
+     * .
      */
     private static long convertDown(long sourceDuration,
                                     TimeUnit sourceUnit,
-                                    TimeUnit targetUnit)
-    {
+                                    TimeUnit targetUnit) {
         long res;
 
         if (sourceUnit==targetUnit) {
@@ -277,12 +265,11 @@ public class TimeUnitUtility
     }
 
     /**
-     *
+     * .
      */
     private static long convertHalfUp(long sourceDuration,
                                       TimeUnit sourceUnit,
-                                      TimeUnit targetUnit)
-    {
+                                      TimeUnit targetUnit) {
         long res;
 
         if (sourceUnit==targetUnit) {
@@ -306,12 +293,11 @@ public class TimeUnitUtility
     }
 
     /**
-     *
+     * .
      */
     private static long convertHalfDown(long sourceDuration,
                                         TimeUnit sourceUnit,
-                                        TimeUnit targetUnit)
-    {
+                                        TimeUnit targetUnit) {
         long res;
 
         if (sourceUnit==targetUnit) {
@@ -334,12 +320,11 @@ public class TimeUnitUtility
     }
 
     /**
-     *
+     * .
      */
     private static long convertHalfEven(long sourceDuration,
                                         TimeUnit sourceUnit,
-                                        TimeUnit targetUnit)
-    {
+                                        TimeUnit targetUnit) {
         long res;
 
         if (sourceUnit==targetUnit) {
@@ -352,14 +337,14 @@ public class TimeUnitUtility
                 if (order<=0) {
                     res=targetUnit.convert(sourceDuration,sourceUnit);  //No rounding, just convert by scaling up!
                 } else {
-                  long targetUnitTruncate=targetUnit.convert(sourceDuration,sourceUnit);  //Truncate!
+                    long targetUnitTruncate=targetUnit.convert(sourceDuration,sourceUnit);  //Truncate!
 
-                  if ((targetUnitTruncate&1L)==0L) { //if truncated integer part is even ...
-                    res=targetUnitTruncate;  //Round down!
-                  } else {
-                    long targetToSourceFactor=sourceUnit.convert(1,targetUnit);
-                    res=targetUnit.convert(sourceDuration+targetToSourceFactor/2,sourceUnit);  //Rounding up!
-                  }
+                    if ((targetUnitTruncate&1L)==0L) { //if truncated integer part is even ...
+                        res=targetUnitTruncate;  //Round down!
+                    } else {
+                        long targetToSourceFactor=sourceUnit.convert(1,targetUnit);
+                        res=targetUnit.convert(sourceDuration+targetToSourceFactor/2,sourceUnit);  //Rounding up!
+                    }
                 }
             }
         }
@@ -368,12 +353,11 @@ public class TimeUnitUtility
     }
 
     /**
-     *
+     * .
      */
     private static long convertUnnecessary(long sourceDuration,
                                            TimeUnit sourceUnit,
-                                           TimeUnit targetUnit)
-    {
+                                           TimeUnit targetUnit) {
         long res;
 
         if (sourceUnit==targetUnit) {

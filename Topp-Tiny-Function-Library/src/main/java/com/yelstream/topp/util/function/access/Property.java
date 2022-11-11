@@ -52,9 +52,9 @@ public class Property<O,V> implements Getter<O,V>, Setter<O,V> {
      * Creates a property.
      * @param reader Reader of property.
      * @param writer Writer of property.
-     * @return Property.
      * @param <O> Type of object.
      * @param <V> Type of value.
+     * @return Property.
      */
     static <O,V> Property<O,V> of(Function<O,V> reader,
                                   BiConsumer<O,V> writer) {

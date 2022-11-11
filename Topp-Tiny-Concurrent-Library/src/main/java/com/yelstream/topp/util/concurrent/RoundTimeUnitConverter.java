@@ -9,13 +9,11 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0
  * @since 2013-02-28
  */
-public class RoundTimeUnitConverter implements TimeUnitConverter
-{
+public class RoundTimeUnitConverter implements TimeUnitConverter  {
     @Override
     public long convert(long sourceDuration,
                         TimeUnit sourceUnit,
-                        TimeUnit targetUnit)
-    {
+                        TimeUnit targetUnit) {
         return TimeUnitUtility.convertWithRounding(sourceDuration,sourceUnit,targetUnit);
     }
 }

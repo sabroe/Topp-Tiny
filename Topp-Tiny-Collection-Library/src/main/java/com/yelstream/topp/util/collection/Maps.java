@@ -65,9 +65,9 @@ public class Maps {
      * @param map Map.
      * @param key Key.
      * @param value value;
-     * @return The current value (existing or computed).
      * @param <K> Type of key.
      * @param <V> Type of value.
+     * @return The current value (existing or computed).
      */
     public <K,V> V updateIfAbsent(Map<K,V> map,
                                   K key,
@@ -80,11 +80,11 @@ public class Maps {
      * @param map Map.
      * @param key Key.
      * @param valueSupplier Supplier of a new value.
-     * @return The current value (existing or computed).
-     * @throws E Thrown in case of error.
      * @param <K> Type of key.
      * @param <V> Type of value.
      * @param <E> Type of exception thrown.
+     * @return The current value (existing or computed).
+     * @throws E Thrown in case of error.
      */
     public <K,V,E extends Throwable> V computeIfAbsent(Map<K,V> map,
                                                        K key,
@@ -97,11 +97,11 @@ public class Maps {
      * @param map Map.
      * @param key Key.
      * @param mappingFunction Supplier of a new value.
-     * @return The current value (existing or computed).
-     * @throws E Thrown in case of error.
      * @param <K> Type of key.
      * @param <V> Type of value.
      * @param <E> Type of exception thrown.
+     * @return The current value (existing or computed).
+     * @throws E Thrown in case of error.
      */
     public <K,V,E extends Throwable> V computeIfAbsent(Map<K,V> map,
                                                        K key,
@@ -126,11 +126,11 @@ public class Maps {
      * @param map Map.
      * @param key Key.
      * @param valueSupplier Supplier of a new value.
-     * @return The current value (existing or computed).
-     * @throws E Thrown in case of error.
      * @param <K> Type of key.
      * @param <V> Type of value.
      * @param <E> Type of exception thrown.
+     * @return The current value (existing or computed).
+     * @throws E Thrown in case of error.
      */
     public <K,V,E extends Throwable> V computeIfPresent(Map<K,V> map,
                                                         K key,
@@ -143,11 +143,11 @@ public class Maps {
      * @param map Map.
      * @param key Key.
      * @param mappingFunction Supplier of a new value.
-     * @return The current value (existing or computed).
-     * @throws E Thrown in case of error.
      * @param <K> Type of key.
      * @param <V> Type of value.
      * @param <E> Type of exception thrown.
+     * @return The current value (existing or computed).
+     * @throws E Thrown in case of error.
      */
     public <K,V,E extends Throwable> V computeIfPresent(Map<K,V> map,
                                                         K key,
@@ -160,11 +160,11 @@ public class Maps {
      * @param map Map.
      * @param key Key.
      * @param mappingFunction Supplier of a new value.
-     * @return The current value (existing or computed).
-     * @throws E Thrown in case of error.
      * @param <K> Type of key.
      * @param <V> Type of value.
      * @param <E> Type of exception thrown.
+     * @return The current value (existing or computed).
+     * @throws E Thrown in case of error.
      */
     @SuppressWarnings("java:S3824")
     public <K,V,E extends Throwable> V computeIfPresent(Map<K,V> map,

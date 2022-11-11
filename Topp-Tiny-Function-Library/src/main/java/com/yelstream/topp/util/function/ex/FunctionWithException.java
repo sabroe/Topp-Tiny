@@ -37,7 +37,7 @@ public interface FunctionWithException<T, R, E extends Throwable> {
      *           composed function
      * @param before the function to apply before this function is applied
      * @return a composed function that first applies the {@code before}
-     * function and then applies this function
+     *     function and then applies this function
      * @throws NullPointerException if before is null
      *
      * @see #andThen(FunctionWithException)
@@ -57,7 +57,7 @@ public interface FunctionWithException<T, R, E extends Throwable> {
      *           composed function
      * @param after the function to apply after this function is applied
      * @return a composed function that first applies this function and then
-     * applies the {@code after} function
+     *     applies the {@code after} function
      * @throws NullPointerException if after is null
      *
      * @see #compose(FunctionWithException)

@@ -41,9 +41,9 @@ public interface BiFunctionWithException<T, U, R, E extends Throwable> {
      * @param <V> the type of output of the {@code after} function, and of the
      *           composed function
      * @param after the function to apply after this function is applied
-     * @return a composed function that first applies this function and then
-     * applies the {@code after} function
-     * @throws NullPointerException if after is null
+     * @return A composed function that first applies this function and then
+     *     applies the {@code after} function.
+     * @throws NullPointerException Ff after is null.
      */
     default <V> BiFunctionWithException<T, U, V, E> andThen(FunctionWithException<? super R, ? extends V, ? extends E> after) {
         Objects.requireNonNull(after);

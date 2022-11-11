@@ -40,9 +40,9 @@ public interface BiConsumerWithException<T, U, E extends Throwable> {
      * the {@code after} operation will not be performed.
      *
      * @param after the operation to perform after this operation
-     * @return a composed {@code BiConsumer} that performs in sequence this
-     * operation followed by the {@code after} operation
-     * @throws NullPointerException if {@code after} is null
+     * @return A composed {@code BiConsumer} that performs in sequence this
+     *     operation followed by the {@code after} operation.
+     * @throws NullPointerException If {@code after} is null.
      */
     default BiConsumerWithException<T, U, E> andThen(BiConsumerWithException<? super T, ? super U, ? extends E> after) {
         Objects.requireNonNull(after);

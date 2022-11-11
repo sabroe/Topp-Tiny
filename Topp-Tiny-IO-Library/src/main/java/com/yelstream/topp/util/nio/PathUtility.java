@@ -12,7 +12,6 @@ import java.util.Set;
 
 /**
  * Utilities addressing instances of {@link Path}.
- *
  * @author Morten Sabroe Mortensen
  * @version 1.0
  * @since 2022-10-30
@@ -29,7 +28,7 @@ public class PathUtility {
     }
 
     /**
-     * Creates default file attributes
+     * Creates default file attributes.
      * @return File attributes.
      */
     private static FileAttribute<Set<PosixFilePermission>> createFileAttributes() {

@@ -65,7 +65,7 @@ public interface PathGenerator {
      */
     static PathGenerator of(Path directory,
                             UnaryOperator<String> partNameToFullFileName) {
-        return part->{
+        return part -> {
             String fileName=partNameToFullFileName.apply(part);
             return directory.resolve(fileName);
         };

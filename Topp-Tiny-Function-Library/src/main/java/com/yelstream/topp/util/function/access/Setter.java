@@ -25,9 +25,9 @@ public interface Setter<O,V> {
     /**
      * Creates a property setter.
      * @param writer Writer of property.
-     * @return Property setter
      * @param <O> Type of object.
      * @param <V> Type of value.
+     * @return Property setter
      */
     static <O,V> Setter<O,V> of(BiConsumer<O,V> writer) {
         return writer::accept;
