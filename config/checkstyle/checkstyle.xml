@@ -18,6 +18,7 @@
 
 <!--
     Copy by MSM.
+    - Version 0.3 @ 2022-11-12
     - Version 0.2 @ 2022-11-12
     - Version 0.1 @ 2022-11-11
 -->
@@ -200,7 +201,10 @@
       <property name="option" value="nl"/>
     </module>
     <module name="PackageName">
+<!-- MSM
       <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
+-->
+      <property name="format" value="^[a-z]+(\.[_a-z][_a-z0-9]*)*$"/>
       <message key="name.invalidPattern"
              value="Package name ''{0}'' must match pattern ''{1}''."/>
     </module>
