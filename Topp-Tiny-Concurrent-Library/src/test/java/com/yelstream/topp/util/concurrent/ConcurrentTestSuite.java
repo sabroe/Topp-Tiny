@@ -12,7 +12,6 @@ import org.junit.platform.suite.api.Suite;
  */
 @Suite
 @SelectClasses({TimeUnitConverterTest.class,TimeUnitUtilityTest.class})
-public class ConcurrentTestSuite
-{
-  //Empty!
+public class ConcurrentTestSuite {
+    //Empty!
 }

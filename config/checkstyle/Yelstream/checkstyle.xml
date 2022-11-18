@@ -18,6 +18,7 @@
 
 <!--
     Copy by MSM.
+    - Version 0.4 @ 2022-11-18
     - Version 0.3 @ 2022-11-12
     - Version 0.2 @ 2022-11-12
     - Version 0.1 @ 2022-11-11
@@ -316,18 +317,31 @@
                     SUPER_CTOR_CALL, ENUM_CONSTANT_DEF, RECORD_DEF"/>
     </module>
     <module name="NoWhitespaceBefore">
+<!-- MSM
       <property name="tokens"
                value="COMMA, SEMI, POST_INC, POST_DEC, DOT,
+                    LABELED_STAT, METHOD_REF"/>
+-->
+        <property name="tokens"
+                  value="SEMI, POST_INC, POST_DEC, DOT,
                     LABELED_STAT, METHOD_REF"/>
       <property name="allowLineBreaks" value="true"/>
     </module>
     <module name="ParenPad">
+<!-- MSM
       <property name="tokens"
                value="ANNOTATION, ANNOTATION_FIELD_DEF, CTOR_CALL, CTOR_DEF, DOT, ENUM_CONSTANT_DEF,
                     EXPR, LITERAL_CATCH, LITERAL_DO, LITERAL_FOR, LITERAL_IF, LITERAL_NEW,
                     LITERAL_SWITCH, LITERAL_SYNCHRONIZED, LITERAL_WHILE, METHOD_CALL,
                     METHOD_DEF, QUESTION, RESOURCE_SPECIFICATION, SUPER_CTOR_CALL, LAMBDA,
                     RECORD_DEF"/>
+-->
+      <property name="tokens"
+                value="ANNOTATION, ANNOTATION_FIELD_DEF, CTOR_CALL, CTOR_DEF, DOT, ENUM_CONSTANT_DEF,
+                  EXPR, LITERAL_CATCH, LITERAL_DO, LITERAL_FOR, LITERAL_IF, LITERAL_NEW,
+                  LITERAL_SWITCH, LITERAL_SYNCHRONIZED, LITERAL_WHILE,
+                  METHOD_DEF, QUESTION, RESOURCE_SPECIFICATION, SUPER_CTOR_CALL, LAMBDA,
+                  RECORD_DEF"/>
     </module>
     <module name="OperatorWrap">
       <property name="option" value="NL"/>

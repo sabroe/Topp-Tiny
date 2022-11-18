@@ -12,8 +12,7 @@ import org.junit.jupiter.api.Test;
  * @version 1.0
  * @since 2013-02-28
  */
-class TimeUnitUtilityTest
-{
+class TimeUnitUtilityTest {
     /**
      * Test of
      * {@link TimeUnitUtility#convert(long, TimeUnit, TimeUnit, RoundingMode)}
@@ -42,7 +41,7 @@ class TimeUnitUtilityTest
      * with rounding mode {@link RoundingMode#CEILING}.
      */
     @Test
-    void testConvert_CEILING()     {
+    void testConvert_CEILING() {
         RoundingMode roundingMode=RoundingMode.CEILING;
 
         Assertions.assertEquals( 6,TimeUnitUtility.convert( 5500,TimeUnit.MICROSECONDS,TimeUnit.MILLISECONDS,roundingMode));
@@ -169,20 +168,23 @@ class TimeUnitUtilityTest
     }
 
     /**
-     *
+     * Indicates, if an arithmetic exception is thrown wheen invoking
+     * {@link TimeUnitUtility#convert(long, TimeUnit, TimeUnit, RoundingMode)}.
+     * @param sourceDuration Source time duration.
+     * @param sourceUnit Source time unit.
+     * @param targetUnit Target time unit.
+     * @param roundingMode RoundingMode.
      */
     protected boolean convert_ArithmeticException(long sourceDuration,
                                                   TimeUnit sourceUnit,
                                                   TimeUnit targetUnit,
                                                   RoundingMode roundingMode) {
         boolean res=false;
-
         try {
-          TimeUnitUtility.convert(sourceDuration,sourceUnit,targetUnit,roundingMode);
+            TimeUnitUtility.convert(sourceDuration,sourceUnit,targetUnit,roundingMode);
         } catch (ArithmeticException ex) {
-          res=true;
+            res=true;
         }
-
         return res;
     }
 
