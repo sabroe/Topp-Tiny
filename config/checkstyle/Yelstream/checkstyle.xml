@@ -18,6 +18,7 @@
 
 <!--
     Copy by MSM.
+    - Version 0.5 @ 2022-11-20
     - Version 0.4 @ 2022-11-18
     - Version 0.3 @ 2022-11-12
     - Version 0.2 @ 2022-11-12
@@ -147,13 +148,13 @@
                     SR_ASSIGN, STAR, STAR_ASSIGN, LITERAL_ASSERT, TYPE_EXTENSION_AND"/>
 -->
       <property name="tokens"
-                value="BOR, BOR_ASSIGN, BSR, BSR_ASSIGN, BXOR,
-                    BXOR_ASSIGN, DO_WHILE, LAND,
+                value="BSR, BSR_ASSIGN,
+                    DO_WHILE, LAND,
                     LCURLY, LITERAL_CATCH, LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY,
                     LITERAL_FOR, LITERAL_IF, LITERAL_RETURN, LITERAL_SWITCH, LITERAL_SYNCHRONIZED,
                     LITERAL_TRY, LITERAL_WHILE, LOR,
-                    RCURLY, SL, SLIST, SL_ASSIGN, SR,
-                    SR_ASSIGN, LITERAL_ASSERT, TYPE_EXTENSION_AND"/>
+                    RCURLY, SLIST,
+                    LITERAL_ASSERT, TYPE_EXTENSION_AND"/>
       <message key="ws.notFollowed"
               value="WhitespaceAround: ''{0}'' is not followed by whitespace. Empty blocks
                may only be represented as '{}' when not part of a multi-block statement (4.1.3)"/>
