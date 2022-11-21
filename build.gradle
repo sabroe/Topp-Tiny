@@ -10,6 +10,7 @@ buildscript {
 plugins {
     id "org.sonarqube" version "3.4.0.2513" apply false
     id "checkstyle"
+    id "jacoco"
 }
 
 import java.text.SimpleDateFormat
@@ -55,10 +56,10 @@ allprojects {
 
 
 subprojects {
-    def projectNameC14N = "${project.name.replaceAll(' ','-')}"
+    def projectNameC14N = "${project.name.replaceAll(' ', '-')}"
     logger.info(":> Project name canonicalization: ${projectNameC14N}.")
 
-    def baseNamePrefix = custom['archives.base-name-prefix']?:""
+    def baseNamePrefix = custom['archives.base-name-prefix'] ?: ""
     logger.info(":> Base name prefix: ${baseNamePrefix}.")
 
     tasks.withType(JavaCompile) {
@@ -67,6 +68,19 @@ subprojects {
         checkstyle {
             toolVersion = '10.4'
             config = resources.text.fromFile(file("${rootProject.projectDir}/config/checkstyle/Yelstream/checkstyle.xml"))
+        }
+    }
+
+    plugins.withType(JacocoPlugin) {
+        jacoco {
+            toolVersion = "0.8.8"
+//            reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+        }
+        test {
+            finalizedBy jacocoTestReport // report is always generated after tests run
+        }
+        jacocoTestReport {
+            dependsOn test // tests are required to run before generating the report
         }
     }
 

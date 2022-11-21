@@ -1,5 +1,6 @@
 plugins {
     id 'java-library-distribution'
+    id 'jacoco'
     id 'maven-publish'
     id 'signing'
 }
