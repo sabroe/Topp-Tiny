@@ -124,12 +124,24 @@ public class UUIDs {
         return createUUID(msb,lsb);
     }
 
+    /**
+     * Creates a random UUIDv4.
+     * @param msb Most significant bits of UUID.
+     * @param lsb Least significant bits of UUID.
+     * @return UUID.
+     */
     public static UUID createUUIDVersion4MSBLeftShift(long msb, long lsb) {  //???
         msb=convertDataToType4MSBLeftShift(msb);
         lsb=convertDataToType4LSB(lsb);
         return createUUID(msb,lsb);
     }
 
+    /**
+     * Creates a random UUIDv4.
+     * @param msb Most significant bits of UUID.
+     * @param lsb Least significant bits of UUID.
+     * @return UUID.
+     */
     public static UUID createUUIDVersion4MSBLSBLeftShift(long msb, long lsb) {  //???
         msb=convertDataToType4MSBLSBLeftShift(msb,lsb);
         lsb=convertDataToType4LSB(lsb);

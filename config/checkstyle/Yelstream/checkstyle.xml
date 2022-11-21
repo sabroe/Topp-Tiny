@@ -18,6 +18,7 @@
 
 <!--
     Copy by MSM.
+    - Version 0.6 @ 2022-11-21
     - Version 0.5 @ 2022-11-20
     - Version 0.4 @ 2022-11-18
     - Version 0.3 @ 2022-11-12
@@ -148,7 +149,7 @@
                     SR_ASSIGN, STAR, STAR_ASSIGN, LITERAL_ASSERT, TYPE_EXTENSION_AND"/>
 -->
       <property name="tokens"
-                value="BSR, BSR_ASSIGN,
+                value="
                     DO_WHILE, LAND,
                     LCURLY, LITERAL_CATCH, LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY,
                     LITERAL_FOR, LITERAL_IF, LITERAL_RETURN, LITERAL_SWITCH, LITERAL_SYNCHRONIZED,
