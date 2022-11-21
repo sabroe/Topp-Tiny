@@ -2,7 +2,9 @@ package com.yelstream.topp.util.random.data;
 
 import com.yelstream.topp.util.random.RandomFactories;
 import com.yelstream.topp.util.random.RandomFactory;
+import com.yelstream.topp.util.random.Randoms;
 
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -25,11 +27,7 @@ public final class ConcurrentRandomDataFactory implements RandomDataFactory {
     public ConcurrentRandomDataFactory(RandomFactory randomFactory,
                                        Integer capacity,
                                        Boolean fair) {
-        if (randomFactory==null) {
-            this.randomFactory=RandomFactories.createSecureRandomFactory();
-        } else {
-            this.randomFactory=randomFactory;
-        }
+        this.randomFactory=Objects.requireNonNullElseGet(randomFactory,RandomFactories::createSecureRandomFactory);
 
         int permits=(capacity==null?DEFAULT_PERMITS:capacity);
         boolean f=(fair==null?DEFAULT_FAIR:fair);
@@ -139,10 +137,6 @@ public final class ConcurrentRandomDataFactory implements RandomDataFactory {
   
     @Override
     public void nextLongs(long[] data) {
-        next(random -> {
-            for (int i=0; i<data.length; i++) {
-                data[i]=random.nextLong();
-            }
-        });
+        next(random -> Randoms.nextLongs(random,data));
     }
 }

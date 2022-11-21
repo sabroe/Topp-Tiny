@@ -27,13 +27,18 @@ dependencies {
 }
 
 test {
-    minHeapSize = "128m" // initial heap size
-    maxHeapSize = "2048m" // maximum heap size
+    minHeapSize = "128m"
+    maxHeapSize = "2048m"
 
     useJUnitPlatform()
+
     testLogging {
 //        events "passed", "skipped", "failed"
         events "skipped", "failed"
+    }
+
+    filter {
+        includeTestsMatching "*TestSuite"
     }
 }
 

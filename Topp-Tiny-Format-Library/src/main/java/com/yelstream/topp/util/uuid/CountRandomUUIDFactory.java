@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * 
  * @author Morten Sabroe Mortensen
  */
-public class CountRandomUUIDFactory extends AbstractRandomUUIDFactory {
+public class CountRandomUUIDFactory implements UUIDFactory {
     public CountRandomUUIDFactory() {
         countHolder.set(BigInteger.ZERO);
     }
@@ -31,6 +31,6 @@ public class CountRandomUUIDFactory extends AbstractRandomUUIDFactory {
         BigInteger b=incrementAndGet();
         long msb=b.shiftRight(64).longValue();
         long lsb=b.longValue();
-        return createUUIDVersion4_MSB_LSB_LeftShift(msb,lsb);
+        return UUIDs.createUUIDVersion4MSBLSBLeftShift(msb,lsb);
     }
 }

@@ -8,16 +8,13 @@ import java.util.concurrent.atomic.AtomicLong;
  * 
  * @author Morten Sabroe Mortensen
  */
-public class CountTimeRandomUUIDFactory extends AbstractRandomUUIDFactory {
-    public CountTimeRandomUUIDFactory() {
-    }
-
-    protected AtomicLong counter=new AtomicLong();
+public class CountTimeRandomUUIDFactory implements UUIDFactory {
+    protected final AtomicLong counter=new AtomicLong();
   
     @Override
     public final UUID createUUID() {
         long msb=System.currentTimeMillis();
         long lsb=counter.getAndIncrement();
-        return createUUIDVersion4_MSB_LSB_LeftShift(msb,lsb);
+        return UUIDs.createUUIDVersion4MSBLSBLeftShift(msb,lsb);
     }
 }

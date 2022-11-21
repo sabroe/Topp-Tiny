@@ -2,6 +2,7 @@ package com.yelstream.topp.util.random.data;
 
 import com.yelstream.topp.util.random.RandomFactories;
 import com.yelstream.topp.util.random.RandomFactory;
+import com.yelstream.topp.util.random.Randoms;
 import lombok.Getter;
 
 import java.util.Random;
@@ -13,6 +14,7 @@ import java.util.Random;
  * @version 1.0
  * @since 2013-10-21
  */
+@SuppressWarnings("java:S1117")
 public final class SimpleRandomDataFactory implements RandomDataFactory {
     public SimpleRandomDataFactory() {
         randomFactory=RandomFactories.createSecureRandomFactory();
@@ -36,8 +38,6 @@ public final class SimpleRandomDataFactory implements RandomDataFactory {
     @Override
     public void nextLongs(long[] data) {
         Random random=getRandom();
-        for (int i=0; i<data.length; i++) {
-            data[i]=random.nextLong();
-        }
+        Randoms.nextLongs(random,data);
     }
 }

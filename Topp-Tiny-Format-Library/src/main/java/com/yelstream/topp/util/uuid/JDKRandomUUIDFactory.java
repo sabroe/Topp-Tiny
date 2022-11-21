@@ -7,7 +7,7 @@ import java.util.UUID;
  * 
  * @author Morten Sabroe Mortensen
  */
-public class JDKRandomUUIDFactory extends AbstractRandomUUIDFactory {
+public class JDKRandomUUIDFactory implements UUIDFactory {
     @Override
     public UUID createUUID() {
         return UUID.randomUUID();

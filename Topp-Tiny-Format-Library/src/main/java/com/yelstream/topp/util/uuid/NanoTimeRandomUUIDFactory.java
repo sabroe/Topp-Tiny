@@ -7,14 +7,11 @@ import java.util.UUID;
  * 
  * @author Morten Sabroe Mortensen
  */
-public class NanoTimeRandomUUIDFactory extends AbstractRandomUUIDFactory {
-    public NanoTimeRandomUUIDFactory() {
-    }
-  
+public class NanoTimeRandomUUIDFactory implements UUIDFactory {
     @Override
     public final UUID createUUID() {
         long msb=System.currentTimeMillis();
         long lsb=System.nanoTime();
-        return createUUIDVersion4_MSB_LSB_LeftShift(msb,lsb);
+        return UUIDs.createUUIDVersion4MSBLSBLeftShift(msb,lsb);
     }
 }

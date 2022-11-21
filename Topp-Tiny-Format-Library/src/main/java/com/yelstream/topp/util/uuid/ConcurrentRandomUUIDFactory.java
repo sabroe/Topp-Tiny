@@ -10,7 +10,7 @@ import java.util.UUID;
  * 
  * @author Morten Sabroe Mortensen
  */
-public class ConcurrentRandomUUIDFactory extends AbstractRandomUUIDFactory {
+public class ConcurrentRandomUUIDFactory implements UUIDFactory {
     public ConcurrentRandomUUIDFactory(Integer capacity, Boolean fair) {
         randomDataFactory=new ConcurrentRandomDataFactory(capacity,fair);
     }
@@ -29,6 +29,6 @@ public class ConcurrentRandomUUIDFactory extends AbstractRandomUUIDFactory {
     public final UUID createUUID() {
         byte[] data=new byte[16];
         randomDataFactory.nextBytes(data);
-        return createUUIDVersion4(data);
+        return UUIDs.createUUIDVersion4(data);
     }
 }
