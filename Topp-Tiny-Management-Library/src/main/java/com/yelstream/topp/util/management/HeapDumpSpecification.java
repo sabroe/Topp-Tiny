@@ -19,7 +19,12 @@ public class HeapDumpSpecification {
     private final PathGenerator pathGenerator;
     private final boolean live;
 
-    @SuppressWarnings("unused")
+    /**
+     * Creates a specification of how to generate a heap dump.
+     * @param directory Directory to place heap dump files in.
+     * @param fileNamePrefix Prefix for the names fof heap dump files.
+     * @return Specification of how to generate a heap dump.
+     */
     public static HeapDumpSpecification of(Path directory,
                                            String fileNamePrefix) {
         PathGenerator fileNameGenerator=PathGenerator.of(directory,fileNamePrefix,HeapUtility.HEAP_DUMP_FILE_NAME_EXTENSION);

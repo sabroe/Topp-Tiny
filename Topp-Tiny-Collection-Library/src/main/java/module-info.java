@@ -1,3 +1,6 @@
+/**
+ * .
+ */
 module com.yelstream.topp.tiny.collection {
     requires static lombok;
     requires transitive com.yelstream.topp.tiny.function;

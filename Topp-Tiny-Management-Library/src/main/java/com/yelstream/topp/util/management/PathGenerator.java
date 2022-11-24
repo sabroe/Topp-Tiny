@@ -14,7 +14,13 @@ import java.util.function.UnaryOperator;
 @SuppressWarnings("unused")
 @FunctionalInterface
 public interface PathGenerator {
+    /**
+     * Generates a path.
+     * @param partName Partial name of path.
+     * @return Path.
+     */
     Path generate(String partName);
+
 
     /**
      * Creates a path generator.

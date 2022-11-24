@@ -1,4 +1,4 @@
-package com.yelstream.topp.util.uuid.test;
+package com.yelstream.topp.util.uuid;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

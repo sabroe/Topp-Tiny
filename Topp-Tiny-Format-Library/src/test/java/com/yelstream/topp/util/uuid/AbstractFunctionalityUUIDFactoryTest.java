@@ -1,4 +1,4 @@
-package com.yelstream.topp.util.uuid.test;
+package com.yelstream.topp.util.uuid;
 
 /**
  * .

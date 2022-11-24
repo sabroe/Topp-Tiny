@@ -5,10 +5,15 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * .
- * 
+ *
  * @author Morten Sabroe Mortensen
+ * @version 1.0
+ * @since 2013-10-21
  */
 public class CountTimeRandomUUIDFactory implements UUIDFactory {
+    /**
+     * Counter.
+     */
     protected final AtomicLong counter=new AtomicLong();
   
     @Override

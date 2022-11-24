@@ -1,11 +1,11 @@
 package com.yelstream.topp.util.random.data;
 
-import com.yelstream.topp.util.random.RandomFactories;
-import com.yelstream.topp.util.random.RandomFactory;
-import com.yelstream.topp.util.random.Randoms;
+import com.yelstream.topp.util.random.RandomGeneratorFactories;
+import com.yelstream.topp.util.random.RandomGeneratorFactory;
+import com.yelstream.topp.util.random.RandomGenerators;
 import lombok.Getter;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 /**
  * Simple factory of random data.
@@ -16,28 +16,49 @@ import java.util.Random;
  */
 @SuppressWarnings("java:S1117")
 public final class SimpleRandomDataFactory implements RandomDataFactory {
+    /**
+     * Constructor.
+     */
     public SimpleRandomDataFactory() {
-        randomFactory=RandomFactories.createSecureRandomFactory();
+        randomFactory= RandomGeneratorFactories.createSecureRandomGeneratorFactory();
     }
-  
-    public SimpleRandomDataFactory(RandomFactory randomFactory) {
+
+    /**
+     * Constructor.
+     * @param randomFactory Factory of random generators
+     */
+    public SimpleRandomDataFactory(RandomGeneratorFactory randomFactory) {
         this.randomFactory=randomFactory;
     }
-  
-    private final RandomFactory randomFactory;
+
+    /**
+     * Constructor.
+     * @param random Random generator.
+     */
+    public SimpleRandomDataFactory(RandomGenerator random) {
+        this.randomFactory=()->random;
+    }
+
+    private final RandomGeneratorFactory randomFactory;
 
     @Getter(lazy=true)
-    private final Random random=randomFactory.createRandom();
+    private final RandomGenerator random=randomFactory.createRandomGenerator();
 
     @Override
     public void nextBytes(byte[] data) {
-        Random random=getRandom();
+        RandomGenerator random=getRandom();
         random.nextBytes(data);
     }
-  
+
     @Override
     public void nextLongs(long[] data) {
-        Random random=getRandom();
-        Randoms.nextLongs(random,data);
+        RandomGenerator random=getRandom();
+        RandomGenerators.nextLongs(random,data);
+    }
+
+    @Override
+    public long nextLong() {
+        RandomGenerator random=getRandom();
+        return random.nextLong();
     }
 }

@@ -1,14 +1,15 @@
-package com.yelstream.topp.util.uuid.test;
+package com.yelstream.topp.util.uuid;
 
-import com.yelstream.topp.util.random.RandomFactories;
-import com.yelstream.topp.util.random.RandomFactory;
+import com.yelstream.topp.util.random.RandomGeneratorFactories;
+import com.yelstream.topp.util.random.RandomGeneratorFactory;
 import com.yelstream.topp.util.random.data.ConcurrentRandomDataFactory;
+import com.yelstream.topp.util.random.data.RandomDataFactories;
 import com.yelstream.topp.util.random.data.RandomDataFactory;
-import com.yelstream.topp.util.uuid.ComposedRandomUUIDFactory;
 import com.yelstream.topp.util.uuid.ConcurrentRandomUUIDFactory;
 import com.yelstream.topp.util.uuid.CountRandomUUIDFactory;
 import com.yelstream.topp.util.uuid.CountTimeRandomUUIDFactory;
 import com.yelstream.topp.util.uuid.JDKRandomUUIDFactory;
+import com.yelstream.topp.util.uuid.LongsRandomUUIDFactory;
 import com.yelstream.topp.util.uuid.NanoTimeRandomUUIDFactory;
 import com.yelstream.topp.util.uuid.UUIDFactory;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -36,7 +37,7 @@ public class BasicUUIDFactoryTest {
         private Class<? extends UUIDFactory> clazz;
 
         public UUIDFactory createUUIDFactory() throws Exception {
-            return clazz.newInstance();
+            return clazz.getDeclaredConstructor().newInstance();
         }
 
         @Override
@@ -69,19 +70,19 @@ public class BasicUUIDFactoryTest {
 
         UUIDFactorySupplier composedRandomUUIDFactorySupplier1=new AbstractUUIDFactorySupplier("ComposedRandomUUIDFactory/java.util.Random") {
             @Override
-            public UUIDFactory createUUIDFactory() throws Exception {
-                RandomFactory randomFactory=RandomFactories.createRandomFactory();
+            public UUIDFactory createUUIDFactory() {
+                RandomGeneratorFactory randomFactory=RandomGeneratorFactories.createRandomGeneratorFactory();
                 RandomDataFactory randomDataFactory=new ConcurrentRandomDataFactory(randomFactory);
-                return new ComposedRandomUUIDFactory(randomDataFactory);
+                return new LongsRandomUUIDFactory(randomDataFactory);
             }
         };
 
         UUIDFactorySupplier composedRandomUUIDFactorySupplier2=new AbstractUUIDFactorySupplier("ComposedRandomUUIDFactory/java.security.SecureRandom") {
             @Override
-            public UUIDFactory createUUIDFactory() throws Exception {
-                RandomFactory randomFactory=RandomFactories.createSecureRandomFactory();
+            public UUIDFactory createUUIDFactory() {
+                RandomGeneratorFactory randomFactory=RandomGeneratorFactories.createSecureRandomGeneratorFactory();
                 RandomDataFactory randomDataFactory=new ConcurrentRandomDataFactory(randomFactory);
-                return new ComposedRandomUUIDFactory(randomDataFactory);
+                return new LongsRandomUUIDFactory(randomDataFactory);
             }
         };
 
@@ -107,7 +108,7 @@ public class BasicUUIDFactoryTest {
         return l;
     }
 
-    @ParameterizedTest(name="{index}: {0}, size={1}")
+    @ParameterizedTest(name="{index}: {00}, size={1}")
     @MethodSource("data")
     void convert(UUIDFactorySupplier g,
                  int listSize) throws Exception {

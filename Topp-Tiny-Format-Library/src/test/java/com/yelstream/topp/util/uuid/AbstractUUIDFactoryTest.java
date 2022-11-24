@@ -1,13 +1,15 @@
-package com.yelstream.topp.util.uuid.test;
+package com.yelstream.topp.util.uuid;
 
 import com.yelstream.topp.util.uuid.ConcurrentRandomUUIDFactory;
 import com.yelstream.topp.util.uuid.JDKRandomUUIDFactory;
 import com.yelstream.topp.util.uuid.UUIDFactory;
+import lombok.AllArgsConstructor;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 /**
@@ -24,12 +26,21 @@ public class AbstractUUIDFactoryTest {
         private Class<? extends UUIDFactory> clazz;
 
         public UUIDFactory createUUIDFactory() throws Exception {
-            return clazz.newInstance();
+            return clazz.getDeclaredConstructor().newInstance();
         }
 
         @Override
         public String toString() {
             return clazz.getSimpleName();
+        }
+    }
+
+    @AllArgsConstructor
+    static class UUIDFactorySupplier2 {
+        private final Supplier<UUIDFactory> uuidFactorySupplier;
+
+        public UUIDFactory createUUIDFactory() {
+            return uuidFactorySupplier.get();
         }
     }
 
@@ -73,13 +84,11 @@ public class AbstractUUIDFactoryTest {
     }
   
     UUID[] createUUIDList(UUIDFactory g,
-                          int listSize) throws Exception {
+                          int listSize) {
         UUID[] l=new UUID[listSize];
-
         for (int i=0; i<listSize; i++) {
             l[i]=g.createUUID();
         }
-
         return l;
     }
 

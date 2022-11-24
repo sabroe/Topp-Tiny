@@ -1,3 +1,6 @@
+/**
+ * .
+ */
 module com.yelstream.topp.tiny.function {
     requires static lombok;
     exports com.yelstream.topp.io;

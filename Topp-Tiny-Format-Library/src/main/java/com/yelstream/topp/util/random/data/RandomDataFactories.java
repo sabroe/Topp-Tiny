@@ -1,7 +1,7 @@
 package com.yelstream.topp.util.random.data;
 
-import com.yelstream.topp.util.random.RandomFactories;
-import com.yelstream.topp.util.random.RandomFactory;
+import com.yelstream.topp.util.random.RandomGeneratorFactories;
+import com.yelstream.topp.util.random.RandomGeneratorFactory;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -13,15 +13,29 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class RandomDataFactories {
+    /**
+     * Creates a factory of random data.
+     * @return Factory of random data.
+     */
     public static RandomDataFactory createRandomDataFactory() {
-        return createRandomDataFactory(RandomFactories.createRandomFactory());
+        return createRandomDataFactory(RandomGeneratorFactories.createRandomGeneratorFactory());
     }
 
-    public static RandomDataFactory createRandomDataFactory(RandomFactory randomFactory) {
+    /**
+     * Creates a factory of random data.
+     * @param randomFactory Factory of random generators.
+     * @return Factory of random data.
+     */
+    public static RandomDataFactory createRandomDataFactory(RandomGeneratorFactory randomFactory) {
         return new SimpleRandomDataFactory(randomFactory);
     }
 
-    public static RandomDataFactory createConcurrentRandomDataFactory(RandomFactory randomFactory) {
+    /**
+     * Creates a factory of random data for concurrent access.
+     * @param randomFactory Factory of random generators.
+     * @return Factory of random data.
+     */
+    public static RandomDataFactory createConcurrentRandomDataFactory(RandomGeneratorFactory randomFactory) {
         return new ConcurrentRandomDataFactory(randomFactory);
     }
 }

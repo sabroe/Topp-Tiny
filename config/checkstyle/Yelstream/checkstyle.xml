@@ -18,6 +18,7 @@
 
 <!--
     Copy by MSM.
+    - Version 0.7 @ 2022-11-23
     - Version 0.6 @ 2022-11-21
     - Version 0.5 @ 2022-11-20
     - Version 0.4 @ 2022-11-18
@@ -303,7 +304,9 @@
                     RECORD_COMPONENT_DEF"/>
     </module>
     <module name="NoWhitespaceBeforeCaseDefaultColon"/>
+<!-- MSM
     <module name="OverloadMethodsDeclarationOrder"/>
+-->
     <module name="VariableDeclarationUsageDistance"/>
 <!-- MSM
     <module name="CustomImportOrder">

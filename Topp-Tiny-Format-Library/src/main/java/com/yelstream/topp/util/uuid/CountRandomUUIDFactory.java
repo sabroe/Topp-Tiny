@@ -6,16 +6,28 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * .
- * 
+ *
  * @author Morten Sabroe Mortensen
+ * @version 1.0
+ * @since 2013-10-21
  */
 public class CountRandomUUIDFactory implements UUIDFactory {
+    /**
+     * Constructor.
+     */
     public CountRandomUUIDFactory() {
         countHolder.set(BigInteger.ZERO);
     }
 
+    /**
+     * Holder of counter.
+     */
     private final AtomicReference<BigInteger> countHolder=new AtomicReference<>();
-  
+
+    /**
+     * Gets the next counter value.
+     * @return Next counter value.
+     */
     protected BigInteger incrementAndGet() {
         while (true) {
             BigInteger current=countHolder.get();

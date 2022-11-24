@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 /**
  * Test suite for {@code com.yelstream.topp.util.random.RandomFactory}.
@@ -18,7 +19,7 @@ import java.util.Random;
  * @since 2013-10-21
  */
 class RandomTest {
-    private static void generateRandomData(Random random,
+    private static void generateRandomData(RandomGenerator random,
                                            int repeatCount) {
         byte[] b=new byte[16];  //16 bytes or 128 bits which is about the size of a UUID
         for (int i=0; i<repeatCount; i++) {
@@ -26,18 +27,18 @@ class RandomTest {
         }
     }
 
-    static final int REPEAT_COUNT = 1_000_000;
+    static final int REPEAT_COUNT=1_000_000;
   
     @Test
     void timeRandom() {
-        Random random=RandomFactories.createRandomFactory().createRandom();
+        RandomGenerator random=RandomGeneratorFactories.createRandomGeneratorFactory().createRandomGenerator();
         generateRandomData(random, REPEAT_COUNT);
         Assertions.assertTrue(true);
     }
   
     @Test
     void timeSecureRandom() {
-        Random random=RandomFactories.createSecureRandomFactory().createRandom();
+        RandomGenerator random=RandomGeneratorFactories.createSecureRandomGeneratorFactory().createRandomGenerator();
         generateRandomData(random, REPEAT_COUNT);
         Assertions.assertTrue(true);
     }

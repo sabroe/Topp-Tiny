@@ -1,14 +1,15 @@
 package com.yelstream.topp.util.random.data;
 
-import com.yelstream.topp.util.random.RandomFactories;
-import com.yelstream.topp.util.random.RandomFactory;
-import com.yelstream.topp.util.random.Randoms;
+import com.yelstream.topp.util.random.RandomGeneratorFactories;
+import com.yelstream.topp.util.random.RandomGeneratorFactory;
+import com.yelstream.topp.util.random.RandomGenerators;
 
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
+import java.util.random.RandomGenerator;
 
 /**
  * Factory of random data ready for concurrent usage.
@@ -19,15 +20,15 @@ import java.util.function.Consumer;
  */
 public final class ConcurrentRandomDataFactory implements RandomDataFactory {
     /**
-     * .
-     * @param randomFactory .
-     * @param capacity .
-     * @param fair .
+     * Constructor.
+     * @param randomFactory Factory of random generators.
+     * @param capacity Number of permits available.
+     * @param fair Indicates, if generation will guarantee first-in first-out granting under contention..
      */
-    public ConcurrentRandomDataFactory(RandomFactory randomFactory,
+    public ConcurrentRandomDataFactory(RandomGeneratorFactory randomFactory,
                                        Integer capacity,
                                        Boolean fair) {
-        this.randomFactory=Objects.requireNonNullElseGet(randomFactory,RandomFactories::createSecureRandomFactory);
+        this.randomFactory=Objects.requireNonNullElseGet(randomFactory, RandomGeneratorFactories::createSecureRandomGeneratorFactory);
 
         int permits=(capacity==null?DEFAULT_PERMITS:capacity);
         boolean f=(fair==null?DEFAULT_FAIR:fair);
@@ -42,21 +43,21 @@ public final class ConcurrentRandomDataFactory implements RandomDataFactory {
     }
 
     /**
-     * .
-     * @param randomFactory .
+     * Constructor.
+     * @param randomFactory Factory of random generators.
      */
-    public ConcurrentRandomDataFactory(RandomFactory randomFactory) {
+    public ConcurrentRandomDataFactory(RandomGeneratorFactory randomFactory) {
         this(randomFactory,
              null,
              null);
     }
 
     /**
-     * .
-     * @param randomFactory .
-     * @param capacity .
+     * Constructor.
+     * @param randomFactory Factory of random generators.
+     * @param capacity Number of permits available.
      */
-    public ConcurrentRandomDataFactory(RandomFactory randomFactory,
+    public ConcurrentRandomDataFactory(RandomGeneratorFactory randomFactory,
                                        Integer capacity) {
         this(randomFactory,
              capacity,
@@ -64,9 +65,9 @@ public final class ConcurrentRandomDataFactory implements RandomDataFactory {
     }
 
     /**
-     * .
-     * @param capacity .
-     * @param fair .
+     * Constructor.
+     * @param capacity Number of permits available.
+     * @param fair Indicates, if generation will guarantee first-in first-out granting under contention..
      */
     public ConcurrentRandomDataFactory(Integer capacity,
                                        Boolean fair) {
@@ -74,29 +75,35 @@ public final class ConcurrentRandomDataFactory implements RandomDataFactory {
     }
 
     /**
-     * .
-     * @param capacity .
+     * Constructor.
+     * @param capacity Number of permits available.
      */
     public ConcurrentRandomDataFactory(Integer capacity) {
         this(null,capacity,null);
     }
 
     /**
-     * .
+     * Constructor.
      */
     public ConcurrentRandomDataFactory() {
         this(null,null,null);
     }
 
-    public static final int DEFAULT_PERMITS=1024;  //Yes, default permits is 1024!
+    /**
+     * Default number of permits available.
+     */
+    public static final int DEFAULT_PERMITS=1024;
 
-    public static final boolean DEFAULT_FAIR=false;  //Yes, per default this uses non-fair fairness!
+    /**
+     * Indicates, if generation will guarantee first-in first-out granting under contention.
+     */
+    public static final boolean DEFAULT_FAIR=false;
   
-    private final RandomFactory randomFactory;
+    private final RandomGeneratorFactory randomFactory;
   
     private final Semaphore barrier;
 
-    private final Random[] randomList;
+    private final RandomGenerator[] randomList;
 
     private final int[] randomReferenceList;
 
@@ -105,7 +112,7 @@ public final class ConcurrentRandomDataFactory implements RandomDataFactory {
     private final int allocateRandomIndex() {
         int randomIndex=randomReferenceList[randomReferenceIndex.getAndIncrement()];
         if (randomList[randomIndex]==null) {
-            randomList[randomIndex]=randomFactory.createRandom();
+            randomList[randomIndex]=randomFactory.createRandomGenerator();
         }
         return randomIndex;
     }
@@ -114,14 +121,13 @@ public final class ConcurrentRandomDataFactory implements RandomDataFactory {
         randomReferenceList[randomReferenceIndex.decrementAndGet()]=randomIndex;
     }
 
-    private void next(Consumer<Random> consumer) {
+    private void next(Consumer<RandomGenerator> reader) {
         try {
             barrier.acquireUninterruptibly();
-
             int randomIndex=allocateRandomIndex();
             try {
-                Random random=randomList[randomIndex];
-                consumer.accept(random);
+                RandomGenerator random=randomList[randomIndex];
+                reader.accept(random);
             } finally {
                 freeRandomIndex(randomIndex);
             }
@@ -134,9 +140,25 @@ public final class ConcurrentRandomDataFactory implements RandomDataFactory {
     public void nextBytes(byte[] data) {
         next(random -> random.nextBytes(data));
     }
-  
+
     @Override
     public void nextLongs(long[] data) {
-        next(random -> Randoms.nextLongs(random,data));
+        next(random -> RandomGenerators.nextLongs(random,data));
+    }
+
+    @Override
+    public long nextLong() {
+        try {
+            barrier.acquireUninterruptibly();
+            int randomIndex=allocateRandomIndex();
+            try {
+                RandomGenerator random=randomList[randomIndex];
+                return random.nextLong();
+            } finally {
+                freeRandomIndex(randomIndex);
+            }
+        } finally {
+            barrier.release();
+        }
     }
 }

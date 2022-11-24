@@ -19,4 +19,10 @@ public interface RandomDataFactory {
      * @param data Data buffer for random data.
      */
     void nextLongs(long[] data);
+
+    /**
+     * Generates a random long value.
+     * @return Data Random long value.
+     */
+    long nextLong();
 }

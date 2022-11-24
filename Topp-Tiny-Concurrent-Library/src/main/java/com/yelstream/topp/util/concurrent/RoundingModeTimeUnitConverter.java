@@ -1,5 +1,7 @@
 package com.yelstream.topp.util.concurrent;
 
+import lombok.AllArgsConstructor;
+
 import java.math.RoundingMode;
 import java.util.concurrent.TimeUnit;
 
@@ -9,11 +11,11 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0
  * @since 2013-02-28
  */
+@AllArgsConstructor
 public class RoundingModeTimeUnitConverter implements TimeUnitConverter {
-    public RoundingModeTimeUnitConverter(RoundingMode roundingMode) {
-        this.roundingMode=roundingMode;
-    }
-  
+    /**
+     * Rounding mode.
+     */
     protected final RoundingMode roundingMode;
   
     @Override

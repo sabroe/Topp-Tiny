@@ -145,6 +145,7 @@ subprojects {
     tasks.withType(JavaCompile) {
         options.compilerArgs << '-Xlint:rawtypes'
         options.compilerArgs << '-Xlint:unchecked'
+        options.compilerArgs << '-Xlint:deprecation'
 //        options.compilerArgs << '-Xlint:-requires-transitive-automatic'
         options.compilerArgs << '-Werror'
 
