@@ -1,5 +1,5 @@
 /**
- * .
+ * Topp Tiny Collection is an open-source Java library which implements collection related utilities.
  */
 module com.yelstream.topp.tiny.collection {
     requires static lombok;

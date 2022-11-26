@@ -1,5 +1,5 @@
 /**
- * .
+ * Topp Tiny Function is an open-source Java library which implements functional utilities.
  */
 module com.yelstream.topp.tiny.function {
     requires static lombok;

@@ -1,5 +1,5 @@
 /**
- * .
+ * Topp Tiny Format is an open-source Java library which implements formatting utilities.
  */
 module com.yelstream.topp.tiny.format {
     requires static lombok;
