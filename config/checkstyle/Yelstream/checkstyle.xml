@@ -18,6 +18,7 @@
 
 <!--
     Copy by MSM.
+    - Version 0.8 @ 2022-11-26
     - Version 0.7 @ 2022-11-23
     - Version 0.6 @ 2022-11-21
     - Version 0.5 @ 2022-11-20
@@ -285,8 +286,9 @@
              value="GenericWhitespace ''{0}'' is not preceded with whitespace."/>
     </module>
     <module name="Indentation">
+<!-- MSM; did modify the indentation-block here! -->
       <property name="basicOffset" value="4"/>
-      <property name="braceAdjustment" value="2"/>
+      <property name="braceAdjustment" value="0"/>
       <property name="caseIndent" value="4"/>
       <property name="throwsIndent" value="4"/>
       <property name="lineWrappingIndentation" value="4"/>

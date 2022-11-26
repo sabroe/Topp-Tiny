@@ -67,6 +67,7 @@ public class StringBuilders {
 
     /**
      * Replaces the last occurrence of a string starting from a specific index.
+     * Note that "last" implies searching backwards.
      * @param buffer Buffer.
      * @param fromIndex Index to start from.
      * @param token String to match and replace.
@@ -89,10 +90,12 @@ public class StringBuilders {
      * @param buffer Buffer.
      * @param token String to match and replace.
      * @param replacement String to replace with.
+     * @return Number of occurrences replaced.
      */
-    public static void replaceAll(StringBuilder buffer,
-                                  String token,
-                                  String replacement) {
+    public static int replaceAll(StringBuilder buffer,
+                                 String token,
+                                 String replacement) {
+        int replacedCount=0;
         int indexFrom=0;
         while (indexFrom<buffer.length()) {
             int index=buffer.indexOf(token, indexFrom);
@@ -101,7 +104,9 @@ public class StringBuilders {
             } else {
                 buffer.replace(index, index+token.length(), replacement);
                 indexFrom=index+token.length();
+                replacedCount++;
             }
         }
+        return replacedCount;
     }
 }
