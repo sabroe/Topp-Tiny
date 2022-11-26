@@ -44,12 +44,12 @@ public final class ConcurrentRandomDataFactory implements RandomDataFactory {
     /**
      * Default number of permits available.
      */
-    public static final int DEFAULT_PERMITS=1024;
+    public static final int DEFAULT_PERMITS=64;
 
     /**
      * Indicates, if generation will guarantee first-in first-out granting under contention.
      */
-    public static final boolean DEFAULT_FAIR=false;
+    public static final boolean DEFAULT_FAIR=true;
   
     private final RandomGeneratorFactory randomFactory;
   

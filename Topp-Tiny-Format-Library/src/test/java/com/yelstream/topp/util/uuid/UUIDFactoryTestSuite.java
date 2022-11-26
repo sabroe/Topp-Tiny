@@ -12,7 +12,8 @@ import org.junit.platform.suite.api.Suite;
 @SelectClasses({SequentialSpeedUUIDFactoryTest.class,
                 ConcurrentSpeedUUIDFactoryTest.class,
                 SequentialCorrectnessUUIDFactoryTest.class,
-                ConcurrentCorrectnessUUIDFactoryTest.class})
+                ConcurrentCorrectnessUUIDFactoryTest.class,
+                AlgorithmComparisonTest.class})
 public class UUIDFactoryTestSuite {
     //Empty!
 }

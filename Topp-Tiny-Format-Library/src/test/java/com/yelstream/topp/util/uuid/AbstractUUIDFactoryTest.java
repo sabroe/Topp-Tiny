@@ -1,13 +1,11 @@
 package com.yelstream.topp.util.uuid;
 
 import com.yelstream.topp.util.random.data.ConcurrentRandomDataFactory;
-import lombok.AllArgsConstructor;
 import org.junit.jupiter.params.provider.Arguments;
 
 import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 /**
@@ -16,15 +14,6 @@ import java.util.stream.Stream;
  * @author Morten Sabroe Mortensen
  */
 public class AbstractUUIDFactoryTest {
-    @AllArgsConstructor
-    static class UUIDFactorySupplier2 {
-        private final Supplier<UUIDFactory> uuidFactorySupplier;
-
-        public UUIDFactory createUUIDFactory() {
-            return uuidFactorySupplier.get();
-        }
-    }
-
     /**
      * .
      * @return .
@@ -64,15 +53,6 @@ public class AbstractUUIDFactoryTest {
         );
     }
   
-    UUID[] createUUIDList(UUIDFactory g,
-                          int listSize) {
-        UUID[] l=new UUID[listSize];
-        for (int i=0; i<listSize; i++) {
-            l[i]=g.createUUID();
-        }
-        return l;
-    }
-
     static class Test1Runnable implements Runnable {
         public Test1Runnable(UUIDFactory uuidFactory,
                              int threadIndex,
