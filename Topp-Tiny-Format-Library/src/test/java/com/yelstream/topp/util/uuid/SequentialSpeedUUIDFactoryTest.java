@@ -1,5 +1,6 @@
 package com.yelstream.topp.util.uuid;
 
+import com.yelstream.topp.util.random.data.ConcurrentRandomDataFactory;
 import com.yelstream.topp.util.random.data.RandomDataFactories;
 import com.yelstream.topp.util.random.data.SimpleRandomDataFactory;
 import org.junit.jupiter.api.Assertions;
@@ -21,9 +22,6 @@ import java.util.stream.Stream;
 class SequentialSpeedUUIDFactoryTest extends AbstractUUIDFactoryTest {
     /**
      * .
-     * @author Morten Sabroe Mortensen
-     * @version 1.0
-     * @since 2013-10-21
      */
     public static Stream<Arguments> data() {
         int listSize=1_000_000;
@@ -35,18 +33,18 @@ class SequentialSpeedUUIDFactoryTest extends AbstractUUIDFactoryTest {
             Arguments.of("NanoTimeRandomUUIDFactory", new UUIDFactorySupplier2(NanoTimeRandomUUIDFactory::new), listSize),
             Arguments.of("CountRandomUUIDFactory", new UUIDFactorySupplier2(CountRandomUUIDFactory::new), listSize),
 
-            Arguments.of("LongsRandomUUIDFactory", new UUIDFactorySupplier2(()->new LongsRandomUUIDFactory(RandomDataFactories.createRandomDataFactory())), listSize),
-            Arguments.of("LongArrayRandomUUIDFactory", new UUIDFactorySupplier2(()->new LongArrayRandomUUIDFactory(RandomDataFactories.createRandomDataFactory())), listSize),
-            Arguments.of("ByteArrayRandomUUIDFactory", new UUIDFactorySupplier2(()->new ByteArrayRandomUUIDFactory(RandomDataFactories.createRandomDataFactory())), listSize),
+            Arguments.of("LongsRandomUUIDFactory", new UUIDFactorySupplier2(()->new LongsRandomUUIDFactory(RandomDataFactories.createSimpleRandomDataFactory())), listSize),
+            Arguments.of("LongArrayRandomUUIDFactory", new UUIDFactorySupplier2(()->new LongArrayRandomUUIDFactory(RandomDataFactories.createSimpleRandomDataFactory())), listSize),
+            Arguments.of("ByteArrayRandomUUIDFactory", new UUIDFactorySupplier2(()->new ByteArrayRandomUUIDFactory(RandomDataFactories.createSimpleRandomDataFactory())), listSize),
 
-            Arguments.of("LongsRandomUUIDFactory/Secure", new UUIDFactorySupplier2(()->new LongsRandomUUIDFactory(new SimpleRandomDataFactory(new SecureRandom()))), listSize),
-            Arguments.of("LongArrayRandomUUIDFactory/Secure", new UUIDFactorySupplier2(()->new LongArrayRandomUUIDFactory(new SimpleRandomDataFactory(new SecureRandom()))), listSize),
-            Arguments.of("ByteArrayRandomUUIDFactory/Secure", new UUIDFactorySupplier2(()->new ByteArrayRandomUUIDFactory(new SimpleRandomDataFactory(new SecureRandom()))), listSize),
+            Arguments.of("LongsRandomUUIDFactory/Secure", new UUIDFactorySupplier2(()->new LongsRandomUUIDFactory(SimpleRandomDataFactory.of(new SecureRandom()))), listSize),
+            Arguments.of("LongArrayRandomUUIDFactory/Secure", new UUIDFactorySupplier2(()->new LongArrayRandomUUIDFactory(SimpleRandomDataFactory.of(new SecureRandom()))), listSize),
+            Arguments.of("ByteArrayRandomUUIDFactory/Secure", new UUIDFactorySupplier2(()->new ByteArrayRandomUUIDFactory(SimpleRandomDataFactory.of(new SecureRandom()))), listSize),
 
             Arguments.of("JDKRandomUUIDFactory", new UUIDFactorySupplier2(JDKRandomUUIDFactory::new), listSize),
-            Arguments.of("ConcurrentRandomUUIDFactory", new UUIDFactorySupplier2(ConcurrentRandomUUIDFactory::new), listSize),
+            Arguments.of("ConcurrentRandomUUIDFactory", new UUIDFactorySupplier2(()->new ByteArrayRandomUUIDFactory(ConcurrentRandomDataFactory.builder().randomFactory(Random::new).build())), listSize),
 
-            Arguments.of("ConcurrentRandomUUIDFactory/Secure", new UUIDFactorySupplier2(()->new ConcurrentRandomUUIDFactory(SecureRandom::new,null,null)), listSize)
+            Arguments.of("ConcurrentRandomUUIDFactory/Secure", new UUIDFactorySupplier2(()->new ByteArrayRandomUUIDFactory(ConcurrentRandomDataFactory.builder().randomFactory(SecureRandom::new).build())), listSize)
         );
     }
 

@@ -1,8 +1,6 @@
 package com.yelstream.topp.util.uuid;
 
-import com.yelstream.topp.util.uuid.ConcurrentRandomUUIDFactory;
-import com.yelstream.topp.util.uuid.JDKRandomUUIDFactory;
-import com.yelstream.topp.util.uuid.UUIDFactory;
+import com.yelstream.topp.util.random.data.ConcurrentRandomDataFactory;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.params.provider.Arguments;
 
@@ -18,23 +16,6 @@ import java.util.stream.Stream;
  * @author Morten Sabroe Mortensen
  */
 public class AbstractUUIDFactoryTest {
-    static class UUIDFactorySupplier {
-        public UUIDFactorySupplier(Class<? extends UUIDFactory> clazz) {
-            this.clazz=clazz;
-        }
-
-        private Class<? extends UUIDFactory> clazz;
-
-        public UUIDFactory createUUIDFactory() throws Exception {
-            return clazz.getDeclaredConstructor().newInstance();
-        }
-
-        @Override
-        public String toString() {
-            return clazz.getSimpleName();
-        }
-    }
-
     @AllArgsConstructor
     static class UUIDFactorySupplier2 {
         private final Supplier<UUIDFactory> uuidFactorySupplier;
@@ -54,12 +35,12 @@ public class AbstractUUIDFactoryTest {
         //int listSize=5_000_000;
 
         return Stream.of(
-            Arguments.of(new UUIDFactorySupplier(JDKRandomUUIDFactory.class)    , listSize,    1),
-            Arguments.of(new UUIDFactorySupplier(JDKRandomUUIDFactory.class)    , listSize,    2),
-            Arguments.of(new UUIDFactorySupplier(JDKRandomUUIDFactory.class)    , listSize,    4),
-            Arguments.of(new UUIDFactorySupplier(JDKRandomUUIDFactory.class)    , listSize,    8),
-            Arguments.of(new UUIDFactorySupplier(JDKRandomUUIDFactory.class)    , listSize,   16),
-            Arguments.of(new UUIDFactorySupplier(JDKRandomUUIDFactory.class)    , listSize,   32),
+            Arguments.of(UUIDFactorySupplier.of(JDKRandomUUIDFactory::new)    , listSize,    1),
+            Arguments.of(UUIDFactorySupplier.of(JDKRandomUUIDFactory::new)    , listSize,    2),
+            Arguments.of(UUIDFactorySupplier.of(JDKRandomUUIDFactory::new)    , listSize,    4),
+            Arguments.of(UUIDFactorySupplier.of(JDKRandomUUIDFactory::new)    , listSize,    8),
+            Arguments.of(UUIDFactorySupplier.of(JDKRandomUUIDFactory::new)    , listSize,   16),
+            Arguments.of(UUIDFactorySupplier.of(JDKRandomUUIDFactory::new)    , listSize,   32),
             //Arguments.of(new UUIDFactorySupplier(JDKRandomUUIDFactory.class)    , listSize,   64),
             //Arguments.of(new UUIDFactorySupplier(JDKRandomUUIDFactory.class)    , listSize,  128),
             //Arguments.of(new UUIDFactorySupplier(JDKRandomUUIDFactory.class)    , listSize,  256),
@@ -68,12 +49,12 @@ public class AbstractUUIDFactoryTest {
             //Arguments.of(new UUIDFactorySupplier(JDKRandomUUIDFactory.class)    , listSize, 2048),
 
 
-            Arguments.of(new UUIDFactorySupplier(ConcurrentRandomUUIDFactory.class), listSize,    1),
-            Arguments.of(new UUIDFactorySupplier(ConcurrentRandomUUIDFactory.class), listSize,    2),
-            Arguments.of(new UUIDFactorySupplier(ConcurrentRandomUUIDFactory.class), listSize,    4),
-            Arguments.of(new UUIDFactorySupplier(ConcurrentRandomUUIDFactory.class), listSize,    8),
-            Arguments.of(new UUIDFactorySupplier(ConcurrentRandomUUIDFactory.class), listSize,   16),
-            Arguments.of(new UUIDFactorySupplier(ConcurrentRandomUUIDFactory.class), listSize,   32)//,
+            Arguments.of(UUIDFactorySupplier.of(()->new ByteArrayRandomUUIDFactory(ConcurrentRandomDataFactory.builder().build())), listSize,    1),
+            Arguments.of(UUIDFactorySupplier.of(()->new ByteArrayRandomUUIDFactory(ConcurrentRandomDataFactory.builder().build())), listSize,    2),
+            Arguments.of(UUIDFactorySupplier.of(()->new ByteArrayRandomUUIDFactory(ConcurrentRandomDataFactory.builder().build())), listSize,    4),
+            Arguments.of(UUIDFactorySupplier.of(()->new ByteArrayRandomUUIDFactory(ConcurrentRandomDataFactory.builder().build())), listSize,    8),
+            Arguments.of(UUIDFactorySupplier.of(()->new ByteArrayRandomUUIDFactory(ConcurrentRandomDataFactory.builder().build())), listSize,   16),
+            Arguments.of(UUIDFactorySupplier.of(()->new ByteArrayRandomUUIDFactory(ConcurrentRandomDataFactory.builder().build())), listSize,   32)
         //Arguments.of(new UUIDFactorySupplier(ConcurrentRandomUUIDFactory.class), listSize,   64),
         //Arguments.of(new UUIDFactorySupplier(ConcurrentRandomUUIDFactory.class), listSize,  128),
         //Arguments.of(new UUIDFactorySupplier(ConcurrentRandomUUIDFactory.class), listSize,  256),

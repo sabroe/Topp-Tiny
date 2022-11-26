@@ -17,8 +17,8 @@ public class RandomDataFactories {
      * Creates a factory of random data.
      * @return Factory of random data.
      */
-    public static RandomDataFactory createRandomDataFactory() {
-        return createRandomDataFactory(RandomGeneratorFactories.createRandomGeneratorFactory());
+    public static RandomDataFactory createSimpleRandomDataFactory() {
+        return createSimpleRandomDataFactory(RandomGeneratorFactories.createRandomGeneratorFactory());
     }
 
     /**
@@ -26,7 +26,7 @@ public class RandomDataFactories {
      * @param randomFactory Factory of random generators.
      * @return Factory of random data.
      */
-    public static RandomDataFactory createRandomDataFactory(RandomGeneratorFactory randomFactory) {
+    public static RandomDataFactory createSimpleRandomDataFactory(RandomGeneratorFactory randomFactory) {
         return new SimpleRandomDataFactory(randomFactory);
     }
 
@@ -36,6 +36,6 @@ public class RandomDataFactories {
      * @return Factory of random data.
      */
     public static RandomDataFactory createConcurrentRandomDataFactory(RandomGeneratorFactory randomFactory) {
-        return new ConcurrentRandomDataFactory(randomFactory);
+        return ConcurrentRandomDataFactory.builder().randomFactory(randomFactory).build();
     }
 }

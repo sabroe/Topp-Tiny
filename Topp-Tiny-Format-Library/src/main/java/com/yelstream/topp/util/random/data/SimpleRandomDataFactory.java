@@ -1,8 +1,8 @@
 package com.yelstream.topp.util.random.data;
 
-import com.yelstream.topp.util.random.RandomGeneratorFactories;
 import com.yelstream.topp.util.random.RandomGeneratorFactory;
 import com.yelstream.topp.util.random.RandomGenerators;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.random.RandomGenerator;
@@ -15,30 +15,8 @@ import java.util.random.RandomGenerator;
  * @since 2013-10-21
  */
 @SuppressWarnings("java:S1117")
+@AllArgsConstructor
 public final class SimpleRandomDataFactory implements RandomDataFactory {
-    /**
-     * Constructor.
-     */
-    public SimpleRandomDataFactory() {
-        randomFactory= RandomGeneratorFactories.createSecureRandomGeneratorFactory();
-    }
-
-    /**
-     * Constructor.
-     * @param randomFactory Factory of random generators
-     */
-    public SimpleRandomDataFactory(RandomGeneratorFactory randomFactory) {
-        this.randomFactory=randomFactory;
-    }
-
-    /**
-     * Constructor.
-     * @param random Random generator.
-     */
-    public SimpleRandomDataFactory(RandomGenerator random) {
-        this.randomFactory=()->random;
-    }
-
     private final RandomGeneratorFactory randomFactory;
 
     @Getter(lazy=true)
@@ -60,5 +38,14 @@ public final class SimpleRandomDataFactory implements RandomDataFactory {
     public long nextLong() {
         RandomGenerator random=getRandom();
         return random.nextLong();
+    }
+
+    /**
+     * Creates a simple factory.
+     * @param random Random generator.
+     * @return Simple factory of random data.
+     */
+    public static SimpleRandomDataFactory of(RandomGenerator random) {
+        return new SimpleRandomDataFactory(()->random);
     }
 }

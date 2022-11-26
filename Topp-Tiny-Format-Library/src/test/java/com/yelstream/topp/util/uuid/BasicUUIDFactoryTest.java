@@ -3,20 +3,13 @@ package com.yelstream.topp.util.uuid;
 import com.yelstream.topp.util.random.RandomGeneratorFactories;
 import com.yelstream.topp.util.random.RandomGeneratorFactory;
 import com.yelstream.topp.util.random.data.ConcurrentRandomDataFactory;
-import com.yelstream.topp.util.random.data.RandomDataFactories;
 import com.yelstream.topp.util.random.data.RandomDataFactory;
-import com.yelstream.topp.util.uuid.ConcurrentRandomUUIDFactory;
-import com.yelstream.topp.util.uuid.CountRandomUUIDFactory;
-import com.yelstream.topp.util.uuid.CountTimeRandomUUIDFactory;
-import com.yelstream.topp.util.uuid.JDKRandomUUIDFactory;
-import com.yelstream.topp.util.uuid.LongsRandomUUIDFactory;
-import com.yelstream.topp.util.uuid.NanoTimeRandomUUIDFactory;
-import com.yelstream.topp.util.uuid.UUIDFactory;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.UUID;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 /**
@@ -25,33 +18,14 @@ import java.util.stream.Stream;
  * @author Morten Sabroe Mortensen
  */
 public class BasicUUIDFactoryTest {
-    interface UUIDFactorySupplier {
-        public UUIDFactory createUUIDFactory() throws Exception;
-    }
 
-    static class ClassUUIDFactorySupplier implements UUIDFactorySupplier {
-        public ClassUUIDFactorySupplier(Class<? extends UUIDFactory> clazz) {
-            this.clazz=clazz;
-        }
-
-        private Class<? extends UUIDFactory> clazz;
-
-        public UUIDFactory createUUIDFactory() throws Exception {
-            return clazz.getDeclaredConstructor().newInstance();
-        }
-
-        @Override
-        public String toString() {
-            return clazz.getSimpleName();
-        }
-    }
 
     abstract static class AbstractUUIDFactorySupplier implements UUIDFactorySupplier {
         public AbstractUUIDFactorySupplier(String name) {
             this.name=name;
         }
 
-        private String name;
+        private final String name;
 
         @Override
         public String toString() {
@@ -72,7 +46,7 @@ public class BasicUUIDFactoryTest {
             @Override
             public UUIDFactory createUUIDFactory() {
                 RandomGeneratorFactory randomFactory=RandomGeneratorFactories.createRandomGeneratorFactory();
-                RandomDataFactory randomDataFactory=new ConcurrentRandomDataFactory(randomFactory);
+                RandomDataFactory randomDataFactory=ConcurrentRandomDataFactory.builder().randomFactory(randomFactory).build();
                 return new LongsRandomUUIDFactory(randomDataFactory);
             }
         };
@@ -81,19 +55,19 @@ public class BasicUUIDFactoryTest {
             @Override
             public UUIDFactory createUUIDFactory() {
                 RandomGeneratorFactory randomFactory=RandomGeneratorFactories.createSecureRandomGeneratorFactory();
-                RandomDataFactory randomDataFactory=new ConcurrentRandomDataFactory(randomFactory);
+                RandomDataFactory randomDataFactory=ConcurrentRandomDataFactory.builder().randomFactory(randomFactory).build();
                 return new LongsRandomUUIDFactory(randomDataFactory);
             }
         };
 
         return Stream.of(
-            Arguments.of(new ClassUUIDFactorySupplier(JDKRandomUUIDFactory.class)       , listSize),
-            Arguments.of(new ClassUUIDFactorySupplier(ConcurrentRandomUUIDFactory.class), listSize),
-            Arguments.of(new ClassUUIDFactorySupplier(NanoTimeRandomUUIDFactory.class)  , listSize),
-            Arguments.of(new ClassUUIDFactorySupplier(CountTimeRandomUUIDFactory.class) , listSize),
-            Arguments.of(composedRandomUUIDFactorySupplier1                             , listSize),
-            Arguments.of(composedRandomUUIDFactorySupplier2                             , listSize),
-            Arguments.of(new ClassUUIDFactorySupplier(CountRandomUUIDFactory.class)     , listSize)
+            Arguments.of(UUIDFactorySupplier.of(JDKRandomUUIDFactory::new), listSize),
+            Arguments.of(UUIDFactorySupplier.of(()->new ByteArrayRandomUUIDFactory(ConcurrentRandomDataFactory.builder().build())), listSize),
+            Arguments.of(UUIDFactorySupplier.of(NanoTimeRandomUUIDFactory::new), listSize),
+            Arguments.of(UUIDFactorySupplier.of(CountTimeRandomUUIDFactory::new), listSize),
+            Arguments.of(composedRandomUUIDFactorySupplier1, listSize),
+            Arguments.of(composedRandomUUIDFactorySupplier2, listSize),
+            Arguments.of(UUIDFactorySupplier.of(CountRandomUUIDFactory::new), listSize)
         );
     }
 

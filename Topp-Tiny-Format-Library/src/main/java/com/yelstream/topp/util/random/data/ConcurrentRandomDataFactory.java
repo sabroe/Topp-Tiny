@@ -3,6 +3,7 @@ package com.yelstream.topp.util.random.data;
 import com.yelstream.topp.util.random.RandomGeneratorFactories;
 import com.yelstream.topp.util.random.RandomGeneratorFactory;
 import com.yelstream.topp.util.random.RandomGenerators;
+import lombok.Builder;
 
 import java.util.Objects;
 import java.util.Random;
@@ -18,21 +19,19 @@ import java.util.random.RandomGenerator;
  * @version 1.0
  * @since 2013-10-21
  */
+@Builder(builderClassName = "Builder")
 public final class ConcurrentRandomDataFactory implements RandomDataFactory {
     /**
      * Constructor.
      * @param randomFactory Factory of random generators.
-     * @param capacity Number of permits available.
+     * @param permits Number of permits available.
      * @param fair Indicates, if generation will guarantee first-in first-out granting under contention..
      */
-    public ConcurrentRandomDataFactory(RandomGeneratorFactory randomFactory,
-                                       Integer capacity,
-                                       Boolean fair) {
+    private ConcurrentRandomDataFactory(RandomGeneratorFactory randomFactory,
+                                        int permits,
+                                        boolean fair) {
         this.randomFactory=Objects.requireNonNullElseGet(randomFactory, RandomGeneratorFactories::createSecureRandomGeneratorFactory);
-
-        int permits=(capacity==null?DEFAULT_PERMITS:capacity);
-        boolean f=(fair==null?DEFAULT_FAIR:fair);
-        barrier=new Semaphore(permits,f);
+        barrier=new Semaphore(permits,fair);
 
         randomList=new Random[permits];
 
@@ -40,53 +39,6 @@ public final class ConcurrentRandomDataFactory implements RandomDataFactory {
         for (int i=0; i<permits; i++) {
             randomReferenceList[i]=i;
         }
-    }
-
-    /**
-     * Constructor.
-     * @param randomFactory Factory of random generators.
-     */
-    public ConcurrentRandomDataFactory(RandomGeneratorFactory randomFactory) {
-        this(randomFactory,
-             null,
-             null);
-    }
-
-    /**
-     * Constructor.
-     * @param randomFactory Factory of random generators.
-     * @param capacity Number of permits available.
-     */
-    public ConcurrentRandomDataFactory(RandomGeneratorFactory randomFactory,
-                                       Integer capacity) {
-        this(randomFactory,
-             capacity,
-             null);
-    }
-
-    /**
-     * Constructor.
-     * @param capacity Number of permits available.
-     * @param fair Indicates, if generation will guarantee first-in first-out granting under contention..
-     */
-    public ConcurrentRandomDataFactory(Integer capacity,
-                                       Boolean fair) {
-        this(null, capacity, fair);
-    }
-
-    /**
-     * Constructor.
-     * @param capacity Number of permits available.
-     */
-    public ConcurrentRandomDataFactory(Integer capacity) {
-        this(null,capacity,null);
-    }
-
-    /**
-     * Constructor.
-     */
-    public ConcurrentRandomDataFactory() {
-        this(null,null,null);
     }
 
     /**
@@ -109,7 +61,25 @@ public final class ConcurrentRandomDataFactory implements RandomDataFactory {
 
     private final AtomicInteger randomReferenceIndex=new AtomicInteger();
 
-    private final int allocateRandomIndex() {
+    /**
+     * Builder of {@link ConcurrentRandomDataFactory} instances.
+     */
+    public static class Builder {
+        private RandomGeneratorFactory randomFactory;
+        private int permits=DEFAULT_PERMITS;
+        private boolean fair=DEFAULT_FAIR;
+
+        /**
+         * Build a new instance.
+         * @return Instance.
+         */
+        public ConcurrentRandomDataFactory build() {
+            this.randomFactory=Objects.requireNonNullElseGet(randomFactory, RandomGeneratorFactories::createSecureRandomGeneratorFactory);
+            return new ConcurrentRandomDataFactory(randomFactory,permits,fair);
+        }
+    }
+
+    private int allocateRandomIndex() {
         int randomIndex=randomReferenceList[randomReferenceIndex.getAndIncrement()];
         if (randomList[randomIndex]==null) {
             randomList[randomIndex]=randomFactory.createRandomGenerator();
@@ -117,7 +87,7 @@ public final class ConcurrentRandomDataFactory implements RandomDataFactory {
         return randomIndex;
     }
 
-    private final void freeRandomIndex(int randomIndex) {
+    private void freeRandomIndex(int randomIndex) {
         randomReferenceList[randomReferenceIndex.decrementAndGet()]=randomIndex;
     }
 
