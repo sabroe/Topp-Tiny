@@ -25,8 +25,6 @@ class SequentialSpeedUUIDFactoryTest {
      */
     public static Stream<Arguments> data() {
         int listSize=1_000_000;
-        //int listSize=3_000_000;
-        //int listSize=5_000_000;
 
         return Stream.of(
             Arguments.of("CountTimeRandomUUIDFactory", UUIDFactorySupplier.of(CountTimeRandomUUIDFactory::new), listSize),

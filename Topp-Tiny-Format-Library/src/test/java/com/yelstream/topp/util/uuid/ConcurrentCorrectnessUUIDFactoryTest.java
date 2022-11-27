@@ -18,6 +18,6 @@ class ConcurrentCorrectnessUUIDFactoryTest extends AbstractUUIDFactoryTest {
                                int threadCount) throws Exception {
         UUIDFactory f=g.createUUIDFactory();
         UUID[] l=createUUIDListInParallel(f,listSize,threadCount);
-        verifyUUIDList(l);
+        UUIDFactoryTestUtility.verifyUUIDList(l);
     }
 }

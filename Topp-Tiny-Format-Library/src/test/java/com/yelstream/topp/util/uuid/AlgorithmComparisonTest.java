@@ -3,7 +3,6 @@ package com.yelstream.topp.util.uuid;
 import com.yelstream.topp.util.random.data.ConcurrentRandomDataFactory;
 import com.yelstream.topp.util.random.data.SimpleRandomDataFactory;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.ClassOrderer;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

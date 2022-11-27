@@ -118,25 +118,4 @@ public class AbstractUUIDFactoryTest {
 
         return idList;
     }
-
-    String[] convert(UUID[] l) {
-        String[] res=new String[l.length];
-        for (int i=0; i<l.length; i++) {
-            res[i]=l[i].toString();
-        }
-        return res;
-    }
-  
-    void verifyUUIDList(UUID[] l) throws Exception {
-        String[] l2=convert(l);
-
-        Arrays.sort(l2);
-
-        for (int i=0; i<l2.length-1; i++) {
-            String x=l2[i];
-            String y=l2[i+1];
-
-            assert x.compareTo(y)<0;
-        }
-    }
 }
