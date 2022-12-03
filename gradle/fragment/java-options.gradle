@@ -17,8 +17,8 @@ plugins.withType(JavaPlugin) {
 }
 
 tasks.withType(JavaCompile) {
-    (custom['java.options.compiler.default-args']?:"").tokenize(' ').forEach() {options.compilerArgs << it }
-    (custom['java.options.compiler.module-specific-args']?:"").tokenize(' ').forEach() {options.compilerArgs << it }
+    (custom['java.compiler.default-args']?:"").tokenize(' ').forEach() {options.compilerArgs << it }
+    (custom['java.compiler.module-specific-args']?:"").tokenize(' ').forEach() {options.compilerArgs << it }
 
     options.javaModuleVersion = provider { project.version }
 }
