@@ -6,6 +6,11 @@
  */
 
 plugins.withType(MavenPublishPlugin) {
+    repositories {
+        mavenCentral()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    }
+
     publishing {
         publications {
             mavenJava(MavenPublication) {
