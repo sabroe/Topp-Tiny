@@ -1,0 +1,11 @@
+tasks.withType(JavaCompile) {
+    apply plugin: "org.sonarqube"
+
+    sonarqube {
+        properties {
+            //https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-gradle/
+            //property "sonar.sourceEncoding", "UTF-8"
+            //property "sonar.sources", "src"
+        }
+    }
+}

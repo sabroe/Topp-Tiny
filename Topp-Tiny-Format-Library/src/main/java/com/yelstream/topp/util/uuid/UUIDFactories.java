@@ -25,10 +25,20 @@ public class UUIDFactories {
         return new JDKRandomUUIDFactory();
     }
 
+    /**
+     * Creates a factory of UUIDs for simple, non-concurrent access.
+     * @param randomDataFactory Factory of random data.
+     * @return Factory of UUIDs.
+     */
     public static UUIDFactory createSimpleUUIDFactory(RandomDataFactory randomDataFactory) {
         return new ByteArrayRandomUUIDFactory(new SimpleRandomDataFactory(SecureRandom::new));
     }
 
+    /**
+     * Creates a factory of UUIDs for concurrent access.
+     * @param randomDataFactory Factory of random data.
+     * @return Factory of UUIDs.
+     */
     public static UUIDFactory createConcurrentUUIDFactory(RandomDataFactory randomDataFactory) {
         return new ByteArrayRandomUUIDFactory(ConcurrentRandomDataFactory.builder().randomFactory(SecureRandom::new).build());
     }

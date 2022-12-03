@@ -1,0 +1,6 @@
+plugins.withType(JavaPlugin) {
+    java {
+        withJavadocJar()
+        withSourcesJar()
+    }
+}

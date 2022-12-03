@@ -1,0 +1,8 @@
+tasks.withType(JavaCompile) {
+    apply plugin: "checkstyle"
+
+    checkstyle {
+        toolVersion = '10.4'
+        config = resources.text.fromFile(file("${rootProject.projectDir}/config/checkstyle/Yelstream/checkstyle.xml"))
+    }
+}

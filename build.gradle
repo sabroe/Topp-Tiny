@@ -2,9 +2,6 @@ buildscript {
     repositories {
         mavenCentral()
     }
-
-    dependencies {
-    }
 }
 
 plugins {
@@ -13,209 +10,24 @@ plugins {
     id "jacoco"
 }
 
-import java.text.SimpleDateFormat
-
-def buildTime = new Date()
-def buildTimeBySecond = new SimpleDateFormat("yyyy-MM-dd-HHmmss").format(buildTime)
-def buildTimeByMinute = new SimpleDateFormat("yyyy-MM-dd-HHmm").format(buildTime)
-def buildTimeByDay = new SimpleDateFormat("yyyy-MM-dd").format(buildTime)
-
-/*
- * Note:
- *     To publish, run the task 'publish'.
- *     To approve the publishing using the Nexus Repository Manager, access https://s01.oss.sonatype.org/#stagingRepositories.
- *     To verify the first stages of approval, access https://repo1.maven.org/maven2/io/github/sabroe/topp/.
- */
+def fragmentDir = "${rootProject.projectDir}/gradle/fragment"
+apply from: "${fragmentDir}/custom-properties.gradle"
 
 allprojects {
-    def localProperties = new Properties()
-    def file=file("custom.properties")
-    logger.info(":> Properties file name: ${file}")
-    if (file.exists()) {
-        localProperties.load(file.newReader())
-    }
-    ext.custom = new Properties()
-    if (parent!=null) ext.custom.putAll(parent.ext.custom)
-    ext.custom.putAll(localProperties)
-    logger.info(":> Parent extension properties: "+(parent==null?null:parent.ext.custom))
-    logger.info(":> Local properties:            "+localProperties)
-    logger.info(":> Extension properties:        "+ext.custom)
-
-    project.group = custom['project.group']?:'io.github.sabroe.topp'
-    project.version = custom['project.version']?:buildTimeBySecond
-
-    logger.info(":> Project name:      $project.name")
-    logger.info(":> Project directory: $project.projectDir")
-    logger.info(":> Project version:   $project.version")
-    logger.info(":> Project group:     $project.group")
-
     repositories {
         mavenCentral()
     }
 }
 
-
 subprojects {
-    def projectNameC14N = "${project.name.replaceAll(' ', '-')}"
-    logger.info(":> Project name canonicalization: ${projectNameC14N}.")
-
-    def baseNamePrefix = custom['archives.base-name-prefix'] ?: ""
-    logger.info(":> Base name prefix: ${baseNamePrefix}.")
-
-    tasks.withType(JavaCompile) {
-        apply plugin: "checkstyle"
-
-        checkstyle {
-            toolVersion = '10.4'
-            config = resources.text.fromFile(file("${rootProject.projectDir}/config/checkstyle/Yelstream/checkstyle.xml"))
-        }
-    }
-
-    plugins.withType(JacocoPlugin) {
-        jacoco {
-            toolVersion = "0.8.8"
-//            reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
-        }
-        test {
-            finalizedBy jacocoTestReport // report is always generated after tests run
-        }
-        jacocoTestReport {
-            dependsOn test // tests are required to run before generating the report
-        }
-    }
-
-    plugins.withType(JavaPlugin) {
-        archivesBaseName = "${baseNamePrefix}${projectNameC14N}"
-        logger.info(":> Archives base name: ${archivesBaseName}.")
-
-        def defaultEncoding = custom['java.default-encoding']?:'UTF-8'
-
-        compileJava {
-            options.encoding = defaultEncoding
-        }
-
-        compileTestJava {
-            options.encoding = defaultEncoding
-        }
-
-        java {
-            toolchain {
-                languageVersion = JavaLanguageVersion.of(custom['java.language-version']?:'17')
-            }
-        }
-
-        jar {
-            manifest {
-                attributes 'Implementation-Title'                :custom['jar.manifest.implementation-title']                ?:(custom['implementation.title']?:project.name)
-                attributes 'Implementation-Group'                :custom['jar.manifest.implementation-group']                ?:(custom['implementation.group']?:project.group)
-                attributes 'Implementation-Version'              :custom['jar.manifest.implementation-version']              ?:(custom['implementation.version']?:project.version)
-                attributes 'Implementation-Vendor'               :custom['jar.manifest.implementation-vendor']               ?:(custom['implementation.vendor-name']?:'Yelstream')
-                attributes 'Implementation-Build-Date'           :custom['jar.manifest.implementation-build-date']           ?:(custom['implementation.build-date']?:buildTimeByDay)
-                attributes 'Implementation-Java-Language-Version':custom['jar.manifest.implementation-java-language-version']?:java.toolchain.languageVersion
-                attributes 'Implementation-Licence'              :custom['jar.manifest.implementation-license']              ?:(custom['implementation.license']?:'Apache License 2.0')
-                attributes 'Implementation-Copyright'            :custom['jar.manifest.implementation-copyright']            ?:(custom['implementation.copyright']?:'Copyright 2022 Morten Sabroe Mortensen')
-                attributes 'Implementation-Author'               :custom['jar.manifest.implementation-author']               ?:(custom['implementation.author']?:'Morten Sabroe Mortensen')
-                attributes 'Implementation-Contact'              :custom['jar.manifest.implementation-contact']              ?:(custom['implementation.contact']?:'mailto:morten.sabroe.mortensen@gmail.com')
-                attributes 'Implementation-Comment'              :custom['jar.manifest.implementation-comment']              ?:(custom['implementation.comment']?:'Greetings to all!')
-            }
-
-            exclude('**/.keep')
-        }
-    }
-
-    plugins.withType(JavaLibraryDistributionPlugin) {
-        distributions {
-            main {
-                archivesBaseName = "${baseNamePrefix}${projectNameC14N}"
-                distZip {
-                    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-                }
-            }
-        }
-    }
-
-    plugins.withType(ApplicationPlugin) {
-        distributions {
-            main {
-                archivesBaseName = "${baseNamePrefix}${projectNameC14N}"
-            }
-        }
-    }
-
-    tasks.withType(JavaCompile) {
-        options.compilerArgs << '-Xlint:rawtypes'
-        options.compilerArgs << '-Xlint:unchecked'
-        options.compilerArgs << '-Xlint:deprecation'
-//        options.compilerArgs << '-Xlint:-requires-transitive-automatic'
-        options.compilerArgs << '-Werror'
-
-        options.javaModuleVersion = provider { project.version }
-    }
-
-    plugins.withType(MavenPublishPlugin) {
-        publishing {
-            publications {
-                mavenJava(MavenPublication) {
-                    groupId = custom['publishing.publication.groupId']?:project.group
-                    artifactId = custom['publishing.publication.artifactId']
-                    version = custom['publishing.publication.groupId']?:project.version
-                    from components.java
-                    pom {
-                        name = custom['publishing.publication.name']
-                        description = custom['publishing.publication.description']
-                        url = custom['publishing.publication.url']
-                        inceptionYear = custom['publishing.publication.inception-year']
-
-                        licenses {
-                            license {
-                                name = custom['publishing.publication.licenses.license-1.name']
-                                url = custom['publishing.publication.licenses.license-1.url']
-                            }
-                        }
-                        developers {
-                            developer {
-                                id = custom['publishing.publication.developers.developer-1.id']
-                                name = custom['publishing.publication.developers.developer-1.name']
-                                email = custom['publishing.publication.developers.developer-1.email']
-                            }
-                        }
-                        scm {
-                            connection = custom['publishing.publication.scm.connection']
-                            developerConnection = custom['publishing.publication.scm.developer-connection']
-                            url = custom['publishing.publication.scm.url']
-                        }
-                    }
-                }
-            }
-
-            repositories {
-                maven {
-                    name = 'OSSRH'
-                    url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
-                    credentials {
-                        username = project.properties['ossrhUsername']
-                        password = project.properties['ossrhPassword']
-                    }
-                }
-            }
-        }
-    }
-
-    plugins.withType(SigningPlugin) {
-        signing {
-            sign publishing.publications.mavenJava
-        }
-    }
-
-    tasks.withType(JavaCompile) {
-        apply plugin: "org.sonarqube"
-
-        sonarqube {
-            properties {
-                //https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-gradle/
-                //property "sonar.sourceEncoding", "UTF-8"
-                //property "sonar.sources", "src"
-            }
-        }
-    }
+    apply from: "${fragmentDir}/checkstyle.gradle"
+    apply from: "${fragmentDir}/jacoco.gradle"
+    apply from: "${fragmentDir}/java-options.gradle"
+    apply from: "${fragmentDir}/java-jars.gradle"
+    apply from: "${fragmentDir}/jar-manifest.gradle"
+    apply from: "${fragmentDir}/archive-naming.gradle"
+    apply from: "${fragmentDir}/publish.gradle"
+    apply from: "${fragmentDir}/sonarqube.gradle"
+    apply from: "${fragmentDir}/lombok.gradle"
+    apply from: "${fragmentDir}/junit.gradle"
 }

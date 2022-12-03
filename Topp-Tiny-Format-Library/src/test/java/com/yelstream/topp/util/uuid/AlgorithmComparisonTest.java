@@ -69,6 +69,6 @@ class AlgorithmComparisonTest {
     @Test
     void compareDurations() {
         double ratio=getMaxMinRatio();
-        Assertions.assertTrue(ratio<1.15);
+        Assertions.assertTrue(ratio<1.25);
     }
 }

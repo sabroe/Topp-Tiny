@@ -1,0 +1,38 @@
+import java.text.SimpleDateFormat
+
+def buildTime = new Date()
+def buildTimeBySecond = new SimpleDateFormat("yyyy-MM-dd-HHmmss").format(buildTime)
+def buildTimeByMinute = new SimpleDateFormat("yyyy-MM-dd-HHmm").format(buildTime)
+def buildTimeByDay = new SimpleDateFormat("yyyy-MM-dd").format(buildTime)
+
+allprojects {
+    def localProperties = new Properties()
+    def file = file("custom.properties")
+    logger.info(":> Properties file name: ${file}")
+    if (file.exists()) {
+        localProperties.load(file.newReader())
+    }
+
+    ext.custom = new Properties()
+    if (parent != null) {
+        ext.custom.putAll(parent.ext.custom)
+    }
+    ext.custom.putAll(localProperties)
+
+    ext.custom['build-time'] = buildTime
+    ext.custom['build-time-by-second'] = buildTimeBySecond
+    ext.custom['build-time-by-minute'] = buildTimeByMinute
+    ext.custom['build-time-by-day'] = buildTimeByDay
+
+    logger.info(":> Parent extension properties: " + (parent == null ? null : parent.ext.custom))
+    logger.info(":> Local properties:            " + localProperties)
+    logger.info(":> Extension properties:        " + ext.custom)
+
+    project.group = custom['project.group'] ?: 'io.github.sabroe.topp'
+    project.version = custom['project.version'] ?: buildTimeBySecond
+
+    logger.info(":> Project name:      $project.name")
+    logger.info(":> Project directory: $project.projectDir")
+    logger.info(":> Project version:   $project.version")
+    logger.info(":> Project group:     $project.group")
+}

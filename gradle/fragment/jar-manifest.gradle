@@ -1,0 +1,19 @@
+plugins.withType(JavaPlugin) {
+    jar {
+        manifest {
+            attributes 'Implementation-Title'                :custom['jar.manifest.implementation-title']                ?:(custom['implementation.title']?:project.name)
+            attributes 'Implementation-Group'                :custom['jar.manifest.implementation-group']                ?:(custom['implementation.group']?:project.group)
+            attributes 'Implementation-Version'              :custom['jar.manifest.implementation-version']              ?:(custom['implementation.version']?:project.version)
+            attributes 'Implementation-Vendor'               :custom['jar.manifest.implementation-vendor']               ?:(custom['implementation.vendor-name']?:'Yelstream')
+            attributes 'Implementation-Build-Date'           :custom['jar.manifest.implementation-build-date']           ?:(custom['implementation.build-date']?:custom['build-time-by-day'])
+            attributes 'Implementation-Java-Language-Version':custom['jar.manifest.implementation-java-language-version']?:java.toolchain.languageVersion
+            attributes 'Implementation-Licence'              :custom['jar.manifest.implementation-license']              ?:(custom['implementation.license']?:'Apache License 2.0')
+            attributes 'Implementation-Copyright'            :custom['jar.manifest.implementation-copyright']            ?:(custom['implementation.copyright']?:'Copyright 2022 Morten Sabroe Mortensen')
+            attributes 'Implementation-Author'               :custom['jar.manifest.implementation-author']               ?:(custom['implementation.author']?:'Morten Sabroe Mortensen')
+            attributes 'Implementation-Contact'              :custom['jar.manifest.implementation-contact']              ?:(custom['implementation.contact']?:'mailto:morten.sabroe.mortensen@gmail.com')
+            attributes 'Implementation-Comment'              :custom['jar.manifest.implementation-comment']              ?:(custom['implementation.comment']?:'Greetings to all!')
+        }
+
+        exclude('**/.keep')
+    }
+}
