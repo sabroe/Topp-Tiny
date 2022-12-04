@@ -114,4 +114,48 @@ class StringBuildersTest {
             Assertions.assertEquals("aaa-bbb-ccc-bbb", buffer.toString());
         }
     }
+
+
+
+    @Test
+    void appendTokenIfBuilderIsNonEmpty() {
+        {
+            StringBuilder builder=new StringBuilder();
+            StringBuilders.appendTokenIfBuilderIsNonEmpty(builder, "-");
+            Assertions.assertEquals(builder.toString(), "");
+        }
+        {
+            StringBuilder builder=new StringBuilder("aaa");
+            StringBuilders.appendTokenIfBuilderIsNonEmpty(builder, "-");
+            Assertions.assertEquals(builder.toString(), "aaa-");
+        }
+    }
+
+    @Test
+    void appendDelimiterIfNotOnToken() {
+        {
+            StringBuilder builder=new StringBuilder("xxx");
+            StringBuilders.appendDelimiterIfNotOnToken(builder,".","bin");
+            Assertions.assertEquals(builder.toString(), "xxx.");
+        }
+        {
+            StringBuilder builder=new StringBuilder("xxx");
+            StringBuilders.appendDelimiterIfNotOnToken(builder,".",".bin");
+            Assertions.assertEquals(builder.toString(), "xxx");
+        }
+    }
+
+    @Test
+    void appendDelimiterAndToken() {
+        {
+            StringBuilder builder=new StringBuilder("xxx");
+            StringBuilders.appendDelimiterAndToken(builder,".","bin");
+            Assertions.assertEquals(builder.toString(), "xxx.bin");
+        }
+        {
+            StringBuilder builder=new StringBuilder("xxx");
+            StringBuilders.appendDelimiterAndToken(builder,".",".bin");
+            Assertions.assertEquals(builder.toString(), "xxx.bin");
+        }
+    }
 }

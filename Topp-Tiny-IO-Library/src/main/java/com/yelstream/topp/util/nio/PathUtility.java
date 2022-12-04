@@ -117,4 +117,15 @@ public class PathUtility {
             Files.delete(path);
         }
     }
+
+    /**
+     * Deletes a file, if present.
+     * @param path Reference to file.
+     * @throws IOException Thrown in case of I/O error.
+     */
+    public static void deleteIfExists(Path path) throws IOException {
+        if (path!=null) {
+            Files.deleteIfExists(path);
+        }
+    }
 }

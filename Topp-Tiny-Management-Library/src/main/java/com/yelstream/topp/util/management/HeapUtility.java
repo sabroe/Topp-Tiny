@@ -6,6 +6,7 @@ import lombok.experimental.UtilityClass;
 import javax.management.MBeanServer;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
@@ -54,12 +55,18 @@ public final class HeapUtility {
      * @param specification Specification of how to create the heap dump.
      * @param name Name of heap dump.
      *             This becomes part of the name of the file containing the heap dump.
+     * @return Path to heap dump file.
      * @throws IOException Thrown in case of I/O error.
      */
-    public static void dump(HeapDumpSpecification specification,
+    public static Path dump(HeapDumpSpecification specification,
                             String name) throws IOException {
         Path file=specification.getPathGenerator().generate(name);
+        Path directory=file.getParent();
+        if (!Files.exists(directory)) {
+            Files.createDirectories(directory);
+        }
         boolean live=specification.isLive();
         dump(file,live);
+        return file;
     }
 }

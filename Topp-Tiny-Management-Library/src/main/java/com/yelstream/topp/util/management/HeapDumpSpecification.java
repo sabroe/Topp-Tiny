@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.Instant;
+import java.time.temporal.TemporalAccessor;
+import java.util.function.Supplier;
 
 /**
  * Specification of how to create heap dumps.
@@ -20,14 +24,59 @@ public class HeapDumpSpecification {
     private final boolean live;
 
     /**
-     * Creates a specification of how to generate a heap dump.
+     * Creates a specification.
      * @param directory Directory to place heap dump files in.
      * @param fileNamePrefix Prefix for the names fof heap dump files.
-     * @return Specification of how to generate a heap dump.
+     * @return Specification.
      */
     public static HeapDumpSpecification of(Path directory,
                                            String fileNamePrefix) {
-        PathGenerator fileNameGenerator=PathGenerator.of(directory,fileNamePrefix,HeapUtility.HEAP_DUMP_FILE_NAME_EXTENSION);
+        PathGenerator fileNameGenerator=DefaultPathGenerator.builder().directory(directory).fileNamePrefix(fileNamePrefix).fileNameExtension(HeapUtility.HEAP_DUMP_FILE_NAME_EXTENSION).build();
         return new HeapDumpSpecification(fileNameGenerator,true);
+    }
+
+    /**
+     * Creates a specification.
+     * @param directory Directory to place heap dump files in.
+     * @param fileNamePrefix Prefix for the names fof heap dump files.
+     * @param temporalAccessor Fixed time formatted into file name.
+     * @return Specification.
+     */
+    public static HeapDumpSpecification of(Path directory,
+                                           String fileNamePrefix,
+                                           TemporalAccessor temporalAccessor) {
+        PathGenerator fileNameGenerator=DefaultPathGenerator.builder().directory(directory).fileNamePrefix(fileNamePrefix).time(temporalAccessor).fileNameExtension(HeapUtility.HEAP_DUMP_FILE_NAME_EXTENSION).build();
+        return new HeapDumpSpecification(fileNameGenerator,true);
+    }
+
+    /**
+     * Creates a specification.
+     * @param directory Directory to place heap dump files in.
+     * @param fileNamePrefix Prefix for the names fof heap dump files.
+     * @param temporalAccessorSupplier Supplier of time formatted into file name.
+     * @return Specification.
+     */
+    public static HeapDumpSpecification of(Path directory,
+                                           String fileNamePrefix,
+                                           Supplier<TemporalAccessor> temporalAccessorSupplier) {
+        PathGenerator fileNameGenerator=DefaultPathGenerator.builder().directory(directory).fileNamePrefix(fileNamePrefix).timeSupplier(temporalAccessorSupplier).fileNameExtension(HeapUtility.HEAP_DUMP_FILE_NAME_EXTENSION).build();
+        return new HeapDumpSpecification(fileNameGenerator,true);
+    }
+
+    /**
+     * Creates a specification.
+     * @param fileNamePrefix Prefix for the names fof heap dump files.
+     * @return Specification.
+     */
+    public static HeapDumpSpecification of(String fileNamePrefix) {
+        return of(Paths.get("."),fileNamePrefix, Instant.now());
+    }
+
+    /**
+     * Creates a specification.
+     * @return Specification.
+     */
+    public static HeapDumpSpecification of() {
+        return of(Paths.get("."),"heapdump");
     }
 }
