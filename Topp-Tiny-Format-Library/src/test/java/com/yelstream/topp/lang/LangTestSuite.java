@@ -11,6 +11,7 @@ import org.junit.platform.suite.api.Suite;
  * @since 2013-10-21
  */
 @Suite
-@SelectClasses({StringBuildersTest.class})
+@SelectClasses({StringBuildersTest.class,
+                StringsTest.class})
 public class LangTestSuite {
 }

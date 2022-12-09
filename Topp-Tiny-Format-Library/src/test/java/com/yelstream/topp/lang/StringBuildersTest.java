@@ -115,8 +115,6 @@ class StringBuildersTest {
         }
     }
 
-
-
     @Test
     void appendTokenIfBuilderIsNonEmpty() {
         {

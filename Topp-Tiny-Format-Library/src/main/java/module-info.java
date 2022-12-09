@@ -7,5 +7,6 @@ module com.yelstream.topp.tiny.format {
     exports com.yelstream.topp.util.format;
     exports com.yelstream.topp.util.random;
     exports com.yelstream.topp.util.random.data;
+    exports com.yelstream.topp.util.regex;
     exports com.yelstream.topp.util.uuid;
 }

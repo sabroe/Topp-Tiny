@@ -10,7 +10,6 @@ import lombok.experimental.UtilityClass;
  * @since 2022-11-18
  */
 @UtilityClass
-@SuppressWarnings("unused")
 public class StringBuilders {
     /**
      * Replaces the first occurrence of a string.
