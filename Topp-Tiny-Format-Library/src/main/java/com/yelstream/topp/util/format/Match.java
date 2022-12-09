@@ -26,6 +26,12 @@ public class Match {
      */
     private final String key;
 
+    /**
+     * Register a matched pattern by notifying all consumers.
+     * @param onMatchConsumers Consumers to notify.
+     * @param pattern Pattern text.
+     * @param key Key text.
+     */
     public static void registerMatch(List<Consumer<Match>> onMatchConsumers,
                                      String pattern,
                                      String key) {

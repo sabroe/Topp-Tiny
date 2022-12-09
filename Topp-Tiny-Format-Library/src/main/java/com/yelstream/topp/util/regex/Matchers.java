@@ -15,6 +15,14 @@ import java.util.regex.Pattern;
  */
 @UtilityClass
 public class Matchers {
+    /**
+     * Runs the main matcher loop.
+     * @param pattern Pattern to match.
+     * @param format Format to match pattern within.
+     * @param matcherToReplacement Mapping of a match to a replacement text.
+     * @param literalReplacement Indicates, if the replacement text is to be taken literal.
+     * @return Resulting formatting.
+     */
     public static String runMatcherLoop(Pattern pattern,
                                         String format,
                                         Function<Matcher,String> matcherToReplacement,
@@ -24,8 +32,7 @@ public class Matchers {
     }
 
     /**
-     *
-     *
+     * Runs the main matcher loop.
      * <p>
      * Note that this runs the standard matching loop:
      * </p>
@@ -37,10 +44,10 @@ public class Matchers {
      *   }
      *   matcher.appendTail(...);
      * </pre>
-     *
-     * @param matcher
-     * @param matcherToReplacement
-     * @return
+     * @param matcher Matcher of pattern within format text.
+     * @param matcherToReplacement Mapping of a match to a replacement text.
+     * @param literalReplacement Indicates, if the replacement text is to be taken literal.
+     * @return Resulting formatting.
      */
     public static String runMatcherLoop(Matcher matcher,
                                         Function<Matcher,String> matcherToReplacement,
@@ -57,6 +64,11 @@ public class Matchers {
         return formatted.toString();
     }
 
+    /**
+     * Create literal replacement for {@link Matcher#appendReplacement(StringBuilder, String)}.
+     * @param replacement Replacement text to become literal.
+     * @return Literal replacement text.
+     */
     private static String createLiteralReplacement(String replacement) {
         return replacement.replace("$","\\$");
     }

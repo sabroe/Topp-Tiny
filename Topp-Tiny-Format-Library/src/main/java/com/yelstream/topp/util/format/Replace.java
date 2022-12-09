@@ -31,6 +31,13 @@ public class Replace {
      */
     private final String replacement;
 
+    /**
+     * Register a replaced pattern by notifying all consumers.
+     * @param onReplaceConsumers Consumers to notify.
+     * @param pattern Pattern text.
+     * @param key Key text.
+     * @param replacement Replacement text.
+     */
     public static void registerReplace(List<Consumer<Replace>> onReplaceConsumers,
                                        String pattern,
                                        String key,
