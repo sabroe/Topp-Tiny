@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 @UtilityClass
 public class Matchers {
     /**
-     * Runs the main matcher loop.
+     * Runs the main matcher loop; see {@link #runMatcherLoop(Matcher, Function, boolean)}.
      * @param pattern Pattern to match.
      * @param format Format to match pattern within.
      * @param matcherToReplacement Mapping of a match to a replacement text.

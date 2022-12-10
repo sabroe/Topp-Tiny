@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test suite for {@code com.yelstream.topp.lang.StringBuildersTest}.
+ * Test suite for {@code com.yelstream.topp.lang.StringBuilders}.
  *
  * @author Morten Sabroe Mortensen
  * @version 1.0

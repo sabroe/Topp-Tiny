@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
@@ -25,7 +26,6 @@ import java.util.regex.Pattern;
 @NoArgsConstructor
 @Builder(builderClassName="Builder",toBuilder=true)
 public class NamedFormatter {
-
     @lombok.Builder.Default
     private final Locale locale=null;
 
@@ -33,72 +33,122 @@ public class NamedFormatter {
      * Pattern for matching parameters.
      */
     @lombok.Builder.Default
-    private final Pattern parameterPattern=Patterns.createFormatterParameterPattern();
+    private final Pattern argumentPattern=Patterns.createFormatterParameterPattern();
 
+    /**
+     * Default format argument.
+     */
     @lombok.Builder.Default
-    private final Object defaultReplacement=null;
+    private final Object defaultFormatArgument=null;
 
-    @lombok.Builder.Default
-    private final boolean literalReplacement=true;
-
+    /**
+     * Consumers to notify about a matched pattern.
+     */
     @Singular
     private List<Consumer<Match>> onMatchConsumers;
 
+    /**
+     * Consumers to notify about a replaced pattern.
+     */
     @Singular
     private List<Consumer<Replace>> onReplaceConsumers;
 
     /**
-     *
-     *
-     * @param format
-     * @param parameters
-     * @return
+     * Consumers to notify about the result of pre-formatting.
      */
-    public String format(String format, Map<String,Object> parameters) {
-        List<Object> used=new ArrayList<>();
+    @Singular
+    private List<BiConsumer<String,List<Object>>> onPreformattedConsumers;
 
+    /**
+     * Creates a text by substituting arguments into a format.
+     * @param format Format.
+     * @param arguments Arguments.
+     * @return Formatted text.
+     */
+    public String format(String format,
+                         Map<String,Object> arguments) {
+        List<Object> formatArguments=new ArrayList<>();
         String preformatted=
-            Matchers.runMatcherLoop(parameterPattern,format,matcher -> {
+            Matchers.runMatcherLoop(argumentPattern,format, matcher -> {
                 String pattern=matcher.group(Patterns.PATTERN_GROUP_NAME);
                 String key=matcher.group(Patterns.KEY_GROUP_NAME);
                 Match.registerMatch(onMatchConsumers,pattern,key);
-                Object replacement=getReplacement(parameters,key,pattern,defaultReplacement,literalReplacement);
-                if (replacement==null) {
-                    return createLiteralReplacement(pattern);
-                } else {
-                    used.add(replacement);
-                    String r = "%" + used.size() + "$";
-                    Replace.registerReplace(onReplaceConsumers, pattern, key, r);
-                    return r;
-                }
+                String replacement=getReplacement(arguments,key,pattern,formatArguments);
+                Replace.registerReplace(onReplaceConsumers,pattern,key,replacement);
+                return replacement;
             },true);
-        return String.format(locale,preformatted,used.toArray());
+        registerPreformatted(onPreformattedConsumers,preformatted,formatArguments);
+        return String.format(locale,preformatted,formatArguments.toArray());
     }
 
-    public static Object getReplacement(Map<String,Object> parameters,  //TODO: Nameing -> getFormatArguments()?
-                                        String key,
-                                        String pattern,
-                                        Object defaultReplacement,
-                                        boolean literalReplacement) {
-        Object replacement;
-//        boolean applyLiteralReplacement=false;
-        if (!parameters.containsKey(key)) {
-            if (defaultReplacement==null) {
-//                replacement=pattern;
-                replacement=null;
-//                applyLiteralReplacement=true;
-            } else {
-                replacement=defaultReplacement;
-            }
+    /**
+     * Gets the replacement for a matched pattern.
+     * @param arguments Arguments.
+     * @param key Matched key.
+     * @param pattern Matched pattern.
+     * @param formatArguments Format arguments.
+     * @return Replacement.
+     */
+    private String getReplacement(Map<String,Object> arguments,
+                                  String key,
+                                  String pattern,
+                                  List<Object> formatArguments) {
+        String replacement;
+        Object formatArgument=getFormatArgument(arguments,key);
+        if (formatArgument==null) {
+            replacement=createLiteral(pattern);
         } else {
-            replacement=parameters.get(key);
-//            applyLiteralReplacement=literalReplacement;
+            int index=formatArguments.indexOf(formatArgument);
+            if (index==-1) {
+                index=formatArguments.size();
+                formatArguments.add(formatArgument);
+            }
+            replacement="%"+(1+index)+"$";
         }
-//        replacement=applyLiteralReplacement?createLiteralReplacement(replacement):replacement;
         return replacement;
     }
 
-    public static String createLiteralReplacement(String replacement) {
-        return replacement.replace("%","%%");
+    /**
+     * Gets the argument to use for the actual formatting with {@link java.util.Formatter}.
+     * @param arguments Arguments.
+     * @param key Matching key.
+     * @return Argument for formatting.
+     */
+    private Object getFormatArgument(Map<String,Object> arguments,
+                                     String key) {
+        Object formatArgument;
+        if (!arguments.containsKey(key)) {
+            if (defaultFormatArgument==null) {
+                formatArgument=null;
+            } else {
+                formatArgument=defaultFormatArgument;
+            }
+        } else {
+            formatArgument=arguments.get(key);
+        }
+        return formatArgument;
+    }
+
+    /**
+     * Creates a token to be literal when placed inside a format used for {@link java.util.Formatter}.
+     * @param token Token to make literal.
+     * @return Literal token.
+     */
+    private static String createLiteral(String token) {
+        return token.replace("%","%%");
+    }
+
+    /**
+     * Register the result of pre-formatting by notifying all consumers.
+     * @param onPreformattedConsumers Consumers to notify.
+     * @param preformatted Preformatted format.
+     * @param formatArguments Format arguments.
+     */
+    private static void registerPreformatted(List<BiConsumer<String,List<Object>>> onPreformattedConsumers,
+                                             String preformatted,
+                                             List<Object> formatArguments) {
+        if (onPreformattedConsumers!=null) {
+            onPreformattedConsumers.forEach(consumer->consumer.accept(preformatted,formatArguments));
+        }
     }
 }
