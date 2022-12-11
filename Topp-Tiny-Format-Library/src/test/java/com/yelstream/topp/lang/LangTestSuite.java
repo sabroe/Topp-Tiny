@@ -1,4 +1,4 @@
-package com.yelstream.topp.util.lang;
+package com.yelstream.topp.lang;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

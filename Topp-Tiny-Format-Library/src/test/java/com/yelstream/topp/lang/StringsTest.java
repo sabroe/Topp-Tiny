@@ -1,4 +1,4 @@
-package com.yelstream.topp.util.lang;
+package com.yelstream.topp.lang;
 
 /**
  * Test suite for {@code com.yelstream.topp.lang.Strings}.

@@ -1,7 +1,7 @@
 package com.yelstream.topp.util.management;
 
 import com.yelstream.topp.util.format.NamedFormatters;
-import com.yelstream.topp.util.lang.StringBuilders;
+import com.yelstream.topp.lang.StringBuilders;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
