@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Test suite for {@code com.yelstream.topp.util.format.ReplacerTest}.
+ * Test suite for {@code com.yelstream.topp.util.format.Replacer}.
  *
  * @author Morten Sabroe Mortensen
  * @version 1.0

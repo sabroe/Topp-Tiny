@@ -6,10 +6,9 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 /**
- * Test suite for {@code com.yelstream.topp.util.format.NamedFormatterTest}.
+ * Test suite for {@code com.yelstream.topp.util.format.NamedFormatter}.
  *
  * @author Morten Sabroe Mortensen
  * @version 1.0

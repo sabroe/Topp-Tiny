@@ -1,7 +1,7 @@
 package com.yelstream.topp.util.management;
 
+import com.yelstream.topp.util.format.NamedFormatters;
 import com.yelstream.topp.util.lang.StringBuilders;
-import com.yelstream.topp.util.lang.Strings;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -88,7 +88,7 @@ public final class DefaultPathGenerator2 implements PathGenerator {
             formattedTime=dateFormatter.format(time);
             arguments.put("formattedTime",formattedTime);
         }
-        return Strings.namedFormat(fileNameFormat,arguments);
+        return NamedFormatters.format(fileNameFormat,arguments);
     }
 
     /**
@@ -134,7 +134,7 @@ public final class DefaultPathGenerator2 implements PathGenerator {
             }
 
             String metaFileNameFormat=metaFileNameFormatBuffer.toString();
-            fileNameFormat=Strings.namedFormat(metaFileNameFormat,arguments);
+            fileNameFormat=NamedFormatters.format(metaFileNameFormat,arguments);
         }
 
         return new InstanceData(fileNameFormat);

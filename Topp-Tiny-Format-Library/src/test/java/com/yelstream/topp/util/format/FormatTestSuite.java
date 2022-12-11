@@ -12,6 +12,8 @@ import org.junit.platform.suite.api.Suite;
  */
 @Suite
 @SelectClasses({NamedFormatterTest.class,
+                NamedFormattersTest.class,
+                ReplacersTest.class,
                 ReplacerTest.class})
 public class FormatTestSuite {
 }
