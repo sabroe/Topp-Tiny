@@ -13,7 +13,7 @@ import java.util.Map;
  * @version 1.0
  * @since 2022-12-11
  */
-public class NamedFormattersTest {
+class NamedFormattersTest {
     /**
      * Basic test of {@link NamedFormatters#format(String, Map)}.
      */

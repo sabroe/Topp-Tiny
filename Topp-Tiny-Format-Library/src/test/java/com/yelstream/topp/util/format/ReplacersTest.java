@@ -12,7 +12,7 @@ import java.util.Map;
  * @version 1.0
  * @since 2022-12-11
  */
-public class ReplacersTest {
+class ReplacersTest {
     /**
      * Basic test of {@link Replacers#replace(String, Map)}.
      */

@@ -3,7 +3,6 @@ package com.yelstream.topp.util.uuid;
 import com.yelstream.topp.util.random.data.ConcurrentRandomDataFactory;
 import org.junit.jupiter.params.provider.Arguments;
 
-import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.stream.Stream;

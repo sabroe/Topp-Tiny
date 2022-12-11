@@ -15,7 +15,7 @@ class SequentialCorrectnessUUIDFactoryTest extends AbstractUUIDFactoryTest {
     @MethodSource("data")
     void correctnessSequential(UUIDFactorySupplier g,
                                int listSize,
-                               int threadCount) throws Exception {
+                               int threadCount) {
         UUIDFactory f=g.createUUIDFactory();
         UUID[] l=UUIDFactoryTestUtility.createUUIDList(f,listSize);
         UUIDFactoryTestUtility.verifyUUIDList(l);

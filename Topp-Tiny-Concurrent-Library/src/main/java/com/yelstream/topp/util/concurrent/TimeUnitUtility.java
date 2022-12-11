@@ -118,48 +118,32 @@ public class TimeUnitUtility {
             throw new IllegalArgumentException("Failure to convert; rounding mode must be set!");
         } else {
             switch (roundingMode) {
-                case FLOOR: {
-                    res= convertFloor(sourceDuration,sourceUnit,targetUnit);
-                    break;
+                case FLOOR -> {
+                    res = convertFloor(sourceDuration, sourceUnit, targetUnit);
                 }
-
-                case CEILING: {
-                    res= convertCeiling(sourceDuration,sourceUnit,targetUnit);
-                    break;
+                case CEILING -> {
+                    res = convertCeiling(sourceDuration, sourceUnit, targetUnit);
                 }
-
-                case UP: {
-                    res= convertUp(sourceDuration,sourceUnit,targetUnit);
-                    break;
+                case UP -> {
+                    res = convertUp(sourceDuration, sourceUnit, targetUnit);
                 }
-
-                case DOWN: {
-                    res= convertDown(sourceDuration,sourceUnit,targetUnit);
-                    break;
+                case DOWN -> {
+                    res = convertDown(sourceDuration, sourceUnit, targetUnit);
                 }
-
-                case HALF_UP: {
-                    res= convertHalfUp(sourceDuration,sourceUnit,targetUnit);
-                    break;
+                case HALF_UP -> {
+                    res = convertHalfUp(sourceDuration, sourceUnit, targetUnit);
                 }
-
-                case HALF_DOWN: {
-                    res= convertHalfDown(sourceDuration,sourceUnit,targetUnit);
-                    break;
+                case HALF_DOWN -> {
+                    res = convertHalfDown(sourceDuration, sourceUnit, targetUnit);
                 }
-
-                case HALF_EVEN: {
-                    res= convertHalfEven(sourceDuration,sourceUnit,targetUnit);
-                    break;
+                case HALF_EVEN -> {
+                    res = convertHalfEven(sourceDuration, sourceUnit, targetUnit);
                 }
-
-                case UNNECESSARY: {
-                    res= convertUnnecessary(sourceDuration,sourceUnit,targetUnit);
-                    break;
+                case UNNECESSARY -> {
+                    res = convertUnnecessary(sourceDuration, sourceUnit, targetUnit);
                 }
-
-                default: {
-                    throw new IllegalArgumentException(String.format("Failure to convert; rounding mode %s can not be recognised!",roundingMode.name()));
+                default -> {
+                    throw new IllegalArgumentException(String.format("Failure to convert; rounding mode %s can not be recognised!", roundingMode.name()));
                 }
             }
         }

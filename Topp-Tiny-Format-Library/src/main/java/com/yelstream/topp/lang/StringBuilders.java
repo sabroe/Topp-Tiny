@@ -23,7 +23,7 @@ public class StringBuilders {
                               String replacement) {
         int index=builder.indexOf(token);
         if (index!=-1) {
-            builder.replace(index, index+token.length(), replacement);
+            builder.replace(index,index+token.length(),replacement);
         }
         return index;
     }
@@ -40,9 +40,9 @@ public class StringBuilders {
                                   int fromIndex,
                                   String token,
                                   String replacement) {
-        int index=builder.indexOf(token, fromIndex);
+        int index=builder.indexOf(token,fromIndex);
         if (index!=-1) {
-            builder.replace(index, index+token.length(), replacement);
+            builder.replace(index,index+token.length(),replacement);
         }
         return index;
     }
@@ -59,7 +59,7 @@ public class StringBuilders {
                                   String replacement) {
         int index=builder.lastIndexOf(token);
         if (index!=-1) {
-            builder.replace(index, index+token.length(), replacement);
+            builder.replace(index,index+token.length(),replacement);
         }
         return index;
     }
@@ -77,9 +77,9 @@ public class StringBuilders {
                                       int fromIndex,
                                       String token,
                                       String replacement) {
-        int index=builder.lastIndexOf(token, fromIndex);
+        int index=builder.lastIndexOf(token,fromIndex);
         if (index!=-1) {
-            builder.replace(index, index+token.length(), replacement);
+            builder.replace(index,index+token.length(),replacement);
         }
         return index;
     }
@@ -97,11 +97,11 @@ public class StringBuilders {
         int replacedCount=0;
         int indexFrom=0;
         while (indexFrom<builder.length()) {
-            int index=builder.indexOf(token, indexFrom);
+            int index=builder.indexOf(token,indexFrom);
             if (index==-1) {
                 indexFrom=builder.length();
             } else {
-                builder.replace(index, index+token.length(), replacement);
+                builder.replace(index,index+token.length(),replacement);
                 indexFrom=index+token.length();
                 replacedCount++;
             }

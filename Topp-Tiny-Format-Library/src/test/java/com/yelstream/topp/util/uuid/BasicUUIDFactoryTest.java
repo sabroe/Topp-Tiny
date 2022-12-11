@@ -9,7 +9,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.UUID;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 /**
@@ -72,7 +71,7 @@ public class BasicUUIDFactoryTest {
     }
 
     UUID[] createUUIDList(UUIDFactory g,
-                          int listSize) throws Exception {
+                          int listSize) {
         UUID[] l=new UUID[listSize];
 
         for (int i=0; i<listSize; i++) {
