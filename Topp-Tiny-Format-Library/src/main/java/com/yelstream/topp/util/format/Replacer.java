@@ -1,6 +1,5 @@
 package com.yelstream.topp.util.format;
 
-import com.yelstream.topp.util.collection.Maps;
 import com.yelstream.topp.util.regex.MatcherLoop;
 import com.yelstream.topp.util.regex.Patterns;
 import lombok.AllArgsConstructor;
@@ -8,11 +7,11 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Singular;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Replaces named variables within a string.
@@ -71,8 +70,7 @@ public class Replacer {
      */
     public String replace(String format,
                          List<Parameter> parameters) {
-        Map<String,Object> parameterMap=new HashMap<>();
-        parameters.forEach(parameter -> Maps.putFromScratch(parameterMap,parameter.name,parameter.value));
+        Map<String,Object> parameterMap=parameters.stream().collect(Collectors.toMap(Parameter::name,Parameter::value));
         return replace(format,parameterMap);
     }
 

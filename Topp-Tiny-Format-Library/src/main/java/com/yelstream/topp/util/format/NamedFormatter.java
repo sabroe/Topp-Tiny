@@ -1,6 +1,5 @@
 package com.yelstream.topp.util.format;
 
-import com.yelstream.topp.util.collection.Maps;
 import com.yelstream.topp.util.regex.MatcherLoop;
 import com.yelstream.topp.util.regex.Patterns;
 import lombok.AllArgsConstructor;
@@ -9,13 +8,13 @@ import lombok.NoArgsConstructor;
 import lombok.Singular;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Replaces named variables within a string.
@@ -77,8 +76,7 @@ public class NamedFormatter {
      */
     public String format(String format,
                          List<Argument> arguments) {
-        Map<String,Object> argumentMap=new HashMap<>();
-        arguments.forEach(argument -> Maps.putFromScratch(argumentMap,argument.name,argument.value));
+        Map<String,Object> argumentMap=arguments.stream().collect(Collectors.toMap(Argument::name,Argument::value));
         return format(format,argumentMap);
     }
 
