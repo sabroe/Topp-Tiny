@@ -1,6 +1,7 @@
 package com.yelstream.topp.util.management;
 
-import com.yelstream.topp.lang.StringBuilders;
+import com.yelstream.topp.util.lang.StringBuilders;
+import com.yelstream.topp.util.lang.Strings;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +10,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Supplier;
 
 /**
@@ -56,7 +58,6 @@ public final class DefaultPathGenerator2 implements PathGenerator {
     @Getter(lazy=true)
     private final InstanceData instanceData=createInstanceData();
 
-/*
     @Override
     @SuppressWarnings("java:S1117")  //"Local variables should not shadow class fields"
     public Path generate(String partName) {
@@ -64,8 +65,8 @@ public final class DefaultPathGenerator2 implements PathGenerator {
         String pathName=createPathName(instanceData.fileNameFormat,timeSupplier,dateFormatter,partName);
         return directory.resolve(pathName);
     }
-*/
 
+    /*
     @Override
     @SuppressWarnings("java:S1117")  //"Local variables should not shadow class fields"
     public Path generate(List<Part> parts) {
@@ -73,24 +74,28 @@ public final class DefaultPathGenerator2 implements PathGenerator {
         String pathName=createPathName(instanceData.fileNameFormat,timeSupplier,dateFormatter,partName);
         return directory.resolve(pathName);
     }
+    */
 
     private static String createPathName(String fileNameFormat,
                                          Supplier<TemporalAccessor> timeSupplier,
                                          DateTimeFormatter dateFormatter,
                                          String partName) {
+        Map<String,Object> arguments=new HashMap<>();
+        arguments.put("partName",partName);
         String formattedTime=null;
         if (timeSupplier!=null) {
             TemporalAccessor time=timeSupplier.get();
             formattedTime=dateFormatter.format(time);
+            arguments.put("formattedTime",formattedTime);
         }
-        return String.format(fileNameFormat,partName,formattedTime);  //Yes, part name first, formatted time second!
+        return Strings.namedFormat(fileNameFormat,arguments);
     }
 
     /**
      * Build a path generator.
      * @return Path generator.
      */
-//    @SuppressWarnings("java:S3776")  //"Cognitive Complexity of methods should not be too high"
+    //@SuppressWarnings("java:S3776")  //"Cognitive Complexity of methods should not be too high"
     private InstanceData createInstanceData() {
         String fileNameFormat;
 
@@ -101,40 +106,52 @@ public final class DefaultPathGenerator2 implements PathGenerator {
             fileNameFormat=this.fileNameFormat;
         } else {
             StringBuilder metaFileNameFormatBuffer=new StringBuilder();
+            Map<String,Object> arguments=new HashMap<>();
 
             if (fileNamePrefix!=null) {
-                metaFileNameFormatBuffer.append("%1$s");
+                metaFileNameFormatBuffer.append("%fileNamePrefix$s");
+                arguments.put("fileNamePrefix",fileNamePrefix);
             }
 
             if (timeSupplier!=null) {
                 StringBuilders.appendTokenIfBuilderIsNonEmpty(metaFileNameFormatBuffer,"-");
-                metaFileNameFormatBuffer.append("%%2$s");  //time
+                metaFileNameFormatBuffer.append("%%formattedTime$s");
             }
 
             StringBuilders.appendTokenIfBuilderIsNonEmpty(metaFileNameFormatBuffer,"-");
-            metaFileNameFormatBuffer.append("%%1$s");  //part name
+            metaFileNameFormatBuffer.append("%%partName$s");
 
             if (fileNameSuffix!=null) {
                 StringBuilders.appendTokenIfBuilderIsNonEmpty(metaFileNameFormatBuffer,"-");
-                metaFileNameFormatBuffer.append("%2$s");
+                metaFileNameFormatBuffer.append("%fileNameSuffix$s");
+                arguments.put("fileNameSuffix",fileNameSuffix);
             }
 
             if (fileNameExtension!=null) {
                 StringBuilders.appendDelimiterIfNotOnToken(metaFileNameFormatBuffer, ".",fileNameExtension);
-                metaFileNameFormatBuffer.append("%3$s");
+                metaFileNameFormatBuffer.append("%fileNameExtension$s");
+                arguments.put("fileNameExtension",fileNameExtension);
             }
 
             String metaFileNameFormat=metaFileNameFormatBuffer.toString();
-            fileNameFormat=String.format(metaFileNameFormat,fileNamePrefix,fileNameSuffix,fileNameExtension);
+            fileNameFormat=Strings.namedFormat(metaFileNameFormat,arguments);
         }
 
         return new InstanceData(fileNameFormat);
     }
 
+    /**
+     * .
+     */
     public static class Builder {
         @SuppressWarnings({"java:S1450","FieldCanBeLocal","unused"})
         private Supplier<TemporalAccessor> timeSupplier;
 
+        /**
+         * .
+         * @param timeSupplier .
+         * @return .
+         */
         public Builder timeSupplier(Supplier<TemporalAccessor> timeSupplier) {
             if (timeSupplier!=null) {
                 throw new IllegalStateException("Failure to set time; cannot set time more than once!");
@@ -143,12 +160,24 @@ public final class DefaultPathGenerator2 implements PathGenerator {
             return this;
         }
 
+        /**
+         * .
+         * @param time .
+         * @return .
+         */
         public Builder time(TemporalAccessor time) {
             return timeSupplier(()->time);
         }
     }
 
+    /**
+     * .
+     * @param args .
+     */
     public static void main(String[] args) {
-        DefaultPathGenerator2.builder().fileNameFormat("").build();
+        DefaultPathGenerator2 generator=DefaultPathGenerator2.builder().fileNamePrefix("prefix").fileNameSuffix("suffix").fileNameExtension(".bin").build();
+        System.out.println(generator.generate("aaa"));
+        System.out.println(generator.generate("bbb"));
+        System.out.println(generator.generate("ccc"));
     }
 }

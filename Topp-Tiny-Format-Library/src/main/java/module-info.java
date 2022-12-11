@@ -3,7 +3,8 @@
  */
 module com.yelstream.topp.tiny.format {
     requires static lombok;
-    exports com.yelstream.topp.lang;
+    requires com.yelstream.topp.tiny.collection;
+    exports com.yelstream.topp.util.lang;
     exports com.yelstream.topp.util.format;
     exports com.yelstream.topp.util.random;
     exports com.yelstream.topp.util.random.data;

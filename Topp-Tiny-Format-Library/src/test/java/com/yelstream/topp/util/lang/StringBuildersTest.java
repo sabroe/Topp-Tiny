@@ -1,5 +1,6 @@
-package com.yelstream.topp.lang;
+package com.yelstream.topp.util.lang;
 
+import com.yelstream.topp.util.lang.StringBuilders;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ class StringBuildersTest {
     void replace() {
         {
             StringBuilder buffer = new StringBuilder("aaa-bbb-ccc-bbb");
-            int index=StringBuilders.replace(buffer, "bbb", "xxx");
+            int index= StringBuilders.replace(buffer, "bbb", "xxx");
             Assertions.assertEquals(4, index);
             Assertions.assertEquals("aaa-xxx-ccc-bbb", buffer.toString());
         }
@@ -120,12 +121,12 @@ class StringBuildersTest {
         {
             StringBuilder builder=new StringBuilder();
             StringBuilders.appendTokenIfBuilderIsNonEmpty(builder, "-");
-            Assertions.assertEquals(builder.toString(), "");
+            Assertions.assertEquals("", builder.toString());
         }
         {
             StringBuilder builder=new StringBuilder("aaa");
             StringBuilders.appendTokenIfBuilderIsNonEmpty(builder, "-");
-            Assertions.assertEquals(builder.toString(), "aaa-");
+            Assertions.assertEquals("aaa-", builder.toString());
         }
     }
 
@@ -134,12 +135,12 @@ class StringBuildersTest {
         {
             StringBuilder builder=new StringBuilder("xxx");
             StringBuilders.appendDelimiterIfNotOnToken(builder,".","bin");
-            Assertions.assertEquals(builder.toString(), "xxx.");
+            Assertions.assertEquals("xxx.", builder.toString());
         }
         {
             StringBuilder builder=new StringBuilder("xxx");
             StringBuilders.appendDelimiterIfNotOnToken(builder,".",".bin");
-            Assertions.assertEquals(builder.toString(), "xxx");
+            Assertions.assertEquals("xxx", builder.toString());
         }
     }
 
@@ -148,12 +149,12 @@ class StringBuildersTest {
         {
             StringBuilder builder=new StringBuilder("xxx");
             StringBuilders.appendDelimiterAndToken(builder,".","bin");
-            Assertions.assertEquals(builder.toString(), "xxx.bin");
+            Assertions.assertEquals("xxx.bin", builder.toString());
         }
         {
             StringBuilder builder=new StringBuilder("xxx");
             StringBuilders.appendDelimiterAndToken(builder,".",".bin");
-            Assertions.assertEquals(builder.toString(), "xxx.bin");
+            Assertions.assertEquals("xxx.bin", builder.toString());
         }
     }
 }

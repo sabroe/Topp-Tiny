@@ -1,4 +1,4 @@
-package com.yelstream.topp.lang;
+package com.yelstream.topp.util.lang;
 
 /**
  * Auto-closeable with a specific exception in the signature of {@link #close()}.

@@ -18,7 +18,7 @@ class RandomContentGeneratorTest {
     }
 
     public static void main(String[] args) throws IOException {
-/*
+        /*
         createFileWithRandomContent(Paths.get("C:/temp/random-1.scratch"),1L*1024L*1024L);
         createFileWithRandomContent(Paths.get("C:/temp/random-10.scratch"),10L*1024L*1024L);
         createFileWithRandomContent(Paths.get("C:/temp/random-30.scratch"),30L*1024L*1024L);
@@ -27,8 +27,8 @@ class RandomContentGeneratorTest {
         createFileWithRandomContent(Paths.get("C:/temp/random-200.scratch"),200L*1024L*1024L);
         createFileWithRandomContent(Paths.get("C:/temp/random-300.scratch"),300L*1024L*1024L);
         createFileWithRandomContent(Paths.get("C:/temp/random-500.scratch"),500L*1024L*1024L);
-*/
-//        createFileWithRandomContent(Paths.get("C:/temp/random-1000.scratch"),1000L*1024L*1024L);
+        */
+        //        createFileWithRandomContent(Paths.get("C:/temp/random-1000.scratch"),1000L*1024L*1024L);
         RandomContentGenerator contentGenerator=new RandomContentGenerator();
         contentGenerator.createContent(Paths.get("C:/temp/random-10.scratch"),10L*1024L*1024L);
     }

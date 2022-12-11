@@ -1,12 +1,14 @@
 package com.yelstream.topp.util.format;
 
-import com.yelstream.topp.util.regex.Matchers;
+import com.yelstream.topp.util.collection.Maps;
+import com.yelstream.topp.util.regex.MatcherLoop;
 import com.yelstream.topp.util.regex.Patterns;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Singular;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -54,22 +56,44 @@ public class Replacer {
     private List<Consumer<String>> onPreformattedConsumers;
 
     /**
-     * Creates a text by substituting arguments into a format.
+     * Parameter.
+     * @param name Name.
+     * @param value Value.
+     */
+    public record Parameter(String name, Object value) {
+    }
+
+    /**
+     * Creates a text by substituting parameters into a format.
+     * @param format Format.
+     * @param parameters Parameters.
+     * @return Formatted text.
+     */
+    public String replace(String format,
+                         List<Parameter> parameters) {
+        Map<String,Object> parameterMap=new HashMap<>();
+        parameters.forEach(parameter -> Maps.putFromScratch(parameterMap,parameter.name,parameter.value));
+        return replace(format,parameterMap);
+    }
+
+    /**
+     * Creates a text by substituting parameters into a format.
      * @param format Format.
      * @param parameters Parameters.
      * @return Formatted text.
      */
     public String replace(String format,
                           Map<String,Object> parameters) {
+        MatcherLoop matcherLoop=MatcherLoop.builder().pattern(parameterPattern).format(format).build();
         String preformatted=
-            Matchers.runMatcherLoop(parameterPattern,format,matcher -> {
+            matcherLoop.run(matcher -> {
                 String pattern=matcher.group(Patterns.PATTERN_GROUP_NAME);
                 String key=matcher.group(Patterns.KEY_GROUP_NAME);
                 Match.registerMatch(onMatchConsumers,pattern,key);
                 String replacement=getReplacement(parameters,key,pattern);
                 Replace.registerReplace(onReplaceConsumers,pattern,key,replacement);
                 return replacement;
-            },true);
+            });
         registerPreformatted(onPreformattedConsumers,preformatted);
         return preformatted.replace("$$","$");
     }

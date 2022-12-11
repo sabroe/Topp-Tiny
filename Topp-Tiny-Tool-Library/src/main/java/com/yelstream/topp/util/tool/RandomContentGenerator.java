@@ -33,6 +33,12 @@ public class RandomContentGenerator {
     @Getter(lazy=true)
     private final byte[] buffer=new byte[bufferSize];
 
+    /**
+     * Creates random content.
+     * @param path Destination file.
+     * @param size Size of file.
+     * @throws IOException Thrown in case of I/O error.
+     */
     public void createContent(Path path,
                               long size) throws IOException {
         Files.createFile(path);
@@ -42,6 +48,12 @@ public class RandomContentGenerator {
         }
     }
 
+    /**
+     * Creates random content.
+     * @param out Destination stream.
+     * @param size Size of file.
+     * @throws IOException Thrown in case of I/O error.
+     */
     public void createContent(OutputStream out,
                               long size) throws IOException {
         byte[] b=getBuffer();

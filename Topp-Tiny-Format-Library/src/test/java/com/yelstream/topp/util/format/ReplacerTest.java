@@ -141,4 +141,18 @@ class ReplacerTest {
             Assertions.assertEquals("aaa-bbb",formatted);
         }
     }
+
+    /**
+     * Test replace with the usage of a default format parameter.
+     */
+    @Test
+    void replaceWithDefaultFormatParameter() {
+        Replacer.Builder builder=Replacer.builder();
+        builder.defaultFormatParameter("???");
+        Replacer replacer=builder.build();
+        {
+            String formatted=replacer.replace("${xxx}-${yyy}-${zzz}",Map.of("xxx","aaa"));
+            Assertions.assertEquals("aaa-???-???",formatted);
+        }
+    }
 }

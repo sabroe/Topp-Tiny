@@ -45,17 +45,18 @@ public class Maps {
      * @param value Value.
      * @param <K> Type of key.
      * @param <V> Type of value.
+     * @return Previous value associated with key, if any.
      */
-    public <K,V> void putFromScratch(Map<K,V> map,
-                                     K key,
-                                     V value) {
+    public <K,V> V putFromScratch(Map<K,V> map,
+                                  K key,
+                                  V value) {
         if (key==null) {
             throw new IllegalArgumentException("Failure to put entry into map from scratch; key is not set!");
         }
         if (map.containsKey(key)) {
             throw new IllegalStateException(String.format("Failure to put entry into map from scratch; map already contains key %s!",key));
         }
-        map.put(key,value);
+        return map.put(key,value);
     }
 
     /**

@@ -1,5 +1,6 @@
-package com.yelstream.topp.lang;
+package com.yelstream.topp.util.lang;
 
+import com.yelstream.topp.util.lang.Strings;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

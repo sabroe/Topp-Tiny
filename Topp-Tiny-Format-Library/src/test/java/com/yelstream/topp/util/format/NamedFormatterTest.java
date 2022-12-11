@@ -127,7 +127,6 @@ class NamedFormatterTest {
         }
     }
 
-
     /**
      * Test format with the usage of a default format argument.
      */
@@ -137,8 +136,8 @@ class NamedFormatterTest {
         builder.defaultFormatArgument("???");
         NamedFormatter formatter=builder.build();
         {
-            String formatted=formatter.format("%xxx$s-%yyy$s",Map.of("xxx","aaa"));
-            Assertions.assertEquals("aaa-???",formatted);
+            String formatted=formatter.format("%xxx$s-%yyy$s-%zzz$s",Map.of("xxx","aaa"));
+            Assertions.assertEquals("aaa-???-???",formatted);
         }
     }
 }

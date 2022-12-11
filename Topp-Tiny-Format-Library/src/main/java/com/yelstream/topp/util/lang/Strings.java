@@ -1,4 +1,4 @@
-package com.yelstream.topp.lang;
+package com.yelstream.topp.util.lang;
 
 import com.yelstream.topp.util.format.NamedFormatter;
 import com.yelstream.topp.util.format.Replacer;

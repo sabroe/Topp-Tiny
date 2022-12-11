@@ -16,7 +16,7 @@ import java.nio.file.Paths;
  * @version 1.0
  * @since 2022-12-03
  */
-public class HeapUtilityTest {
+class HeapUtilityTest {
     @Test
     void createHeapDumpInSpecificDirectory() throws IOException {
         Path directory=Paths.get("build/tmp/test/dump");

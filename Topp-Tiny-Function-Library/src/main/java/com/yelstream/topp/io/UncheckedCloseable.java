@@ -1,6 +1,6 @@
 package com.yelstream.topp.io;
 
-import com.yelstream.topp.lang.UncheckedAutoCloseable;
+import com.yelstream.topp.util.lang.UncheckedAutoCloseable;
 
 /**
  * Closeable with no checked exception thrown in the signature of {@link #close()}.

@@ -1,6 +1,6 @@
 package com.yelstream.topp.io;
 
-import com.yelstream.topp.lang.AutoCloseableWithException;
+import com.yelstream.topp.util.lang.AutoCloseableWithException;
 
 import java.io.IOException;
 

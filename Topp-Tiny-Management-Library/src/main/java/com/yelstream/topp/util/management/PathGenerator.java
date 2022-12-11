@@ -15,28 +15,43 @@ import java.util.stream.IntStream;
  */
 @FunctionalInterface
 public interface PathGenerator {
-    /**
+    /*
      * Generates a path.
      * @param parts Partial names of path.
      * @return Path.
      */
+    /*
     default Path generate(String... parts) {
         List<Part> partList=IntStream.range(0,parts.length).mapToObj(i->new Part(Integer.toString(i),parts[i])).toList();
         return generate(partList);
     }
+    */
 
+    /*
     record Part(String name, String value) {
     }
+    */
 
-    /**
+    /*
      * Generates a path.
      * @param parts Partial names of path.
      * @return Path.
      */
+    /*
     default Path generate(Part... parts) {
         List<Part> partList=Arrays.stream(parts).toList();
         return generate(partList);
     }
+    */
 
+    /*
     Path generate(List<Part> parts);
+    */
+
+    /**
+     * .
+     * @param partName .
+     * @return .
+     */
+    Path generate(String partName);
 }

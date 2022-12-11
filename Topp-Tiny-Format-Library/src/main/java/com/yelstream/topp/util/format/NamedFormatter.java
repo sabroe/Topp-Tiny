@@ -1,6 +1,7 @@
 package com.yelstream.topp.util.format;
 
-import com.yelstream.topp.util.regex.Matchers;
+import com.yelstream.topp.util.collection.Maps;
+import com.yelstream.topp.util.regex.MatcherLoop;
 import com.yelstream.topp.util.regex.Patterns;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Singular;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -60,6 +62,27 @@ public class NamedFormatter {
     private List<BiConsumer<String,List<Object>>> onPreformattedConsumers;
 
     /**
+     * Format argument.
+     * @param name Name.
+     * @param value Value.
+     */
+    public record Argument(String name, Object value) {
+    }
+
+    /**
+     * Creates a text by substituting arguments into a format.
+     * @param format Format.
+     * @param arguments Arguments.
+     * @return Formatted text.
+     */
+    public String format(String format,
+                         List<Argument> arguments) {
+        Map<String,Object> argumentMap=new HashMap<>();
+        arguments.forEach(argument -> Maps.putFromScratch(argumentMap,argument.name,argument.value));
+        return format(format,argumentMap);
+    }
+
+    /**
      * Creates a text by substituting arguments into a format.
      * @param format Format.
      * @param arguments Arguments.
@@ -68,15 +91,16 @@ public class NamedFormatter {
     public String format(String format,
                          Map<String,Object> arguments) {
         List<Object> formatArguments=new ArrayList<>();
+        MatcherLoop matcherLoop=MatcherLoop.builder().pattern(argumentPattern).format(format).build();
         String preformatted=
-            Matchers.runMatcherLoop(argumentPattern,format, matcher -> {
+            matcherLoop.run(matcher -> {
                 String pattern=matcher.group(Patterns.PATTERN_GROUP_NAME);
                 String key=matcher.group(Patterns.KEY_GROUP_NAME);
                 Match.registerMatch(onMatchConsumers,pattern,key);
                 String replacement=getReplacement(arguments,key,pattern,formatArguments);
                 Replace.registerReplace(onReplaceConsumers,pattern,key,replacement);
                 return replacement;
-            },true);
+            });
         registerPreformatted(onPreformattedConsumers,preformatted,formatArguments);
         return String.format(locale,preformatted,formatArguments.toArray());
     }

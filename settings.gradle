@@ -1,5 +1,6 @@
 rootProject.name = 'Yelstream Topp Tiny Utility Project'
 
+//include 'Topp-Tiny-Language-Library'
 include 'Topp-Tiny-Collection-Library'
 include 'Topp-Tiny-Concurrent-Library'
 include 'Topp-Tiny-Format-Library'

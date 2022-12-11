@@ -1,4 +1,4 @@
-package com.yelstream.topp.lang;
+package com.yelstream.topp.util.lang;
 
 import lombok.experimental.UtilityClass;
 
