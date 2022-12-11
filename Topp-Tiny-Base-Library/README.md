@@ -1,10 +1,10 @@
-# Topp Tiny IO Library
+# Topp Tiny Base Library
 
-Module: `topp-tiny-io-utility`
+Module: `topp-tiny-base-utility`
 
 ## Description
 
-Topp Tiny IO is an open-source Java library which implements input/output related utilities.
+Topp Tiny Base is an open-source Java library which implements Java utilities related to module java.base.
 
 ## Content
 
@@ -19,7 +19,7 @@ Artifacts are released to the [Maven Central Repository](https://search.maven.or
 
 For the latest version,
 search
-[_Group ID_ `io.github.sabroe.topp` and _Artifact ID_ `topp-io-net-utility`](https://search.maven.org/search?q=g:io.github.sabroe.topp%20AND%20a:topp-tiny-io-utility).
+[_Group ID_ `io.github.sabroe.topp` and _Artifact ID_ `topp-io-base-utility`](https://search.maven.org/search?q=g:io.github.sabroe.topp%20AND%20a:topp-tiny-base-utility).
 
 ---
 
