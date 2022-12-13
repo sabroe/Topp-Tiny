@@ -17,6 +17,7 @@ allprojects {
     repositories {
         mavenCentral()
     }
+    apply from: "${fragmentDir}/project-report.gradle"
 }
 
 subprojects {
@@ -31,3 +32,42 @@ subprojects {
     apply from: "${fragmentDir}/lombok.gradle"
     apply from: "${fragmentDir}/junit.gradle"
 }
+
+/*
+ Note:
+    To get a page with report links, consider executing this:
+
+    sabroe@DESKTOP-KI53BD9 /cygdrive/c/Project/Topp-Work/Topp-Tiny
+    $ find . -name "*.html" | grep -E "/build/(docs|reports)/[^.]+/[[:alnum:]]+[.]html"
+    ./Topp-Tiny-Collection-Library/build/docs/javadoc/index.html
+    ./Topp-Tiny-Collection-Library/build/reports/checkstyle/main.html
+    ./Topp-Tiny-Concurrent-Library/build/docs/javadoc/index.html
+    ./Topp-Tiny-Concurrent-Library/build/reports/checkstyle/main.html
+    ./Topp-Tiny-Concurrent-Library/build/reports/checkstyle/test.html
+    ./Topp-Tiny-Concurrent-Library/build/reports/jacoco/test/html/index.html
+    ./Topp-Tiny-Concurrent-Library/build/reports/tests/test/index.html
+    ./Topp-Tiny-Format-Library/build/docs/javadoc/index.html
+    ./Topp-Tiny-Format-Library/build/reports/checkstyle/main.html
+    ./Topp-Tiny-Format-Library/build/reports/checkstyle/test.html
+    ./Topp-Tiny-Format-Library/build/reports/jacoco/test/html/index.html
+    ./Topp-Tiny-Format-Library/build/reports/tests/test/index.html
+    ./Topp-Tiny-Function-Library/build/docs/javadoc/index.html
+    ./Topp-Tiny-Function-Library/build/reports/checkstyle/main.html
+    ./Topp-Tiny-IO-Library/build/docs/javadoc/index.html
+    ./Topp-Tiny-IO-Library/build/reports/checkstyle/main.html
+    ./Topp-Tiny-IO-Library/build/reports/checkstyle/test.html
+    ./Topp-Tiny-IO-Library/build/reports/jacoco/test/html/index.html
+    ./Topp-Tiny-IO-Library/build/reports/tests/test/index.html
+    ./Topp-Tiny-Management-Library/build/docs/javadoc/index.html
+    ./Topp-Tiny-Management-Library/build/reports/checkstyle/main.html
+    ./Topp-Tiny-Management-Library/build/reports/checkstyle/test.html
+    ./Topp-Tiny-Management-Library/build/reports/jacoco/test/html/index.html
+    ./Topp-Tiny-Management-Library/build/reports/tests/test/index.html
+    ./Topp-Tiny-Net-Library/build/docs/javadoc/index.html
+    ./Topp-Tiny-Net-Library/build/reports/checkstyle/main.html
+    ./Topp-Tiny-Tool-Library/build/docs/javadoc/index.html
+    ./Topp-Tiny-Tool-Library/build/reports/checkstyle/main.html
+    ./Topp-Tiny-Tool-Library/build/reports/checkstyle/test.html
+    ./Topp-Tiny-Tool-Library/build/reports/jacoco/test/html/index.html
+    ./Topp-Tiny-Tool-Library/build/reports/tests/test/index.html
+ */
