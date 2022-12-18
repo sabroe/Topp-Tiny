@@ -1,8 +1,11 @@
 package com.yelstream.topp.util.tool;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
@@ -13,24 +16,24 @@ import java.nio.file.Paths;
  * @since 2022-12-06
  */
 class RandomContentGeneratorTest {
+    /**
+     * Tests the method {@link RandomContentGenerator#createContent(Path, long)}.
+     * @throws IOException Thrown in case of I/O error.
+     */
     @Test
-    void replace() {
-    }
-
-    public static void main(String[] args) throws IOException {
-        /*
-        createFileWithRandomContent(Paths.get("C:/temp/random-1.scratch"),1L*1024L*1024L);
-        createFileWithRandomContent(Paths.get("C:/temp/random-10.scratch"),10L*1024L*1024L);
-        createFileWithRandomContent(Paths.get("C:/temp/random-30.scratch"),30L*1024L*1024L);
-        createFileWithRandomContent(Paths.get("C:/temp/random-50.scratch"),50L*1024L*1024L);
-        createFileWithRandomContent(Paths.get("C:/temp/random-100.scratch"),100L*1024L*1024L);
-        createFileWithRandomContent(Paths.get("C:/temp/random-200.scratch"),200L*1024L*1024L);
-        createFileWithRandomContent(Paths.get("C:/temp/random-300.scratch"),300L*1024L*1024L);
-        createFileWithRandomContent(Paths.get("C:/temp/random-500.scratch"),500L*1024L*1024L);
-        */
-        //        createFileWithRandomContent(Paths.get("C:/temp/random-1000.scratch"),1000L*1024L*1024L);
+    void createContent10MiBFile() throws IOException {
         RandomContentGenerator contentGenerator=new RandomContentGenerator();
-        contentGenerator.createContent(Paths.get("C:/temp/random-10.scratch"),10L*1024L*1024L);
-    }
 
+        Path dirPath=Paths.get("build/temp");
+        Files.createDirectories(dirPath);
+        Path filePath=dirPath.resolve("random-10.scratch");
+        Files.deleteIfExists(filePath);
+
+        contentGenerator.createContent(filePath,10L*1024L*1024L);
+
+        Assertions.assertTrue(Files.exists(filePath));
+        Assertions.assertEquals(10L*1024L*1024L,Files.size(filePath));
+
+        Assertions.assertThrows(IOException.class,()->contentGenerator.createContent(filePath,10L*1024L*1024L));
+    }
 }

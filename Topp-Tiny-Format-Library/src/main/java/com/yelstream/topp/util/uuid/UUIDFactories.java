@@ -18,28 +18,34 @@ import java.security.SecureRandom;
 public class UUIDFactories {
     /**
      * Creates a factory of UUIDs.
-     * @param randomDataFactory Factory of random data.
      * @return Factory of UUIDs.
      */
-    public static UUIDFactory createUUIDFactory(RandomDataFactory randomDataFactory) {
+    public static UUIDFactory createUUIDFactory() {
         return new JDKRandomUUIDFactory();
     }
 
     /**
-     * Creates a factory of UUIDs for simple, non-concurrent access.
+     * Creates a factory of UUIDs.
      * @param randomDataFactory Factory of random data.
      * @return Factory of UUIDs.
      */
     public static UUIDFactory createSimpleUUIDFactory(RandomDataFactory randomDataFactory) {
+        return new ByteArrayRandomUUIDFactory(randomDataFactory);
+    }
+
+    /**
+     * Creates a factory of UUIDs for simple, non-concurrent access.
+     * @return Factory of UUIDs.
+     */
+    public static UUIDFactory createSimpleUUIDFactory() {
         return new ByteArrayRandomUUIDFactory(new SimpleRandomDataFactory(SecureRandom::new));
     }
 
     /**
      * Creates a factory of UUIDs for concurrent access.
-     * @param randomDataFactory Factory of random data.
      * @return Factory of UUIDs.
      */
-    public static UUIDFactory createConcurrentUUIDFactory(RandomDataFactory randomDataFactory) {
+    public static UUIDFactory createConcurrentUUIDFactory() {
         return new ByteArrayRandomUUIDFactory(ConcurrentRandomDataFactory.builder().randomFactory(SecureRandom::new).build());
     }
 }

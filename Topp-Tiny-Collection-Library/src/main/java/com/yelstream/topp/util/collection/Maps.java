@@ -5,8 +5,6 @@ import com.yelstream.topp.util.function.ex.FunctionWithException;
 import com.yelstream.topp.util.function.ex.SupplierWithException;
 import lombok.experimental.UtilityClass;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -105,6 +103,7 @@ public class Maps {
      * @return The current value (existing or computed).
      * @throws E Thrown in case of error.
      */
+    @SuppressWarnings("java:S3824")
     public <K,V,E extends Throwable> V computeIfAbsent(Map<K,V> map,
                                                        K key,
                                                        FunctionWithException<? super K,? extends V,? extends E> mappingFunction) throws E {

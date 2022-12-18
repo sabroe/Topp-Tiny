@@ -1,6 +1,8 @@
 package com.yelstream.topp.util.collection;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Holder of an object.
@@ -11,6 +13,8 @@ import lombok.Data;
  * @since 2022-05-14
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Reference<E> {
     /**
      * Held object.

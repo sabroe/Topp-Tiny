@@ -15,7 +15,7 @@ import java.util.Map;
  * @version 1.0
  * @since 2022-12-17
  */
-public class MapsTest {
+class MapsTest {
     /**
      * Tests utility method {@link Maps#registerVisit(Map, Object)}.
      */

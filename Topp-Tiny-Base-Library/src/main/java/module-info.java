@@ -3,6 +3,4 @@
  */
 module com.yelstream.topp.tiny.base {
     requires static lombok;
-//    exports com.yelstream.topp.util.io;
-//    exports com.yelstream.topp.util.nio;
 }

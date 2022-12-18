@@ -35,27 +35,32 @@ public class RandomContentGenerator {
 
     /**
      * Creates random content.
-     * @param path Destination file.
+     * @param filePath Destination file.
      * @param size Size of file.
+     * @return Destination file.
      * @throws IOException Thrown in case of I/O error.
      */
-    public void createContent(Path path,
+    public Path createContent(Path filePath,
                               long size) throws IOException {
-        Files.createFile(path);
-        try (OutputStream out=Files.newOutputStream(path)) {
-            createContent(out,size);
+        if (Files.exists(filePath)) {
+            throw new IOException(String.format("Failure to create content; file '%s' does already exist!",filePath));
+        }
+        Files.createFile(filePath);
+        try (OutputStream out=Files.newOutputStream(filePath)) {
+            addContent(out,size);
             out.flush();
         }
+        return filePath;
     }
 
     /**
-     * Creates random content.
+     * Adds random content.
      * @param out Destination stream.
      * @param size Size of file.
      * @throws IOException Thrown in case of I/O error.
      */
-    public void createContent(OutputStream out,
-                              long size) throws IOException {
+    public void addContent(OutputStream out,
+                           long size) throws IOException {
         byte[] b=getBuffer();
         long actualSize=0;
         while (actualSize<size) {
