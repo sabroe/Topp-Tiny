@@ -153,7 +153,7 @@ class FeatureMapTest {
 
 
     /**
-     * Tests if a feature is applicable
+     * Tests if a feature is applicable.
      */
     @Test
     void createMapFromEnabling() {
