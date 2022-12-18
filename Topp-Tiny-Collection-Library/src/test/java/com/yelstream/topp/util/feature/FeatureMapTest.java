@@ -151,7 +151,6 @@ class FeatureMapTest {
         Assertions.assertThrows(IllegalArgumentException.class,()->predicate.test(ProductFeature.Collecting));
     }
 
-
     /**
      * Tests if a feature is applicable.
      */
