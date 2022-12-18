@@ -3,6 +3,7 @@ package com.yelstream.topp.util.feature;
 import lombok.Getter;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -33,7 +34,7 @@ import java.util.function.Predicate;
  * void process(FeatureMap&lt;ProductFeature&gt; featureMap,
  *              Map&lt;ProductFeature,Boolean&gt; featureEnabling,
  *              ...) {
- *     Predicate&lt;ProducerFeature&gt; enabled=featureMap.createEnabledPredicate(featureEnabling);
+ *     Predicate&lt;ProductFeature&gt; enabled=featureMap.createEnabledPredicate(featureEnabling);
  *     if (enabled.test(ProductFeature.Notifying) {
  *         ...
  *     }
@@ -50,9 +51,7 @@ import java.util.function.Predicate;
  * @version 1.0
  * @since 2022-05-14
  */
-@SuppressWarnings("unused")
-public class FeatureMap<F extends Enum<F>> {
-
+public final class FeatureMap<F extends Enum<F>> {
     /**
      * Associates applicable features with their default enabling.
      * A feature is recognized if and only if it is a key in this map.
@@ -66,8 +65,21 @@ public class FeatureMap<F extends Enum<F>> {
      * Constructor.
      * @param defaultFeatureEnabling Association of applicable features with their default enabling.
      */
-    public FeatureMap(Map<F,Boolean> defaultFeatureEnabling) {
+    private FeatureMap(Map<F,Boolean> defaultFeatureEnabling) {
         this.defaultFeatureEnabling=Collections.unmodifiableMap(defaultFeatureEnabling);
+    }
+
+    /**
+     * Constructor.
+     * @param featureMap Feature map.
+     * @param featureEnabling Association of applicable features with their default enabling.
+     */
+    private FeatureMap(FeatureMap<F> featureMap,
+                       Map<F,Boolean> featureEnabling) {
+        featureMap.verifyFeatureEnablingApplicable(featureEnabling);
+        Map<F,Boolean> newDefaultFeatureEnabling=new HashMap<>(featureMap.defaultFeatureEnabling);
+        newDefaultFeatureEnabling.putAll(featureEnabling);
+        this.defaultFeatureEnabling=Collections.unmodifiableMap(newDefaultFeatureEnabling);
     }
 
     /**
@@ -85,7 +97,7 @@ public class FeatureMap<F extends Enum<F>> {
      * @return Indicates, if feature is applicable.
      */
     public boolean isFeatureEnablingApplicable(Map<F,Boolean> featureEnabling) {
-        return featureEnabling==null || defaultFeatureEnabling.keySet().containsAll(featureEnabling.keySet());
+        return featureEnabling!=null && defaultFeatureEnabling.keySet().containsAll(featureEnabling.keySet());
     }
 
     /**
@@ -100,13 +112,24 @@ public class FeatureMap<F extends Enum<F>> {
     }
 
     /**
+     * Verifies that a set of feature is applicable.
+     * If the set of features is not applicable then an exception is thrown.
+     * @param featureEnabling Actual features with their enabling.
+     */
+    public void verifyFeatureEnablingApplicable(Map<F,Boolean> featureEnabling) {
+        if (!isFeatureEnablingApplicable(featureEnabling)) {
+            throw new IllegalArgumentException(String.format("Failure to recognize features; features are %s, recognized features are %s!",featureEnabling,defaultFeatureEnabling));
+        }
+    }
+
+    /**
      * Indicates, if a specific feature is enabled relative to default feature enabling.
      * @param feature Feature to test enabling of.
      * @return Indicates, if feature is enabled.
      */
     public boolean isFeatureEnabled(F feature) {
         boolean enabled=false;
-        if (defaultFeatureEnabling.containsKey(feature)) {
+        if (feature!=null && defaultFeatureEnabling.containsKey(feature)) {
             enabled=Boolean.TRUE==defaultFeatureEnabling.get(feature);
         }
         return enabled;
@@ -121,11 +144,13 @@ public class FeatureMap<F extends Enum<F>> {
     public boolean isFeatureEnabled(Map<F,Boolean> featureEnabling,
                                     F feature) {
         boolean enabled=false;
-        if (featureEnabling!=null && featureEnabling.containsKey(feature)) {
-            enabled=Boolean.TRUE==featureEnabling.get(feature);
-        } else {
-            if (defaultFeatureEnabling.containsKey(feature)) {
-                enabled=Boolean.TRUE==defaultFeatureEnabling.get(feature);
+        if (feature!=null) {
+            if (featureEnabling!=null && featureEnabling.containsKey(feature)) {
+                enabled=Boolean.TRUE==featureEnabling.get(feature);
+            } else {
+                if (defaultFeatureEnabling.containsKey(feature)) {
+                    enabled=Boolean.TRUE==defaultFeatureEnabling.get(feature);
+                }
             }
         }
         return enabled;
@@ -160,5 +185,17 @@ public class FeatureMap<F extends Enum<F>> {
      */
     public static <F extends Enum<F>> FeatureMap<F> of(Map<F, Boolean> defaultFeatureEnabling) {
         return new FeatureMap<>(defaultFeatureEnabling);
+    }
+
+    /**
+     * Constructor.
+     * @param featureMap Feature map.
+     * @param featureEnabling Association of applicable features with their default enabling.
+     * @param <F> Type of feature.
+     * @return Created instance.
+     */
+    public static <F extends Enum<F>> FeatureMap<F> of(FeatureMap<F> featureMap,
+                                                       Map<F,Boolean> featureEnabling) {
+        return new FeatureMap<>(featureMap,featureEnabling);
     }
 }
