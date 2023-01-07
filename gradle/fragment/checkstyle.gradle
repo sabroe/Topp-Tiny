@@ -4,5 +4,24 @@ tasks.withType(JavaCompile) {
     checkstyle {
         toolVersion = '10.6.0'
         config = resources.text.fromFile(file("${rootProject.projectDir}/config/checkstyle/Yelstream/checkstyle.xml"))
+        sourceSets = project.sourceSets.find{it.name.equals('checkstyle')}!=null?[project.sourceSets['checkstyle']]:project.sourceSets
+
+        /*
+         * Note:
+         *     To exclude generated code refer to the package in the main build file of the module like this:
+         *
+         *      javadoc {
+         *          exclude 'urn/iso/std/iso/_20022/**'
+         *      }
+         *
+         *      sourceSets {
+         *          checkstyle {
+         *              java {
+         *                  exclude 'urn/iso/std/iso/_20022/**'
+         *              }
+         *          }
+         *      }
+         *
+         */
     }
 }
