@@ -35,6 +35,11 @@ public class PathAccess {
     @lombok.Builder.Default
     private final OpenOption[] openOptions=null;
 
+    /**
+     * Creates all directories to the path.
+     * @return Path.
+     * @throws IOException Thrown in case of I/O error.
+     */
     public Path createDirectories() throws IOException {
         if (!Files.exists(path)) {
             Files.createDirectories(path,directoriesAttrs);
@@ -42,6 +47,11 @@ public class PathAccess {
         return path;
     }
 
+    /**
+     * Creates all directories and the file given by the path.
+     * @return Path.
+     * @throws IOException Thrown in case of I/O error.
+     */
     public Path createFile() throws IOException {
         Path parent=path.getParent();
         if (parent!=null) {
@@ -52,10 +62,20 @@ public class PathAccess {
         return Files.createFile(path,fileAttrs);
     }
 
+    /**
+     * Creates an output stream to write to the file given by the path.
+     * @return Stream.
+     * @throws IOException Thrown in case of I/O error.
+     */
     public OutputStream newOutputStream() throws IOException {
         return Files.newOutputStream(path,openOptions);
     }
 
+    /**
+     * .
+     * @param args .
+     * @throws IOException .
+     */
     public static void main(String[] args) throws IOException {
         PathAccess access=PathAccess.builder().path(Paths.get("build/temp/aaa/xxx.txt")).build();
         access.createFile();

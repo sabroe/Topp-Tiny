@@ -36,6 +36,15 @@
   <property name="severity" value="warning"/>
 
   <property name="fileExtensions" value="java, properties, xml"/>
+
+  <!-- MSM
+    Inspired by an older stack-overflow thread: https://stackoverflow.com/questions/32903412/how-to-tell-checkstyle-to-check-all-lines-for-linefeed-newline-lf-and-not-crl
+  -->
+  <module name="RegexpMultiline">
+    <property name="format" value="(?s:(\r\n|\r).*)"/>
+    <property name="message" value="CRLF and CR line endings are prohibited, but this file uses them."/>
+  </module>
+
   <!-- Excludes all 'module-info.java' files              -->
   <!-- See https://checkstyle.org/config_filefilters.html -->
   <module name="BeforeExecutionExclusionFileFilter">
