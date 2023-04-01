@@ -26,9 +26,9 @@ public enum StandardPortNumberRange {
     Registered(PortNumberRange.of(1024,49152)),
 
     /**
-     * Dynamic and/or private ports.
+     * Dynamic ports.
      */
-    DynamicOrPrivate(PortNumberRange.of(49152,65536));
+    Dynamic(PortNumberRange.of(49152,65536));
 
     /**
      * Port number range.
