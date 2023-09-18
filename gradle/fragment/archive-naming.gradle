@@ -5,9 +5,11 @@ def baseNamePrefix = custom['archives.base-name-prefix'] ?: ""
 logger.info(":> Base name prefix: ${baseNamePrefix}.")
 
 plugins.withType(JavaLibraryDistributionPlugin) {
+    base {
+        archivesName = "${baseNamePrefix}${projectNameC14N}"
+    }
     distributions {
         main {
-            archivesBaseName = "${baseNamePrefix}${projectNameC14N}"
             distZip {
                 duplicatesStrategy = DuplicatesStrategy.EXCLUDE
             }
@@ -15,10 +17,8 @@ plugins.withType(JavaLibraryDistributionPlugin) {
     }
 }
 
-plugins.withType(ApplicationPlugin) {
-    distributions {
-        main {
-            archivesBaseName = "${baseNamePrefix}${projectNameC14N}"
-        }
+plugins.withType(BasePlugin) {
+    base {
+        archivesName = "${baseNamePrefix}${projectNameC14N}"
     }
 }
